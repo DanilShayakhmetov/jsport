@@ -1,15 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {FriendsContext} from './FriendsContext';
+import makeApolloClient from './apollo';
+import {gql, useQuery} from '@apollo/client';
 
 class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>You have {this.context.currentFriends.length} friends.</Text>
-
+        <Text>You have {this.context.currentFriends.length} items.</Text>
         <Button
-          title="Add some friends"
+          title="Add new"
           onPress={() => this.props.navigation.navigate('Friends')}
         />
       </View>

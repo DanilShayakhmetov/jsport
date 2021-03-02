@@ -6,12 +6,12 @@ class FriendsScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Add friends here!</Text>
+        <Text>Add new items!</Text>
 
         {this.context.possibleFriends.map((friend, index) => (
           <Button
             key={friend}
-            title={`Add ${friend}`}
+            title={`Add items`}
             onPress={() => this.context.addFriend(index)}
           />
         ))}

@@ -1,19 +1,54 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {
+  TouchableOpacity,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Platform,
+  FlatList,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FriendsContext} from './FriendsContext';
 import HomeScreen from './HomeScreen';
-import FriendsScreen from './FriendsScreen';
+import FriendsScreen from './ItemsScreen';
+import makeApolloClient from './apollo';
+import gql from 'graphql-tag';
 
 const Stack = createStackNavigator();
+const client = makeApolloClient();
+// const query = gql`
+//   query {
+//     round(round_id: 1011261) {
+//       name
+//       type_id
+//       target
+//       has_table
+//     }
+//   }
+// `;
+
+client
+  .query({
+    query: gql`
+      query TestQuery {
+        round(round_id: 1011261) {
+          name
+          type_id
+          target
+          has_table
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      possibleFriends: ['Alice', 'Bob', 'Sammy'],
+      possibleFriends: ['A', 'B', 'S'],
       currentFriends: [],
     };
   }
@@ -21,6 +56,7 @@ class App extends React.Component {
   addFriend = (index) => {
     const {currentFriends, possibleFriends} = this.state;
 
+    const client = makeApolloClient();
     // Pull friend out of possibleFriends
     const addedFriend = possibleFriends.splice(index, 1);
 
