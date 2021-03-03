@@ -1,0 +1,10 @@
+echo 256 | sudo tee -a /proc/sys/fs/inotify/max_user_instances
+echo 32768 | sudo tee -a /proc/sys/fs/inotify/max_queued_events
+echo 65536 | sudo tee -a /proc/sys/fs/inotify/max_user_watches
+watchman shutdown-server
+npm start --clear-cache
+npx react-native run-android
+react-native run-android
+npx react-native run-ios --simulator="iPhone 8"
+lsof -i:8080
+

@@ -33,39 +33,6 @@ client
     `,
   })
   .then((result) => console.log(result));
-client
-  .query({
-    variables: {from: '2001-01-01', to: '2021-01-01'},
-    query: gql`
-      query TestQuery($from: Date!, $to: Date!) {
-        calendar(filters: {start_date_range: {from: $from, to: $to}}) {
-          paginatorInfo {
-            count
-          }
-          data {
-            tournament_id
-            series_id
-            number
-            team1 {
-              team_id
-            }
-            team2 {
-              team_id
-              short_name
-              logo
-            }
-            gf
-            ga
-            gfp
-            gap
-            stadium_id
-            start_dt
-          }
-        }
-      }
-    `,
-  })
-  .then((calendar) => console.log(calendar));
 
 class App extends React.Component {
   constructor(props) {
@@ -76,57 +43,9 @@ class App extends React.Component {
     };
   }
 
-  getDate = (year, month, date) => {
-    const d = new Date(year, month, date);
-    const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-    const mo = new Intl.DateTimeFormat('en', {month: 'short'}).format(d);
-    const da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
-    const resultDate = `${da}-${mo}-${ye}`;
-    console.log(resultDate);
-  };
-
-  getCalendar = () => {
-    let result;
-    let from = '2001-01-01';
-    let to = '2021-01-01';
-    client
-      .query({
-        query: gql`
-          query CalendarQuery($from: String, $to: String) {
-            calendar(filters: {start_date_range: {from: $from, to: $to}}) {
-              paginatorInfo {
-                count
-              }
-              data {
-                tournament_id
-                series_id
-                number
-                team1 {
-                  team_id
-                }
-                team2 {
-                  team_id
-                  short_name
-                  logo
-                }
-                gf
-                ga
-                gfp
-                gap
-                stadium_id
-                start_dt
-              }
-            }
-          }
-        `,
-      })
-      .then((calendar) => (result = calendar));
-
-    return result;
-  };
-
   addFriend = (index) => {
     const {currentFriends, possibleFriends} = this.state;
+
     const client = makeApolloClient();
     // Pull friend out of possibleFriends
     const addedFriend = possibleFriends.splice(index, 1);
