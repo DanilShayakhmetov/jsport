@@ -21,20 +21,41 @@ const client = makeApolloClient();
 
 client
   .query({
+    variables: {from: '2001-01-01', to: '2021-01-01'},
     query: gql`
-      query TestQuery {
-        round(round_id: 1011261) {
-          name
-          type_id
-          target
-          has_table
+      query TestQuery($from: Date!, $to: Date!) {
+        calendar(filters: {start_date_range: {from: $from, to: $to}}) {
+          paginatorInfo {
+            count
+          }
+          data {
+            tournament_id
+            series_id
+            number
+            team1 {
+              team_id
+              short_name
+              logo
+            }
+            team2 {
+              team_id
+              short_name
+              logo
+            }
+            gf
+            ga
+            gfp
+            gap
+            stadium_id
+            start_dt
+          }
         }
       }
     `,
   })
-  .then((result) => console.log(result));
+  .then((calendar) => console.log(calendar));
 
-class App extends React.Component {
+class MatchCenter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,21 +64,59 @@ class App extends React.Component {
     };
   }
 
-  addFriend = (index) => {
-    const {currentFriends, possibleFriends} = this.state;
+  getDate = (year, month, date) => {
+    const d = new Date(year, month, date);
+    const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
+    const mo = new Intl.DateTimeFormat('en', {month: 'short'}).format(d);
+    const da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
+    const resultDate = `${ye}-${mo}-${da}`;
+    console.log(resultDate);
+  };
 
-    const client = makeApolloClient();
-    // Pull friend out of possibleFriends
-    const addedFriend = possibleFriends.splice(index, 1);
+  getCalendar = (from, to) => {
+    let result;
+    client
+      .query({
+        variables: {from: from, to: to},
+        query: gql`
+          query TestQuery($from: Date!, $to: Date!) {
+            calendar(filters: {start_date_range: {from: $from, to: $to}}) {
+              paginatorInfo {
+                count
+              }
+              data {
+                tournament_id
+                series_id
+                number
+                team1 {
+                  team_id
+                  short_name
+                  logo
+                }
+                team2 {
+                  team_id
+                  short_name
+                  logo
+                }
+                gf
+                ga
+                gfp
+                gap
+                stadium_id
+                start_dt
+              }
+            }
+          }
+        `,
+      })
+      .then((calendar) => (result = calendar));
 
-    // And put friend in currentFriends
-    currentFriends.push(addedFriend);
+    return result;
+  };
 
-    // Finally, update the app state
-    this.setState({
-      currentFriends,
-      possibleFriends,
-    });
+  getSortedByTournament = (from, to) => {
+    let calendar = JSON.parse(this.getCalendar(from, to)).data.calendar.data;
+    console.log(calendar);
   };
 
   render() {
@@ -66,7 +125,6 @@ class App extends React.Component {
         value={{
           currentFriends: this.state.currentFriends,
           possibleFriends: this.state.possibleFriends,
-          addFriend: this.addFriend,
         }}>
         <NavigationContainer>
           <Stack.Navigator>
@@ -88,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default MatchCenter;
