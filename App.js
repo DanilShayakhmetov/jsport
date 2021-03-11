@@ -19,6 +19,8 @@ import gql from 'graphql-tag';
 const Stack = createStackNavigator();
 const client = makeApolloClient();
 
+var G = 'sadas';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -92,13 +94,20 @@ class App extends React.Component {
           }
         }
         return calendarArr;
+      })
+      .then((val) => {
+        this.setState({
+          responseAPI: val.data,
+        });
+      })
+      .catch((error) => {
+        error;
       });
-    return result;
+    console.log(this.state.responseAPI.data);
   };
 
   getSortedByTournament = (from, to) => {
     let calendar = this.getCalendar(from, to);
-    console.log(calendar);
   };
 
   render() {
