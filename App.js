@@ -97,13 +97,15 @@ class App extends React.Component {
       })
       .then((val) => {
         this.setState({
-          responseAPI: val.data,
+          responseAPI: val,
         });
+        return true;
       })
       .catch((error) => {
         error;
       });
-    console.log(this.state.responseAPI.data);
+    // console.log(this.state.responseAPI);
+    return result;
   };
 
   getSortedByTournament = (from, to) => {
@@ -111,7 +113,15 @@ class App extends React.Component {
   };
 
   render() {
-    this.getSortedByTournament('2001-01-01', '2021-01-01');
+    const dataset = this.state.responseAPI;
+    if (this.getCalendar('2019-12-01', '2019-12-25')) {
+      if (dataset !== undefined) {
+        const filtered = dataset.filter(function (el) {
+          return el != null;
+        });
+        console.log(filtered);
+      }
+    }
     return (
       <FriendsContext.Provider
         value={{
