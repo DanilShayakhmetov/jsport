@@ -1,13 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  TouchableOpacity,
-  ScrollView,
-  Text,
-  StyleSheet,
-  Platform,
-  FlatList,
-} from 'react-native';
+import {StyleSheet,} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FriendsContext} from './FriendsContext';
@@ -27,6 +20,7 @@ class App extends React.Component {
     this.state = {
       possibleFriends: ['A', 'B', 'S'],
       currentFriends: [],
+      calendar: 'empty',
     };
   }
 
@@ -97,7 +91,7 @@ class App extends React.Component {
       })
       .then((val) => {
         this.setState({
-          responseAPI: val,
+          calendar: val,
         });
         return true;
       })
@@ -113,20 +107,24 @@ class App extends React.Component {
   };
 
   render() {
-    const dataset = this.state.responseAPI;
-    if (this.getCalendar('2019-12-01', '2019-12-25')) {
-      if (dataset !== undefined) {
-        const filtered = dataset.filter(function (el) {
-          return el != null;
-        });
-        console.log(filtered);
-      }
+    const dataset = this.state.calendar;
+    if (dataset === 'empty') {
+      this.getCalendar('2019-12-01', '2019-12-25');
+    } else {
+      const filtered = dataset.filter(function (el) {
+        return el != null;
+      });
+      this.state.calendar = filtered[0];
+      // console.log(filtered[i]);
+      // console.log(filtered[0][0].__typename);
     }
+
     return (
       <FriendsContext.Provider
         value={{
           currentFriends: this.state.currentFriends,
           possibleFriends: this.state.possibleFriends,
+          calendar: this.state.calendar,
         }}>
         <NavigationContainer>
           <Stack.Navigator>
