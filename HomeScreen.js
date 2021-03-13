@@ -3,6 +3,12 @@ import {StyleSheet, Text, View, Button} from 'react-native';
 import {FriendsContext} from './FriendsContext';
 
 class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  changeState = () => {};
+
   render() {
     let tournament_id = '';
     let calendar = this.context.calendar;
@@ -15,17 +21,31 @@ class HomeScreen extends React.Component {
         ga = <Text>{tournament_id}</Text>;
       }
     }
-    return (
-      <View style={styles.container}>
-        <Text>{tournament_id}</Text>
-        {ga}
-        <Text>You have {tournament_id} items.</Text>
-        <Button
-          title="Add new"
-          onPress={() => this.props.navigation.navigate('Match')}
-        />
-      </View>
-    );
+    if (this.context.calendar === 'empty') {
+      return (
+        <View style={styles.container}>
+          <Text>You have 0 items.</Text>
+          <Button
+            title="Add new"
+            onPress={() => this.props.navigation.navigate('Match')}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text>{this.context.calendar[0].tournament_id}</Text>
+          {this.context.calendar.map((friend, index) => (
+            <Text key={index}>{friend.toString()}</Text>
+          ))}
+          <Text>You have {tournament_id} items.</Text>
+          <Button
+            title="Add new"
+            onPress={() => this.props.navigation.navigate('Match')}
+          />
+        </View>
+      );
+    }
   }
 }
 HomeScreen.contextType = FriendsContext;

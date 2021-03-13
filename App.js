@@ -85,6 +85,7 @@ class App extends React.Component {
             calendarArr[id] = bufferArr;
           }
         }
+
         return calendarArr;
       })
       .then((val) => {
