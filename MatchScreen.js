@@ -2,7 +2,11 @@ import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {FriendsContext} from './FriendsContext';
 
-class FriendsScreen extends React.Component {
+class MatchScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -11,11 +15,16 @@ class FriendsScreen extends React.Component {
         {this.context.possibleFriends.map((friend, index) => (
           <Button
             key={friend}
-            title={`Add items`}
+            title={'Add items'}
             onPress={() => this.context.addFriend(index)}
           />
         ))}
-
+        {this.context.calendar.map((friend, index) => (
+          <View>
+            <Text>{friend.__typename}</Text>
+            <Text>{index}</Text>
+          </View>
+        ))}
         <Button
           title="Back to home"
           onPress={() => this.props.navigation.navigate('Home')}
@@ -24,7 +33,7 @@ class FriendsScreen extends React.Component {
     );
   }
 }
-FriendsScreen.contextType = FriendsContext;
+MatchScreen.contextType = FriendsContext;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FriendsScreen;
+export default MatchScreen;
