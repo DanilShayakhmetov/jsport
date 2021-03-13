@@ -3,21 +3,10 @@ import {StyleSheet, Text, View, Button} from 'react-native';
 import {FriendsContext} from './FriendsContext';
 
 class HomeScreen extends React.Component {
-  // getC = () => {
-  //   console.log(this.context.calendar);
-  //
-  //   return this.context.calendar;
-  // };
-
   render() {
     let tournament_id = '';
     let calendar = this.context.calendar;
     let ga = '';
-    // let ga = '';
-    // let ga = '';
-    // let ga = '';
-    // let ga = '';
-    // let ga = '';
     if (calendar !== undefined) {
       console.log(calendar);
       for (let i = 0; i < calendar.length; i++) {
@@ -33,7 +22,7 @@ class HomeScreen extends React.Component {
         <Text>You have {tournament_id} items.</Text>
         <Button
           title="Add new"
-          onPress={() => this.props.navigation.navigate('Friends')}
+          onPress={() => this.props.navigation.navigate('Match')}
         />
       </View>
     );

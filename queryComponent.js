@@ -12,7 +12,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FriendsContext} from './FriendsContext';
 import HomeScreen from './HomeScreen';
-import FriendsScreen from './ItemsScreen';
+import FriendsScreen from './MatchScreen';
 import makeApolloClient from './apollo';
 import gql from 'graphql-tag';
 import Dogs from "./queryComponent";

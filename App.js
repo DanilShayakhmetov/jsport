@@ -5,14 +5,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FriendsContext} from './FriendsContext';
 import HomeScreen from './HomeScreen';
-import FriendsScreen from './ItemsScreen';
 import makeApolloClient from './apollo';
 import gql from 'graphql-tag';
+import MatchScreen from './MatchScreen';
 
 const Stack = createStackNavigator();
 const client = makeApolloClient();
-
-var G = 'sadas';
 
 class App extends React.Component {
   constructor(props) {
@@ -102,10 +100,6 @@ class App extends React.Component {
     return result;
   };
 
-  getSortedByTournament = (from, to) => {
-    let calendar = this.getCalendar(from, to);
-  };
-
   render() {
     const dataset = this.state.calendar;
     if (dataset === 'empty') {
@@ -115,8 +109,6 @@ class App extends React.Component {
         return el != null;
       });
       this.state.calendar = filtered[0];
-      // console.log(filtered[i]);
-      // console.log(filtered[0][0].__typename);
     }
 
     return (
@@ -129,7 +121,7 @@ class App extends React.Component {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Friends" component={FriendsScreen} />
+            <Stack.Screen name="Match" component={MatchScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </FriendsContext.Provider>

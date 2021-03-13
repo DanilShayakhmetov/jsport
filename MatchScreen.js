@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {FriendsContext} from './FriendsContext';
 
-class FriendsScreen extends React.Component {
+class MatchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -24,7 +24,7 @@ class FriendsScreen extends React.Component {
     );
   }
 }
-FriendsScreen.contextType = FriendsContext;
+MatchScreen.contextType = FriendsContext;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FriendsScreen;
+export default MatchScreen;
