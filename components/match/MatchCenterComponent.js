@@ -11,37 +11,13 @@ class MatchCenterScreen extends React.Component {
     super(props);
   }
 
-  getTournamentList = (calendar) => {
-    let tournamentList = {};
-    if (calendar !== 'empty') {
-      for (let i = 0; i < calendar.length; i++) {
-        if (!(calendar[i].tournament_id in tournamentList)) {
-          tournamentList[calendar[i].tournament_id] = [];
-        }
-      }
-    }
-    return tournamentList;
-  };
-
-  getSortedData = (calendar) => {
-    let resultList = this.getTournamentList(calendar);
-    if (calendar !== 'empty') {
-      for (let i = 0; i < calendar.length; i++) {
-        if (calendar[i].tournament_id in resultList) {
-          resultList[calendar[i].tournament_id].push(calendar[i]);
-        }
-      }
-    }
-    return resultList;
-  };
-
   render() {
-    if (this.context.calendar !== 'empty') {
-      let calendar = dataHandler.dataFilter(this.context.calendar);
-      let result = this.getSortedData(calendar);
-      console.log(result);
-    }
-    if (this.context.calendar === 'empty') {
+    var tournaments = [];
+    console.log(this.context.calendar);
+    if (
+      this.context.calendar === 'empty' ||
+      this.context.calendar === undefined
+    ) {
       return (
         <View style={styles.container}>
           <Text>You have 0 items.</Text>
@@ -52,13 +28,17 @@ class MatchCenterScreen extends React.Component {
         </View>
       );
     } else {
+      tournaments = Object.keys(this.context.calendar);
       return (
         <View style={styles.container}>
-          <Text>You have 0 items.</Text>
-          <Button
-            title="Add new"
-            onPress={() => this.props.navigation.navigate('Match')}
-          />
+          {tournaments.map((tournament, events) => (
+            <View style={styles.container}>
+              {/*<Text key={tournament}>{tournament}</Text>*/}
+              {this.context.calendar[parseInt(tournament)].map((item, k) => (
+                <Text key={k}>{item.__typename}</Text>
+              ))}
+            </View>
+          ))}
         </View>
       );
     }

@@ -257,7 +257,7 @@ class Handler {
   }
 
   static dataFilter(inputData) {
-    if (inputData === 'empty') {
+    if (inputData === 'empty' || inputData === undefined) {
       console.log(inputData);
       return [];
     } else {

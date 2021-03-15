@@ -22,15 +22,45 @@ class App extends React.Component {
     };
   }
 
+  getTournamentList = (calendar) => {
+    let tournamentList = {};
+    if (calendar !== 'empty') {
+      for (let i = 0; i < calendar.length; i++) {
+        if (!(calendar[i].tournament_id in tournamentList)) {
+          tournamentList[calendar[i].tournament_id] = [];
+        }
+      }
+    }
+    return tournamentList;
+  };
+
+  getSortedData = (calendar) => {
+    let resultList = this.getTournamentList(calendar);
+    if (calendar !== 'empty') {
+      for (let i = 0; i < calendar.length; i++) {
+        if (calendar[i].tournament_id in resultList) {
+          resultList[calendar[i].tournament_id].push(calendar[i]);
+        }
+      }
+    }
+    return resultList;
+  };
+
   async componentDidMount() {
     // let days = this.context.days;
     // let from = dataHandler.getDate();
     // let to = dataHandler.getDate(days);
-    await handler.getMatchCalendar('2020-12-01', '2020-12-25').then((value) => {
-      this.setState({
-        calendar: value,
+    await handler
+      .getMatchCalendar('2020-12-01', '2020-12-25')
+      .then((value) => {
+        const calendar = this.getSortedData(handler.dataFilter(value));
+        this.setState({
+          calendar: calendar,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    });
   }
 
   render() {
