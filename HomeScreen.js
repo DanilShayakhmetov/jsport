@@ -7,16 +7,14 @@ class HomeScreen extends React.Component {
     super(props);
   }
 
-  changeState = () => {};
-
   render() {
     let tournament_id = '';
     let calendar = this.context.calendar;
     let ga = '';
     if (calendar !== undefined) {
-      console.log(calendar);
+      // console.log(calendar);
       for (let i = 0; i < calendar.length; i++) {
-        console.log(calendar[i].tournament_id);
+        // console.log(calendar[i].tournament_id);
         tournament_id += calendar[i].tournament_id;
         ga = <Text>{tournament_id}</Text>;
       }
