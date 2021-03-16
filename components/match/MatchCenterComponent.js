@@ -55,7 +55,7 @@ export default class MatchCenterScreen extends Component {
       return (
         <View style={styles.container}>
           <ScrollView>
-            {this.context.calendar.map((item, key) => (
+            {this.context.calendar.map((item, number) => (
               <View>
                 {/*Header of the Expandable List Item*/}
                 <TouchableOpacity
@@ -67,23 +67,20 @@ export default class MatchCenterScreen extends Component {
                 </TouchableOpacity>
                 <View
                   style={{
-                    height: item.isExpanded ? null : 0,
+                    height: item.isExpanded ? 0 : null,
                     overflow: 'hidden',
                   }}>
                   {/*Content under the header of the Expandable List Item*/}
                   {item.matchItems.map((value, key) => (
-                    // <TouchableOpacity
-                    //   key={key}
-                    //   style={styles.content}
-                    //   onPress={() =>
-                    //     alert('Id: ' + value.id + ' val: ' + value.val)
-                    //   }>
-                    //   <Text style={styles.text}>
-                    //     {key}. {value.__typename}
-                    //   </Text>
-                    // <View style={styles.separator} />
-                    // </TouchableOpacity>
-                    <Text key={key}>{key}</Text>
+                    <TouchableOpacity
+                      key={key}
+                      style={styles.content}
+                      onPress={() => this.props.navigation.navigate('Match')}>
+                      <Text style={styles.text}>
+                        {key}. {value.__typename}
+                      </Text>
+                      <View style={styles.separator} />
+                    </TouchableOpacity>
                   ))}
                 </View>
               </View>
