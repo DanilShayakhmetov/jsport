@@ -67,22 +67,23 @@ export default class MatchCenterScreen extends Component {
                 </TouchableOpacity>
                 <View
                   style={{
-                    height: this.context.layoutHeight,
+                    height: item.isExpanded ? null : 0,
                     overflow: 'hidden',
                   }}>
                   {/*Content under the header of the Expandable List Item*/}
                   {item.matchItems.map((value, key) => (
-                    <TouchableOpacity
-                      key={key}
-                      style={styles.content}
-                      onPress={() =>
-                        alert('Id: ' + value.id + ' val: ' + value.val)
-                      }>
-                      <Text style={styles.text}>
-                        {key}. {value.__typename}
-                      </Text>
-                      <View style={styles.separator} />
-                    </TouchableOpacity>
+                    // <TouchableOpacity
+                    //   key={key}
+                    //   style={styles.content}
+                    //   onPress={() =>
+                    //     alert('Id: ' + value.id + ' val: ' + value.val)
+                    //   }>
+                    //   <Text style={styles.text}>
+                    //     {key}. {value.__typename}
+                    //   </Text>
+                    // <View style={styles.separator} />
+                    // </TouchableOpacity>
+                    <Text key={key}>{key}</Text>
                   ))}
                 </View>
               </View>
