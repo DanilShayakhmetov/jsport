@@ -7,6 +7,7 @@ import {FriendsContext} from './FriendsContext';
 import MatchScreen from './MatchScreen';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
+import ExpandableItemComponent from './components/expandable/ExpandableComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -19,12 +20,13 @@ class App extends React.Component {
       currentFriends: [],
       calendar: 'empty',
       days: 0,
+      layoutHeight: 0,
     };
   }
 
   getTournamentList = (calendar) => {
     let tournamentList = [];
-    if (calendar !== 'empty') {
+    if (calendar !== 'empty' && calendar !== undefined) {
       for (let i = 0; i < calendar.length; i++) {
         if (!(calendar[i].tournament_id in tournamentList)) {
           let tournamentItem = {
@@ -62,9 +64,10 @@ class App extends React.Component {
     // let from = dataHandler.getDate();
     // let to = dataHandler.getDate(days);
     await handler
-      .getMatchCalendar('2020-12-01', '2020-12-25')
+      .getMatchCalendar('2020-03-01', '2020-12-25')
       .then((value) => {
-        let calendar = this.getSortedData(handler.dataFilter(value));
+        let calendar = handler.dataFilter(value);
+        calendar = this.getSortedData(calendar);
         calendar = handler.dataFilter(calendar);
         this.setState({
           calendar: calendar,
@@ -88,6 +91,7 @@ class App extends React.Component {
           <Stack.Navigator>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
+            <Stack.Screen name="Expandable" component={ExpandableItemComponent} />
           </Stack.Navigator>
         </NavigationContainer>
       </FriendsContext.Provider>

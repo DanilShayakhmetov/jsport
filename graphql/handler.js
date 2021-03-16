@@ -36,24 +36,7 @@ class Handler {
       })
       .then(function (value) {
         let calendar = value.data.calendar.data;
-        let calendarArr = new Array(calendar.length);
-        for (let i = 0; i < calendar.length; i++) {
-          let id = calendar[i].tournament_id;
-          if (calendarArr[id]) {
-            continue;
-          } else {
-            let counter = 0;
-            let bufferArr = new Array(calendar.length);
-            for (let j = 0; j < calendar.length; j++) {
-              if (calendar[j].tournament_id === id) {
-                bufferArr[counter] = calendar[j];
-                counter++;
-              }
-            }
-            calendarArr[id] = bufferArr;
-          }
-        }
-        return calendarArr;
+        return calendar;
       })
       .catch((error) => {
         error;
@@ -265,7 +248,7 @@ class Handler {
         return el != null;
       });
 
-      return filtered[0];
+      return filtered;
     }
   }
 
