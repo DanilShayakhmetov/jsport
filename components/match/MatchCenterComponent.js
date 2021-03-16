@@ -1,59 +1,134 @@
-import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import React, {Component} from 'react';
+import {
+  LayoutAnimation,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  UIManager,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {FriendsContext} from '../../FriendsContext';
-import Handler from '../../graphql/handler';
 
-const dataHandler = Handler;
-const today = new Date();
-
-class MatchCenterScreen extends React.Component {
+export default class MatchCenterScreen extends Component {
+  //Main View defined under this Class
   constructor(props) {
     super(props);
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
   }
 
+  updateLayout = (index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    let array = [];
+    if (
+      this.context.calendar === undefined ||
+      this.context.calendar === 'empty'
+    ) {
+    } else {
+      array = [...this.context.calendar];
+      console.log(array);
+      array.map((value, placeindex) =>
+        value.tournamentId === index
+          ? (array[placeindex].isExpanded = !array[placeindex].isExpanded)
+          : (array[placeindex].isExpanded = true),
+      );
+      this.setState({
+        calendar: array,
+      });
+    }
+  };
+
   render() {
-    var tournaments = [];
     if (
       this.context.calendar === 'empty' ||
       this.context.calendar === undefined
     ) {
       return (
         <View style={styles.container}>
-          <Text>You have 0 items.</Text>
-          <Button
-            title="Add new"
-            onPress={() => this.props.navigation.navigate('Match')}
-          />
+          <Text style={styles.topHeading}>Wait</Text>
         </View>
       );
     } else {
-      tournaments = Object.keys(this.context.calendar);
-      console.log(this.context.calendar);
       return (
         <View style={styles.container}>
-          <Text>{tournaments.toString()}</Text>
-          {/*{tournaments.map((tournament, events) => (*/}
-          {/*  <View style={styles.container}>*/}
-          {/*    /!*<Text key={tournament}>{tournament}</Text>*!/*/}
-          {/*    {this.context.calendar[parseInt(tournament)].map((item, k) => (*/}
-          {/*      <Text key={k}>{item.__typename}</Text>*/}
-          {/*    ))}*/}
-          {/*  </View>*/}
-          {/*))}*/}
+          <ScrollView>
+            {this.context.calendar.map((item, key) => (
+              <View>
+                {/*Header of the Expandable List Item*/}
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.updateLayout.bind(this, item.tournamentId)}
+                  style={styles.header}>
+                  <Text style={styles.headerText}>{item.tournamentId}</Text>
+                  <Text style={styles.headerText}>{item.isExpanded.toString()}</Text>
+                </TouchableOpacity>
+                <View
+                  style={{
+                    height: this.context.layoutHeight,
+                    overflow: 'hidden',
+                  }}>
+                  {/*Content under the header of the Expandable List Item*/}
+                  {item.matchItems.map((value, key) => (
+                    <TouchableOpacity
+                      key={key}
+                      style={styles.content}
+                      onPress={() =>
+                        alert('Id: ' + value.id + ' val: ' + value.val)
+                      }>
+                      <Text style={styles.text}>
+                        {key}. {value.__typename}
+                      </Text>
+                      <View style={styles.separator} />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            ))}
+          </ScrollView>
         </View>
       );
     }
   }
 }
+
 MatchCenterScreen.contextType = FriendsContext;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 30,
+    backgroundColor: '#F5FCFF',
+  },
+  topHeading: {
+    paddingLeft: 10,
+    fontSize: 20,
+  },
+  header: {
+    backgroundColor: '#F5FCFF',
+    padding: 16,
+  },
+  headerText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  separator: {
+    height: 0.5,
+    backgroundColor: '#808080',
+    width: '95%',
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  text: {
+    fontSize: 16,
+    color: '#606070',
+    padding: 10,
+  },
+  content: {
+    paddingLeft: 10,
+    paddingRight: 10,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
-
-export default MatchCenterScreen;

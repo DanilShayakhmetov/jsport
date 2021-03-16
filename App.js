@@ -7,7 +7,6 @@ import {FriendsContext} from './FriendsContext';
 import MatchScreen from './MatchScreen';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
-import ExpandableItemComponent from './components/expandable/ExpandableComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -85,13 +84,13 @@ class App extends React.Component {
           currentFriends: this.state.currentFriends,
           possibleFriends: this.state.possibleFriends,
           calendar: this.state.calendar,
+          layoutHeight: this.state.layoutHeight,
           days: this.state.days,
         }}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
-            <Stack.Screen name="Expandable" component={ExpandableItemComponent} />
           </Stack.Navigator>
         </NavigationContainer>
       </FriendsContext.Provider>
