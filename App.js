@@ -23,11 +23,17 @@ class App extends React.Component {
   }
 
   getTournamentList = (calendar) => {
-    let tournamentList = {};
+    let tournamentList = [];
     if (calendar !== 'empty') {
       for (let i = 0; i < calendar.length; i++) {
         if (!(calendar[i].tournament_id in tournamentList)) {
-          tournamentList[calendar[i].tournament_id] = [];
+          let tournamentItem = {
+            isExpanded: false,
+            tournamentId: 0,
+            matchItems: [],
+          };
+          tournamentItem.tournamentId = calendar[i].tournament_id;
+          tournamentList[calendar[i].tournament_id] = tournamentItem;
         }
       }
     }
@@ -35,15 +41,20 @@ class App extends React.Component {
   };
 
   getSortedData = (calendar) => {
-    let resultList = this.getTournamentList(calendar);
+    let tournamentList = this.getTournamentList(calendar);
     if (calendar !== 'empty') {
       for (let i = 0; i < calendar.length; i++) {
-        if (calendar[i].tournament_id in resultList) {
-          resultList[calendar[i].tournament_id].push(calendar[i]);
+        if (calendar[i].tournament_id in tournamentList) {
+          tournamentList[calendar[i].tournament_id].matchItems.push(
+            calendar[i],
+          );
+          tournamentList[calendar[i].tournament_id].tournamentId =
+            calendar[i].tournament_id;
         }
       }
     }
-    return resultList;
+
+    return tournamentList;
   };
 
   async componentDidMount() {
@@ -53,7 +64,8 @@ class App extends React.Component {
     await handler
       .getMatchCalendar('2020-12-01', '2020-12-25')
       .then((value) => {
-        const calendar = this.getSortedData(handler.dataFilter(value));
+        let calendar = this.getSortedData(handler.dataFilter(value));
+        calendar = handler.dataFilter(calendar);
         this.setState({
           calendar: calendar,
         });

@@ -13,7 +13,6 @@ class MatchCenterScreen extends React.Component {
 
   render() {
     var tournaments = [];
-    console.log(this.context.calendar);
     if (
       this.context.calendar === 'empty' ||
       this.context.calendar === undefined
@@ -29,16 +28,18 @@ class MatchCenterScreen extends React.Component {
       );
     } else {
       tournaments = Object.keys(this.context.calendar);
+      console.log(this.context.calendar);
       return (
         <View style={styles.container}>
-          {tournaments.map((tournament, events) => (
-            <View style={styles.container}>
-              {/*<Text key={tournament}>{tournament}</Text>*/}
-              {this.context.calendar[parseInt(tournament)].map((item, k) => (
-                <Text key={k}>{item.__typename}</Text>
-              ))}
-            </View>
-          ))}
+          <Text>{tournaments.toString()}</Text>
+          {/*{tournaments.map((tournament, events) => (*/}
+          {/*  <View style={styles.container}>*/}
+          {/*    /!*<Text key={tournament}>{tournament}</Text>*!/*/}
+          {/*    {this.context.calendar[parseInt(tournament)].map((item, k) => (*/}
+          {/*      <Text key={k}>{item.__typename}</Text>*/}
+          {/*    ))}*/}
+          {/*  </View>*/}
+          {/*))}*/}
         </View>
       );
     }
