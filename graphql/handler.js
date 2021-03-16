@@ -12,12 +12,16 @@ import {GET_TOURNAMENT_APPLICATION} from './queri/tournament/ApplicationQuery';
 import {GET_TEAM_MATCH} from './queri/team/TeamMatchQuery';
 import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
-import {GET_PLAYER_STATUS} from './queri/PlayerQuery/PlayerStatsQuery';
+import {FriendsContext} from '../FriendsContext';
 
 const client = makeApolloClient();
 const today = new Date();
 
-class Handler {
+class Handler extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   getDate = (year, month, date) => {
     const d = new Date(year, month, date);
     const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
@@ -51,9 +55,8 @@ class Handler {
         variables: {matchId: matchId},
         query: GET_MATCH,
       })
-      .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+      .then((value) => {
+        return value.data.match;
       })
       .catch((error) => {
         console.log(error);
@@ -262,5 +265,7 @@ class Handler {
     return yyyy + '-' + mm + '-' + dd;
   }
 }
+
+Handler.contextType = FriendsContext;
 
 export default Handler;

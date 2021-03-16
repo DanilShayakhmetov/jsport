@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FriendsContext} from './FriendsContext';
-import MatchScreen from './MatchScreen';
+import MatchScreen from './components/match/MatchComponent';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
 
@@ -20,6 +20,7 @@ class App extends React.Component {
       calendar: 'empty',
       days: 0,
       layoutHeight: 0,
+      matchMain: 'empty',
     };
   }
 
@@ -85,12 +86,14 @@ class App extends React.Component {
           possibleFriends: this.state.possibleFriends,
           calendar: this.state.calendar,
           layoutHeight: this.state.layoutHeight,
+          matchMain: this.state.matchMain,
           days: this.state.days,
         }}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
+            <Stack.Screen name="Handler" component={Handler} />
           </Stack.Navigator>
         </NavigationContainer>
       </FriendsContext.Provider>

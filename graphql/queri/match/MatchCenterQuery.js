@@ -10,6 +10,7 @@ export const GET_MATCH_CENTER = gql`
         tournament_id
         series_id
         number
+        match_id
         team1 {
           team_id
           short_name

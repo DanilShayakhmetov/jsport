@@ -8,8 +8,12 @@ import {
   UIManager,
   TouchableOpacity,
   Platform,
+  AsyncStorage,
 } from 'react-native';
 import {FriendsContext} from '../../FriendsContext';
+import Handler from '../../graphql/handler';
+
+const handler = Handler;
 
 export default class MatchCenterScreen extends Component {
   //Main View defined under this Class
@@ -29,7 +33,6 @@ export default class MatchCenterScreen extends Component {
     ) {
     } else {
       array = [...this.context.calendar];
-      console.log(array);
       array.map((value, placeindex) =>
         value.tournamentId === index
           ? (array[placeindex].isExpanded = !array[placeindex].isExpanded)
@@ -39,6 +42,12 @@ export default class MatchCenterScreen extends Component {
         calendar: array,
       });
     }
+  };
+
+  matchRedirect = (matchId) => {
+    this.context.matchMain = matchId;
+    this.context.days = handler.getMatchMain(matchId);
+    return this.props.navigation.navigate('Match');
   };
 
   render() {
@@ -63,7 +72,7 @@ export default class MatchCenterScreen extends Component {
                   onPress={this.updateLayout.bind(this, item.tournamentId)}
                   style={styles.header}>
                   <Text style={styles.headerText}>{item.tournamentId}</Text>
-                  <Text style={styles.headerText}>{item.isExpanded.toString()}</Text>
+                  {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
                 </TouchableOpacity>
                 <View
                   style={{
@@ -75,9 +84,14 @@ export default class MatchCenterScreen extends Component {
                     <TouchableOpacity
                       key={key}
                       style={styles.content}
-                      onPress={() => this.props.navigation.navigate('Match')}>
+                      onPress={() => this.matchRedirect(value.match_id)}>
                       <Text style={styles.text}>
-                        {key}. {value.__typename}
+                        {value.team1.short_name}.{value.team1.logo}.{value.gf}.
+                        {':'}.{value.ga}.{value.team2.logo}.
+                        {value.team2.short_name}
+                      </Text>
+                      <Text style={styles.text}>
+                        {value.start_dt}.{value.stadium_id}.
                       </Text>
                       <View style={styles.separator} />
                     </TouchableOpacity>

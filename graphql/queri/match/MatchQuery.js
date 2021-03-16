@@ -11,10 +11,12 @@ export const GET_MATCH = gql`
       team1 {
         team_id
         short_name
+        logo
       }
       team2 {
         team_id
         short_name
+        logo
       }
       gf
       ga
