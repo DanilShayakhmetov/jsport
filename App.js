@@ -15,8 +15,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      possibleFriends: ['A', 'B', 'S'],
-      currentFriends: [],
       calendar: 'empty',
       matchData: 0,
       layoutHeight: 0,
@@ -60,9 +58,9 @@ class App extends React.Component {
   };
 
   async componentDidMount() {
-    // let days = this.context.days;
-    // let from = dataHandler.getDate();
-    // let to = dataHandler.getDate(days);
+    let from = handler.getDate();
+    let to = handler.getDate(0, 1);
+    console.log(from, to);
     await handler
       .getMatchCalendar('2020-03-01', '2020-12-25')
       .then((value) => {
@@ -82,8 +80,6 @@ class App extends React.Component {
     return (
       <FriendsContext.Provider
         value={{
-          currentFriends: this.state.currentFriends,
-          possibleFriends: this.state.possibleFriends,
           calendar: this.state.calendar,
           layoutHeight: this.state.layoutHeight,
           matchId: this.state.matchId,

@@ -11,9 +11,6 @@ export default class MatchScreen extends Component {
   }
 
   async componentDidMount() {
-    // let days = this.context.days;
-    // let from = dataHandler.getDate();
-    // let to = dataHandler.getDate(days);
     await this.context.matchData
       .then((value) => {
         this.setState({

@@ -50,6 +50,36 @@ export default class MatchCenterScreen extends Component {
     return this.props.navigation.navigate('Match');
   };
 
+  changeInterval = (calendar, days = 0, month = 0) => {
+    let to = handler.getDate(days, month);
+    // let calendar = this.context.calendar.matchItems;
+    let filtered = {
+      isExpanded: false,
+      tournamentId: this.context.calendar.tournamentId,
+      matchItems: [],
+    };
+    let result = [];
+
+    calendar.forEach(function (value) {
+      let matchList = value.matchItems;
+      matchList.forEach(function (match) {
+        if (match.start_dt.split(' ')[0] <= to) {
+          filtered.matchItems.push(match);
+        }
+      });
+      result[value.tournamentId] = filtered;
+    });
+    // for (let i = 0; i < calendar.length; i++) {
+    //   let matchList = this.context.calendar[i].matchItems;
+    //   for (let j = 0; j < matchList.length; j++) {
+    //     if (matchList[j].start_dt.split(' ')[0] <= to) {
+    //       filtered.matchItems.push(this.context.calendar[i].matchItems[j]);
+    //     }
+    //   }
+    // }
+    return result;
+  };
+
   render() {
     if (
       this.context.calendar === 'empty' ||
@@ -61,47 +91,82 @@ export default class MatchCenterScreen extends Component {
         </View>
       );
     } else {
-      return (
-        <View style={styles.container}>
-          <ScrollView>
-            {this.context.calendar.map((item, number) => (
-              <View>
-                {/*Header of the Expandable List Item*/}
+      // console.log(this.context.calendar[0].matchItems[0].start_dt.split(' ')[0] < '2021-04-17');
+      // if (this.context.calendar[0].matchItems[0].start_dt.split(' ')[0] < '2021-04-17') {
+      //   this.context.calendar[0].matchItems[0] = {};
+      // }
+      // console.log(this.context.calendar[0].matchItems.start_dt);
+      // console.log(new Date());
+      let calendar = this.changeInterval(this.context.calendar);
+      if (calendar !== undefined) {
+        return (
+          <View style={styles.container}>
+              <ScrollView horizontal={true}>
                 <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.updateLayout.bind(this, item.tournamentId)}
-                  style={styles.header}>
-                  <Text style={styles.headerText}>{item.tournamentId}</Text>
-                  {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
+                    activeOpacity={0.8}
+                    onPress={this.changeInterval.bind(this, 0, 0)}
+                    style={styles.header}>
+                  <Text>{'        Сегодня         '}</Text>
                 </TouchableOpacity>
-                <View
-                  style={{
-                    height: item.isExpanded ? 0 : null,
-                    overflow: 'hidden',
-                  }}>
-                  {/*Content under the header of the Expandable List Item*/}
-                  {item.matchItems.map((value, key) => (
-                    <TouchableOpacity
-                      key={key}
-                      style={styles.content}
-                      onPress={() => this.matchRedirect(value.match_id)}>
-                      <Text style={styles.text}>
-                        {value.team1.short_name}.{value.team1.logo}.{value.gf}.
-                        {':'}.{value.ga}.{value.team2.logo}.
-                        {value.team2.short_name}
-                      </Text>
-                      <Text style={styles.text}>
-                        {value.start_dt}.{value.stadium_id}.
-                      </Text>
-                      <View style={styles.separator} />
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-      );
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.changeInterval.bind(this, 1, 0)}
+                    style={styles.header}>
+                  <Text>{'        Завтра          '}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.changeInterval.bind(this, 7, 0)}
+                    style={styles.header}>
+                  <Text>{'        Неделя          '}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.changeInterval.bind(this, 0, 1)}
+                    style={styles.header}>
+                  <Text>{'        Месяц           '}</Text>
+                </TouchableOpacity>
+              </ScrollView>
+              <ScrollView>
+                {calendar.map((item, number) => (
+                    <View>
+                      {/*Header of the Expandable List Item*/}
+                      <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={this.updateLayout.bind(this, item.tournamentId)}
+                          style={styles.header}>
+                        <Text style={styles.headerText}>{item.tournamentId}</Text>
+                        {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
+                      </TouchableOpacity>
+                      <View
+                          style={{
+                            height: item.isExpanded ? 0 : null,
+                            overflow: 'hidden',
+                          }}>
+                        {/*Content under the header of the Expandable List Item*/}
+                        {item.matchItems.map((value, key) => (
+                            <TouchableOpacity
+                                key={key}
+                                style={styles.content}
+                                onPress={() => this.matchRedirect(value.match_id)}>
+                              <Text style={styles.text}>
+                                {value.team1.short_name}.{value.team1.logo}.{value.gf}.
+                                {':'}.{value.ga}.{value.team2.logo}.
+                                {value.team2.short_name}
+                              </Text>
+                              <Text style={styles.text}>
+                                {value.start_dt}.{value.stadium_id}.
+                              </Text>
+                              <View style={styles.separator} />
+                            </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                ))}
+              </ScrollView>
+            </View>
+        );
+      }
     }
   }
 }

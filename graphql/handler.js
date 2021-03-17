@@ -255,9 +255,9 @@ class Handler extends React.Component {
     }
   }
 
-  static getDate(days = 0) {
-    let dd = today.getDate() + days;
-    let mm = today.getMonth() + 1;
+  static getDate(day = 0, month = 0) {
+    let dd = today.getDate() + day;
+    let mm = today.getMonth() + 1 + month;
     let yyyy = today.getFullYear();
     if (mm.toString().length === 1) {
       mm = '0' + mm;
