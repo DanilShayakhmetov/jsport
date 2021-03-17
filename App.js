@@ -18,9 +18,9 @@ class App extends React.Component {
       possibleFriends: ['A', 'B', 'S'],
       currentFriends: [],
       calendar: 'empty',
-      days: 0,
+      matchData: 0,
       layoutHeight: 0,
-      matchMain: 'empty',
+      matchId: 'empty',
     };
   }
 
@@ -86,8 +86,8 @@ class App extends React.Component {
           possibleFriends: this.state.possibleFriends,
           calendar: this.state.calendar,
           layoutHeight: this.state.layoutHeight,
-          matchMain: this.state.matchMain,
-          days: this.state.days,
+          matchId: this.state.matchId,
+          matchData: this.state.matchData,
         }}>
         <NavigationContainer>
           <Stack.Navigator>

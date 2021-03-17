@@ -45,8 +45,8 @@ export default class MatchCenterScreen extends Component {
   };
 
   matchRedirect = (matchId) => {
-    this.context.matchMain = matchId;
-    this.context.days = handler.getMatchMain(matchId);
+    this.context.matchId = matchId;
+    this.context.matchData = handler.getMatchMain(matchId);
     return this.props.navigation.navigate('Match');
   };
 

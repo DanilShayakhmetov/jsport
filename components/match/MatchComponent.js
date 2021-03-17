@@ -14,10 +14,10 @@ export default class MatchScreen extends Component {
     // let days = this.context.days;
     // let from = dataHandler.getDate();
     // let to = dataHandler.getDate(days);
-    await this.context.days
+    await this.context.matchData
       .then((value) => {
         this.setState({
-          days: value,
+          matchData: value,
         });
       })
       .catch((error) => {
@@ -26,11 +26,11 @@ export default class MatchScreen extends Component {
   }
 
   render() {
-    console.log(this.context.days._W);
-    var matchD = this.context.days._W;
+    console.log(this.context.matchData._W);
+    var matchD = this.context.matchData._W;
     if (
-      this.context.matchMain === 'empty' ||
-      this.context.matchMain === undefined ||
+      this.context.matchId === 'empty' ||
+      this.context.matchId === undefined ||
       matchD === null
     ) {
       return (
@@ -43,13 +43,13 @@ export default class MatchScreen extends Component {
         </View>
       );
     } else {
-      console.log(this.context.matchMain);
-      // console.log(this.context.days);
+      console.log(this.context.matchId);
+      // console.log(this.context.matchData);
       console.log(matchD);
       return (
         <View style={styles.container}>
           <View key={'qwe'}>
-            <Text>{this.context.matchMain}</Text>
+            <Text>{this.context.matchId}</Text>
             <Text>{matchD.start_dt}</Text>
             <Text>
               {matchD.team1.logo}.{matchD.gf}.{'      :      '}.{matchD.ga}.
