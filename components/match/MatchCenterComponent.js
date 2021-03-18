@@ -131,9 +131,6 @@ export default class MatchCenterScreen extends Component {
                   onPress={this.updateLayout.bind(this, item.tournamentId)}
                   style={styles.header}>
                   <Text style={styles.headerText}>{item.tournamentId}</Text>
-                  <Text style={styles.headerText}>
-                    {item.matchItems[0].toString()}
-                  </Text>
                   {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
                 </TouchableOpacity>
                 <View
