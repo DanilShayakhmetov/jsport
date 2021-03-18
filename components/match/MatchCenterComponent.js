@@ -101,7 +101,9 @@ export default class MatchCenterScreen extends Component {
               activeOpacity={0.8}
               onPress={this.changeInterval.bind(this, 0, 0)}
               style={styles.header}>
-              <Text>{'        Сегодня         '}</Text>
+              <Text color={true ? 'red' : 'blue'}>
+                {'        Сегодня         '}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
