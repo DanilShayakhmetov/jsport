@@ -23,6 +23,9 @@ export default class MatchCenterScreen extends Component {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
     this.changeInterval = this.changeInterval.bind(this);
+    this.state = {
+      filteredCalendar: 'empty',
+    };
   }
 
   updateLayout = (index) => {
@@ -53,32 +56,14 @@ export default class MatchCenterScreen extends Component {
 
   changeInterval = (days = 0, month = 0) => {
     let to = handler.getDate(days, month);
-    // let calendar = this.context.calendar.matchItems;
-    let filteredCalendar = [];
-    let filteredItem = {
-      isExpanded: false,
-      tournamentId: this.context.calendar.tournamentId,
-      matchItems: [
-        {
-          item: {},
-          visibility: false,
-        },
-      ],
-    };
-    let filteredList = [];
     let calendar = [...this.context.calendar];
     calendar.forEach(function (value) {
-      let matchList = value.matchItems;
-      matchList.forEach(function (match) {
-        console.log(filteredItem.matchItems.visibility);
-        filteredItem.matchItems.visibility =
-          match.item.start_dt.split(' ')[0] >= to;
-        filteredList.push(filteredItem);
+      value.matchItems.forEach(function (match) {
+        match.visibility = match.item.start_dt.split(' ')[0] >= to;
       });
-      filteredCalendar[value.tournamentId] = filteredList;
     });
     this.setState({
-      calendar: filteredCalendar,
+      filteredCalendar: calendar,
     });
   };
 
@@ -99,7 +84,16 @@ export default class MatchCenterScreen extends Component {
       // }
       // console.log(this.context.calendar[0].matchItems.start_dt);
       // console.log(new Date());
-      console.log(this.context.calendar[0].matchItems[0].visibility);
+      // console.log(this.context.calendar[0].matchItems[0].visibility);
+      var calendar = '';
+      if (this.state.filteredCalendar !== 'empty') {
+        calendar = handler.dataFilter(this.state.filteredCalendar);
+      } else {
+        calendar = this.context.calendar;
+      }
+
+      console.log(calendar[0].matchItems);
+
       return (
         <View style={styles.container}>
           <ScrollView horizontal={true}>
@@ -129,7 +123,7 @@ export default class MatchCenterScreen extends Component {
             </TouchableOpacity>
           </ScrollView>
           <ScrollView>
-            {this.context.calendar.map((item, number) => (
+            {calendar.map((item, number) => (
               <View>
                 {/*Header of the Expandable List Item*/}
                 <TouchableOpacity
@@ -137,6 +131,9 @@ export default class MatchCenterScreen extends Component {
                   onPress={this.updateLayout.bind(this, item.tournamentId)}
                   style={styles.header}>
                   <Text style={styles.headerText}>{item.tournamentId}</Text>
+                  <Text style={styles.headerText}>
+                    {item.matchItems[0].toString()}
+                  </Text>
                   {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
                 </TouchableOpacity>
                 <View
