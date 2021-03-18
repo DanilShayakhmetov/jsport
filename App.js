@@ -41,13 +41,21 @@ class App extends React.Component {
   };
 
   getSortedData = (calendar) => {
+    let currentDate = handler.getDate();
     let tournamentList = this.getTournamentList(calendar);
     if (calendar !== 'empty') {
       for (let i = 0; i < calendar.length; i++) {
-        if (calendar[i].tournament_id in tournamentList) {
-          tournamentList[calendar[i].tournament_id].matchItems.push(
-            calendar[i],
-          );
+        let matchItem = {
+          item: {},
+          visibility: true,
+        };
+        let match = calendar[i];
+        if (match.tournament_id in tournamentList) {
+          matchItem.item = match;
+          if (match.start_dt.split(' ')[0] === currentDate) {
+            matchItem.visibility = true;
+          }
+          tournamentList[match.tournament_id].matchItems.push(matchItem);
           tournamentList[calendar[i].tournament_id].tournamentId =
             calendar[i].tournament_id;
         }
