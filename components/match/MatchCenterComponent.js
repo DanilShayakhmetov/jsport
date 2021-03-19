@@ -92,7 +92,7 @@ export default class MatchCenterScreen extends Component {
         calendar = this.context.calendar;
       }
 
-      console.log(calendar[0].matchItems);
+      // console.log(calendar[0].matchItems);
 
       return (
         <View style={styles.container}>
