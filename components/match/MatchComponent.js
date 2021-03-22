@@ -17,8 +17,8 @@ export default class MatchScreen extends Component {
     super(props);
     this.state = {
       focusedTab: '0',
+      focusedRoster: '0',
       eventsList: '',
-      roasterList: '',
       statsList: '',
     };
   }
@@ -28,6 +28,10 @@ export default class MatchScreen extends Component {
       .then((value) => {
         this.setState({
           matchData: value,
+        });
+
+        this.setState({
+          rosterList: value._W,
         });
       })
       .catch((error) => {
@@ -109,7 +113,7 @@ export default class MatchScreen extends Component {
     let teams = [match.team1, match.team2];
     let playersSubstitiutions = match.substitutions;
     let matchPlayers = match.players;
-    let roaster = {
+    let roster = {
       team1: [],
       team2: [],
     };
@@ -152,16 +156,23 @@ export default class MatchScreen extends Component {
           }
 
           if (team.team_id == team1) {
-            roaster.team1.push(playerItem);
+            roster.team1.push(playerItem);
           }
           if (team.team_id == team2) {
-            roaster.team2.push(playerItem);
+            roster.team2.push(playerItem);
           }
         });
       }
     });
 
-    return roaster;
+    return roster;
+  };
+
+  statsPreparer = (match) => {
+    return {
+      team1: match.stats1,
+      team2: match.stats2,
+    };
   };
 
   tabsHandler = (page) => {
@@ -169,6 +180,18 @@ export default class MatchScreen extends Component {
     this.setState({
       focusedTab: page,
     });
+  };
+
+  rosterHandler = (team) => {
+    this.setState({
+      focusedRoster: team,
+    });
+  };
+
+  matchRedirect = (matchId) => {
+    this.context.matchId = matchId;
+    this.context.matchData = handler.getMatchMain(matchId);
+    return this.props.navigation.navigate('Match');
   };
 
   render() {
@@ -190,6 +213,8 @@ export default class MatchScreen extends Component {
     } else {
       let eventsList = this.eventPreparer(matchD);
       let rosterList = this.rosterPreparer(matchD);
+      this.state.rosterList = rosterList;
+      console.log('THIS------------->', this.state.rosterList);
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
@@ -203,6 +228,13 @@ export default class MatchScreen extends Component {
               {matchD.team1.short_name}.{'            '}.
               {matchD.team2.short_name}
             </Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={this.tabsHandler.bind(this, '0')}>
+              <Text>{matchD.tournament.short_name}</Text>
+            </TouchableOpacity>
           </View>
           <View style={{height: 30, marginBottom: 30}}>
             <ScrollView horizontal={true} style={styles.scrollItem}>
@@ -253,16 +285,43 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === '2' ? null : 'none',
                 overflow: 'hidden',
               }}>
-              {rosterList.team1.map((item) => (
-                <Text>
-                  {item.position}.{item.name}.{'     roast          '}
-                </Text>
-              ))}
-              {rosterList.team2.map((item) => (
-                <Text>
-                  {item.position}.{item.name}.{'     roast          '}
-                </Text>
-              ))}
+              <View
+                style={{
+                  marginBottom: 20,
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.rosterHandler.bind(this, '0')}>
+                  <Text>{'rosterList.team1.team_id'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.rosterHandler.bind(this, '1')}>
+                  <Text>{'rosterList.team2.team_id'}</Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  display: this.state.focusedRoster === '0' ? null : 'none',
+                  overflow: 'hidden',
+                }}>
+                {rosterList.team1.map((item) => (
+                  <Text>
+                    {item.position}.{item.name}.{'     rost          '}
+                  </Text>
+                ))}
+              </View>
+              <View
+                style={{
+                  display: this.state.focusedRoster === '1' ? null : 'none',
+                  overflow: 'hidden',
+                }}>
+                {rosterList.team2.map((item) => (
+                  <Text>
+                    {item.position}.{item.name}.{'     rost          '}
+                  </Text>
+                ))}
+              </View>
             </View>
           </View>
           {/*<Button*/}
