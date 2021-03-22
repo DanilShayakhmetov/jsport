@@ -61,6 +61,14 @@ export const GET_MATCH = gql`
         additional
         number
       }
+      players {
+        id
+        team_id
+        player_id
+        number
+        status
+        goalkeeper
+      }
 #      stats1 {
 #        team_id
 #        goals_first_half

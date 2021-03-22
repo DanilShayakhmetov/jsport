@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {
+  Button,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  Button,
-  AsyncStorage,
-  ScrollView,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import {FriendsContext} from '../../FriendsContext';
 import Handler from '../../graphql/handler';
@@ -19,6 +18,8 @@ export default class MatchScreen extends Component {
     this.state = {
       focusedTab: '0',
       eventsList: '',
+      roasterList: '',
+      statsList: '',
     };
   }
 
@@ -102,35 +103,84 @@ export default class MatchScreen extends Component {
     return eventsList;
   };
 
-  EventsPage = (props) => {
-    this.setState({
-      focusedTab: 'events',
-    });
-    let events = this.eventPreparer(props.match);
+  rosterPreparer = (match) => {
+    let team1 = match.team1.team_id;
+    let team2 = match.team2.team_id;
+    let teams = [match.team1, match.team2];
+    let playersSubstitiutions = match.substitutions;
+    let matchPlayers = match.players;
+    let roaster = {
+      team1: [],
+      team2: [],
+    };
 
-    if (events !== undefined) {
-      return (
-        <View>
-          {events.map((item) => (
-            <Text>
-              {item.event}.{item.time}
-            </Text>
-          ))}
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <Text>events error</Text>
-        </View>
-      );
-    }
+    teams.forEach(function (team) {
+      if (team.players !== undefined) {
+        team.players.forEach(function (player) {
+          let playerItem = {
+            id: '',
+            number: '',
+            name: '',
+            sub: '',
+            position: '',
+          };
+          playerItem.id = player.player_id;
+          playerItem.name =
+            player.last_name +
+            ' ' +
+            player.first_name +
+            ' ' +
+            player.middle_name;
+          playerItem.position = player.position_id;
+          if (playersSubstitiutions !== undefined) {
+            playersSubstitiutions.forEach(function (substitution) {
+              if (substitution.player_out_id === player.player_id) {
+                playerItem.sub = {
+                  player_in_id: substitution.player_in_id,
+                  minute: substitution.minute,
+                };
+              }
+            });
+          }
+
+          if (matchPlayers !== undefined) {
+            matchPlayers.forEach(function (matchPlayer) {
+              if (matchPlayer.player_id === player.player_id) {
+                playerItem.number = matchPlayer.number;
+              }
+            });
+          }
+
+          if (team.team_id == team1) {
+            roaster.team1.push(playerItem);
+          }
+          if (team.team_id == team2) {
+            roaster.team2.push(playerItem);
+          }
+        });
+      }
+    });
+
+    return roaster;
   };
 
-  statisticsPage = () => {
-    this.setState({
-      focusedTab: 'statistics',
-    });
+  checkSubstitutions = (match, player_id) => {
+    let playersSubstitiutions = match.substitutions;
+
+    if (playersSubstitiutions !== undefined) {
+      playersSubstitiutions.forEach(function (substitution) {
+        if (substitution.player_out_id === player_id) {
+          return {
+            player_in_id: substitution.player_in_id,
+            minute: substitution.minute,
+          };
+        }
+      });
+    }
+    return {
+      player_in_id: '',
+      minute: '',
+    };
   };
 
   rosterPage = () => {
@@ -147,7 +197,6 @@ export default class MatchScreen extends Component {
   };
 
   render() {
-    console.log(this.state.focusedTab);
     const matchD = this.context.matchData._W;
     if (
       this.context.matchId === 'empty' ||
@@ -165,6 +214,7 @@ export default class MatchScreen extends Component {
       );
     } else {
       let eventsList = this.eventPreparer(matchD);
+      let rosterList = this.rosterPreparer(matchD);
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
@@ -228,9 +278,14 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === '2' ? null : 'none',
                 overflow: 'hidden',
               }}>
-              {eventsList.map((item) => (
+              {rosterList.team1.map((item) => (
                 <Text>
-                  {item.event}.{item.time}.{'roast'}
+                  {item.position}.{item.name}.{'     roast          '}
+                </Text>
+              ))}
+              {rosterList.team2.map((item) => (
+                <Text>
+                  {item.position}.{item.name}.{'     roast          '}
                 </Text>
               ))}
             </View>
