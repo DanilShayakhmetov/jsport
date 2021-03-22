@@ -164,31 +164,6 @@ export default class MatchScreen extends Component {
     return roaster;
   };
 
-  checkSubstitutions = (match, player_id) => {
-    let playersSubstitiutions = match.substitutions;
-
-    if (playersSubstitiutions !== undefined) {
-      playersSubstitiutions.forEach(function (substitution) {
-        if (substitution.player_out_id === player_id) {
-          return {
-            player_in_id: substitution.player_in_id,
-            minute: substitution.minute,
-          };
-        }
-      });
-    }
-    return {
-      player_in_id: '',
-      minute: '',
-    };
-  };
-
-  rosterPage = () => {
-    this.setState({
-      focusedTab: 'roster',
-    });
-  };
-
   tabsHandler = (page) => {
     console.log(this.context.focusedTab);
     this.setState({
