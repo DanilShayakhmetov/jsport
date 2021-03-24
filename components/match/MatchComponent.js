@@ -188,10 +188,8 @@ export default class MatchScreen extends Component {
     });
   };
 
-  matchRedirect = (matchId) => {
-    this.context.matchId = matchId;
-    this.context.matchData = handler.getMatchMain(matchId);
-    return this.props.navigation.navigate('Match');
+  tournamentRedirect = () => {
+    return this.props.navigation.navigate('TournamentTable');
   };
 
   render() {
@@ -215,6 +213,8 @@ export default class MatchScreen extends Component {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
       console.log('THIS------------->', this.state.rosterList);
+      console.log(this.context.calendar);
+
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
@@ -232,7 +232,7 @@ export default class MatchScreen extends Component {
           <View>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.tabsHandler.bind(this, '0')}>
+              onPress={this.tournamentRedirect.bind(this, '0')}>
               <Text>{matchD.tournament.short_name}</Text>
             </TouchableOpacity>
           </View>

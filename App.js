@@ -7,6 +7,7 @@ import {FriendsContext} from './FriendsContext';
 import MatchScreen from './components/match/MatchComponent';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
+import TableScreen from './components/tournament/TableComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -17,8 +18,10 @@ class App extends React.Component {
     this.state = {
       calendar: 'empty',
       matchData: 0,
+      tournamentData: 'empty',
       layoutHeight: 0,
       matchId: 'empty',
+      tournamentId: 'empty',
     };
   }
 
@@ -92,12 +95,13 @@ class App extends React.Component {
           layoutHeight: this.state.layoutHeight,
           matchId: this.state.matchId,
           matchData: this.state.matchData,
+          tournamentData: this.state.tournamentData,
         }}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
-            <Stack.Screen name="Handler" component={Handler} />
+            <Stack.Screen name="TournamentTable" component={TableScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </FriendsContext.Provider>

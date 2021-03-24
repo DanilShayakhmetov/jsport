@@ -48,9 +48,10 @@ export default class MatchCenterScreen extends Component {
     }
   };
 
-  matchRedirect = (matchId) => {
+  matchRedirect = (matchId, matches) => {
     this.context.matchId = matchId;
     this.context.matchData = handler.getMatchMain(matchId);
+    this.context.tournamentData = matches;
     return this.props.navigation.navigate('Match');
   };
 
@@ -150,7 +151,9 @@ export default class MatchCenterScreen extends Component {
                       <TouchableOpacity
                         key={key}
                         style={styles.content}
-                        onPress={() => this.matchRedirect(value.item.match_id)}>
+                        onPress={() =>
+                          this.matchRedirect(value.item.match_id, item)
+                        }>
                         <Text style={styles.text}>
                           {value.item.team1.short_name}.{value.item.team1.logo}.
                           {':'}.{value.item.ga}.{value.item.team2.logo}.
