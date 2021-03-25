@@ -215,6 +215,13 @@ export default class TableScreen extends Component {
                 display: this.state.focusedTab === '1' ? null : 'none',
                 overflow: 'hidden',
               }}>
+              <View
+                style={{
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}>
+                <Text>{statsList.name}</Text>
+              </View>
               {statsList.tableRows.map((item) => (
                 <Text>
                   {item.team.short_name}.{item.team.logo}.{'\n'}.{item.games}.
