@@ -212,8 +212,8 @@ export default class MatchScreen extends Component {
       let eventsList = this.eventPreparer(matchD);
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      console.log('THIS------------->', this.state.rosterList);
-      console.log(this.context.calendar);
+      // console.log('THIS------------->', this.state.rosterList);
+      // console.log(this.context.calendar);
 
       return (
         <View style={styles.container}>

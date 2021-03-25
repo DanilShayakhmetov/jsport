@@ -19,7 +19,7 @@ export default class TableScreen extends Component {
       focusedTab: '0',
       focusedRoster: '0',
       matchList: 'empty',
-      statsList: '',
+      statsList: 'empty',
     };
   }
 
@@ -32,6 +32,21 @@ export default class TableScreen extends Component {
 
         this.setState({
           rosterList: value._W,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(this.context.matchData._W.round_id, 'this');
+
+    const round_id = this.context.matchData._W.round_id;
+
+    await handler
+      .getRound(round_id)
+      .then((value) => {
+        this.setState({
+          statsList: value,
         });
       })
       .catch((error) => {
@@ -129,8 +144,14 @@ export default class TableScreen extends Component {
   render() {
     const matchD = this.context.matchData._W;
     const matchList = this.context.tournamentData.matchItems;
-    console.log(matchList);
-    if (matchList === 'empty' || matchList === undefined || matchD === null) {
+    const statsList = this.state.statsList;
+    if (
+      statsList === 'empty' ||
+      statsList === undefined ||
+      matchList === 'empty' ||
+      matchList === undefined ||
+      matchD === null
+    ) {
       return (
         <View style={styles.container}>
           <Text style={styles.topHeading}>Wait</Text>
@@ -143,7 +164,7 @@ export default class TableScreen extends Component {
     } else {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      console.log('THIS------------->', this.state.rosterList);
+      console.log(statsList);
       return (
         <View style={styles.container}>
           <View style={styles.titleText}>
@@ -194,9 +215,11 @@ export default class TableScreen extends Component {
                 display: this.state.focusedTab === '1' ? null : 'none',
                 overflow: 'hidden',
               }}>
-              {matchList.map((item) => (
+              {statsList.tableRows.map((item) => (
                 <Text>
-                  {item.event}.{item.time}.{'stats'}
+                  {item.team.short_name}.{item.team.logo}.{'\n'}.{item.games}.
+                  {item.wins}.{item.draws}.{item.loses}.{item.ga}.{' - '}.
+                  {item.gf}
                 </Text>
               ))}
             </View>

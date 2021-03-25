@@ -88,8 +88,10 @@ class Handler extends React.Component {
         query: GET_ROUND,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let round;
+        round = value.data.round;
+        // console.log(round);
+        return round;
       })
       .catch((error) => {
         console.log(error);
