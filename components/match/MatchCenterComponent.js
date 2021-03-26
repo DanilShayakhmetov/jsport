@@ -31,10 +31,7 @@ export default class MatchCenterScreen extends Component {
   updateLayout = (index) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     let calendar = [];
-    if (
-      this.context.calendar === undefined ||
-      this.context.calendar === 'empty'
-    ) {
+    if (handler.isUndefined(this.context.calendar)) {
     } else {
       calendar = [...this.context.calendar];
       calendar.map((value, placeindex) =>
@@ -69,24 +66,24 @@ export default class MatchCenterScreen extends Component {
     });
   };
 
+  getCalendar = () => {
+    var calendar = '';
+    if (this.state.filteredCalendar !== 'empty') {
+      calendar = handler.dataFilter(this.state.filteredCalendar);
+    } else {
+      calendar = this.context.calendar;
+    }
+    return calendar;
+  };
+
   render() {
-    if (
-      this.context.calendar === 'empty' ||
-      this.context.calendar === undefined
-    ) {
+    if (handler.isUndefined(this.context.calendar)) {
       return (
         <View style={styles.container}>
           <Text style={styles.topHeading}>Wait</Text>
         </View>
       );
     } else {
-      var calendar = '';
-      if (this.state.filteredCalendar !== 'empty') {
-        calendar = handler.dataFilter(this.state.filteredCalendar);
-      } else {
-        calendar = this.context.calendar;
-      }
-
       return (
         <View style={styles.container}>
           <ScrollView horizontal={true}>
@@ -118,7 +115,7 @@ export default class MatchCenterScreen extends Component {
             </TouchableOpacity>
           </ScrollView>
           <ScrollView>
-            {calendar.map((item, number) => (
+            {this.getCalendar().map((item, number) => (
               <View>
                 {/*Header of the Expandable List Item*/}
                 <TouchableOpacity
@@ -126,7 +123,6 @@ export default class MatchCenterScreen extends Component {
                   onPress={this.updateLayout.bind(this, item.tournamentId)}
                   style={styles.header}>
                   <Text style={styles.headerText}>{item.tournamentId}</Text>
-                  {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
                 </TouchableOpacity>
                 <View
                   style={{

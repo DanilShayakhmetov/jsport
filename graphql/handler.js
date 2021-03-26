@@ -268,6 +268,10 @@ class Handler extends React.Component {
     }
     return yyyy + '-' + mm + '-' + dd;
   }
+
+  static isUndefined(inputData) {
+    return inputData === 'empty' || inputData === undefined;
+  }
 }
 
 Handler.contextType = FriendsContext;
