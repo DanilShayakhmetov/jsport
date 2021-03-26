@@ -169,7 +169,7 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let application = value.data;
-        console.log(application);
+        // console.log(application);
         return application;
       })
       .catch((error) => {

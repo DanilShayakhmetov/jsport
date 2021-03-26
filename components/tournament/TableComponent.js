@@ -11,7 +11,7 @@ import {FriendsContext} from '../../FriendsContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
-var TEAM_APPLICATION = <Text>{''}</Text>;
+var PLAYERS = <Text>{''}</Text>;
 
 export default class TableScreen extends Component {
   constructor(props) {
@@ -21,6 +21,7 @@ export default class TableScreen extends Component {
       focusedRoster: '0',
       matchList: 'empty',
       tableList: 'empty',
+      players: 'empty',
     };
   }
 
@@ -131,18 +132,77 @@ export default class TableScreen extends Component {
     });
   };
 
-  showApplication = (teamId) => {
+  showApplication = (teamId, approvedStatus = 1) => {
     this.context.teamId = teamId;
-    this.context.teamData = handler.getTournamentApplication(
-      teamId,
-      this.context.tournamentId,
-    );
-    TEAM_APPLICATION = (
-      <View>
-        <Text>Here</Text>
-      </View>
-    );
-    this.tabsHandler('3');
+    this.context.teamData = handler
+      .getTournamentApplication(teamId, this.context.tournamentId)
+      .then((value) => {
+        console.log(value.application.players);
+        let players = {
+          approved: [],
+          disapproved: [],
+        };
+        value.application.players.forEach(function (player) {
+          if (player.status === 'approved') {
+            players.approved.push(player);
+          } else {
+            players.disapproved.push(player);
+          }
+        });
+        this.setState({
+          players: players,
+        });
+        let approved = (
+          <View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.touchItem}
+              onPress={this.showApplication.bind(this, teamId, 1)}>
+              <Text>{'        Заявленные          '}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.touchItem}
+              onPress={this.showApplication.bind(this, teamId, 0)}>
+              <Text>{'        Отзаявленные          '}</Text>
+            </TouchableOpacity>
+
+            {players.approved.map((player) => (
+              <Text>
+                {player.player_id}.{'   -   '}.
+              </Text>
+            ))}
+          </View>
+        );
+        let disapproved = (
+          <View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.touchItem}
+              onPress={this.showApplication.bind(this, teamId, 1)}>
+              <Text>{'        Заявленные          '}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.touchItem}
+              onPress={this.showApplication.bind(this, teamId, 0)}>
+              <Text>{'        Отзаявленные          '}</Text>
+            </TouchableOpacity>
+            {players.disapproved.map((player) => (
+              <Text>
+                {player.player_id}.{'   -   '}.
+              </Text>
+            ))}
+          </View>
+        );
+        if (approvedStatus) {
+          PLAYERS = approved;
+        } else {
+          PLAYERS = disapproved;
+        }
+
+        this.tabsHandler('3');
+      });
   };
 
   render() {
@@ -168,7 +228,7 @@ export default class TableScreen extends Component {
     } else {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      console.log(tableList);
+      // console.log(tableList);
 
       return (
         <View style={styles.container}>
@@ -315,7 +375,7 @@ export default class TableScreen extends Component {
                           : 'none',
                       overflow: 'hidden',
                     }}>
-                    {TEAM_APPLICATION}
+                    {PLAYERS}
                   </View>
                 </TouchableOpacity>
               ))}
