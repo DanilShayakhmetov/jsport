@@ -9,7 +9,7 @@ import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
 import TableScreen from './components/tournament/TableComponent';
 import {empty} from '@apollo/client';
-import ApplicationScreen from './components/tournament/ApplicationComponent';
+import TeamScreen from './components/team/TeamMatchComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -19,6 +19,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       calendar: 'empty',
+      teamCalendar: 'empty',
       matchData: 'empty',
       tournamentData: 'empty',
       teamData: 'empty',
@@ -100,13 +101,15 @@ class App extends React.Component {
           matchId: this.state.matchId,
           matchData: this.state.matchData,
           tournamentData: this.state.tournamentData,
+          teamCalendar: this.state.teamCalendar,
+          teamData: this.state.teamData,
         }}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
             <Stack.Screen name="TournamentTable" component={TableScreen} />
-            <Stack.Screen name="TournamentApplication" component={ApplicationScreen} />
+            <Stack.Screen name="Team" component={TeamScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </FriendsContext.Provider>

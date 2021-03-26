@@ -187,7 +187,8 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let calendar = value.data;
-        console.log(calendar);
+        return calendar;
+        // console.log(calendar);
       })
       .catch((error) => {
         console.log(error);
@@ -204,7 +205,7 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let calendar = value.data;
-        console.log(calendar);
+        return calendar;
       })
       .catch((error) => {
         console.log(error);

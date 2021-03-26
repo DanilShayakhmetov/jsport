@@ -80,21 +80,12 @@ export default class MatchCenterScreen extends Component {
         </View>
       );
     } else {
-      // console.log(this.context.calendar[0].matchItems[0].start_dt.split(' ')[0] < '2021-04-17');
-      // if (this.context.calendar[0].matchItems[0].start_dt.split(' ')[0] < '2021-04-17') {
-      //   this.context.calendar[0].matchItems[0] = {};
-      // }
-      // console.log(this.context.calendar[0].matchItems.start_dt);
-      // console.log(new Date());
-      // console.log(this.context.calendar[0].matchItems[0].visibility);
       var calendar = '';
       if (this.state.filteredCalendar !== 'empty') {
         calendar = handler.dataFilter(this.state.filteredCalendar);
       } else {
         calendar = this.context.calendar;
       }
-
-      // console.log(calendar[0].matchItems);
 
       return (
         <View style={styles.container}>

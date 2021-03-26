@@ -212,8 +212,6 @@ export default class MatchScreen extends Component {
       let eventsList = this.eventPreparer(matchD);
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      // console.log('THIS------------->', this.state.rosterList);
-      // console.log(this.context.calendar);
 
       return (
         <View style={styles.container}>
@@ -232,7 +230,7 @@ export default class MatchScreen extends Component {
           <View>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.tournamentRedirect.bind(this, '0')}>
+              onPress={this.tournamentRedirect.bind(this)}>
               <Text>{matchD.tournament.short_name}</Text>
             </TouchableOpacity>
           </View>

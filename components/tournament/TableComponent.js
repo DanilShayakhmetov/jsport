@@ -132,10 +132,10 @@ export default class TableScreen extends Component {
     });
   };
 
-  showApplication = (teamId, approvedStatus = 1) => {
-    this.context.teamId = teamId;
+  showApplication = (team, approvedStatus = 1) => {
+    this.context.teamId = team.team_id;
     this.context.teamData = handler
-      .getTournamentApplication(teamId, this.context.tournamentId)
+      .getTournamentApplication(team.team_id, this.context.tournamentId)
       .then((value) => {
         console.log(value.application.players);
         let players = {
@@ -149,28 +149,31 @@ export default class TableScreen extends Component {
             players.disapproved.push(player);
           }
         });
-        this.setState({
-          players: players,
-        });
+
         let approved = (
           <View>
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.touchItem}
-              onPress={this.showApplication.bind(this, teamId, 1)}>
+              onPress={this.showApplication.bind(this, team, 1)}>
               <Text>{'        Заявленные          '}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.touchItem}
-              onPress={this.showApplication.bind(this, teamId, 0)}>
+              onPress={this.showApplication.bind(this, team, 0)}>
               <Text>{'        Отзаявленные          '}</Text>
             </TouchableOpacity>
 
             {players.approved.map((player) => (
-              <Text>
-                {player.player_id}.{'   -   '}.
-              </Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.touchItem}
+                onPress={this.teamRedirect.bind(this, team)}>
+                <Text>
+                  {player.player_id}.{'   -   '}.
+                </Text>
+              </TouchableOpacity>
             ))}
           </View>
         );
@@ -178,20 +181,23 @@ export default class TableScreen extends Component {
           <View>
             <TouchableOpacity
               activeOpacity={0.8}
-              style={styles.touchItem}
-              onPress={this.showApplication.bind(this, teamId, 1)}>
+              onPress={this.showApplication.bind(this, team, 1)}>
               <Text>{'        Заявленные          '}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.touchItem}
-              onPress={this.showApplication.bind(this, teamId, 0)}>
+              onPress={this.showApplication.bind(this, team, 0)}>
               <Text>{'        Отзаявленные          '}</Text>
             </TouchableOpacity>
             {players.disapproved.map((player) => (
-              <Text>
-                {player.player_id}.{'   -   '}.
-              </Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.teamRedirect.bind(this, team)}>
+                <Text>
+                  {player.player_id}.{'   -   '}.
+                </Text>
+              </TouchableOpacity>
             ))}
           </View>
         );
@@ -203,6 +209,11 @@ export default class TableScreen extends Component {
 
         this.tabsHandler('3');
       });
+  };
+
+  teamRedirect = (team) => {
+    this.context.teamData = team;
+    return this.props.navigation.navigate('Team');
   };
 
   render() {
@@ -228,8 +239,6 @@ export default class TableScreen extends Component {
     } else {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      // console.log(tableList);
-
       return (
         <View style={styles.container}>
           <View style={styles.titleText}>
@@ -295,7 +304,7 @@ export default class TableScreen extends Component {
               {tableList.tableRows.map((item) => (
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={this.showApplication.bind(this, item.team.team_id)}>
+                  onPress={this.showApplication.bind(this, item.team)}>
                   <Text>
                     {item.team.short_name}.{item.team.logo}.{'\n'}.{item.games}.
                     {item.wins}.{item.draws}.{item.loses}.{item.ga}.{' - '}.
@@ -363,7 +372,7 @@ export default class TableScreen extends Component {
               {tableList.tableRows.map((item) => (
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={this.showApplication.bind(this, item.team.team_id)}>
+                  onPress={this.showApplication.bind(this, item.team)}>
                   <Text>
                     {item.team.logo}.{item.team.short_name}
                   </Text>
