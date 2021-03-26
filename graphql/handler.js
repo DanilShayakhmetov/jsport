@@ -168,8 +168,9 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_APPLICATION,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let application = value.data;
+        console.log(application);
+        return application;
       })
       .catch((error) => {
         console.log(error);

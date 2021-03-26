@@ -50,6 +50,7 @@ export default class MatchCenterScreen extends Component {
 
   matchRedirect = (matchId, matches) => {
     this.context.matchId = matchId;
+    this.context.tournamentId = matches.tournamentId;
     this.context.matchData = handler.getMatchMain(matchId);
     this.context.tournamentData = matches;
     return this.props.navigation.navigate('Match');

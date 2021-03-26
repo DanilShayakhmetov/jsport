@@ -11,6 +11,7 @@ import {FriendsContext} from '../../FriendsContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
+var TEAM_APPLICATION = <Text>{''}</Text>;
 
 export default class TableScreen extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class TableScreen extends Component {
       focusedTab: '0',
       focusedRoster: '0',
       matchList: 'empty',
-      statsList: 'empty',
+      tableList: 'empty',
     };
   }
 
@@ -38,7 +39,7 @@ export default class TableScreen extends Component {
         console.log(error);
       });
 
-    console.log(this.context.matchData._W.round_id, 'this');
+    // console.log(this.context.matchData._W.round_id, 'this');
 
     const round_id = this.context.matchData._W.round_id;
 
@@ -46,7 +47,7 @@ export default class TableScreen extends Component {
       .getRound(round_id)
       .then((value) => {
         this.setState({
-          statsList: value,
+          tableList: value,
         });
       })
       .catch((error) => {
@@ -54,6 +55,7 @@ export default class TableScreen extends Component {
       });
   }
 
+  //Отвечает за ненужнй раздел, просто заглушка
   rosterPreparer = (match) => {
     let team1 = match.team1.team_id;
     let team2 = match.team2.team_id;
@@ -115,13 +117,6 @@ export default class TableScreen extends Component {
     return roster;
   };
 
-  statsPreparer = (match) => {
-    return {
-      team1: match.stats1,
-      team2: match.stats2,
-    };
-  };
-
   tabsHandler = (page) => {
     console.log(this.context.focusedTab);
     this.setState({
@@ -129,25 +124,34 @@ export default class TableScreen extends Component {
     });
   };
 
+  //Отвечает за ненужнй раздел, просто заглушка
   rosterHandler = (team) => {
     this.setState({
       focusedRoster: team,
     });
   };
 
-  matchRedirect = (matchId) => {
-    this.context.matchId = matchId;
-    this.context.matchData = handler.getMatchMain(matchId);
-    return this.props.navigation.navigate('Match');
+  showApplication = (teamId) => {
+    this.context.teamId = teamId;
+    this.context.teamData = handler.getTournamentApplication(
+      teamId,
+      this.context.tournamentId,
+    );
+    TEAM_APPLICATION = (
+      <View>
+        <Text>Here</Text>
+      </View>
+    );
+    this.tabsHandler('3');
   };
 
   render() {
     const matchD = this.context.matchData._W;
     const matchList = this.context.tournamentData.matchItems;
-    const statsList = this.state.statsList;
+    const tableList = this.state.tableList;
     if (
-      statsList === 'empty' ||
-      statsList === undefined ||
+      tableList === 'empty' ||
+      tableList === undefined ||
       matchList === 'empty' ||
       matchList === undefined ||
       matchD === null
@@ -164,7 +168,8 @@ export default class TableScreen extends Component {
     } else {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      console.log(statsList);
+      console.log(tableList);
+
       return (
         <View style={styles.container}>
           <View style={styles.titleText}>
@@ -194,6 +199,11 @@ export default class TableScreen extends Component {
                 onPress={this.tabsHandler.bind(this, '2')}>
                 <Text>{'        Статистика          '}</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.tabsHandler.bind(this, '3')}>
+                <Text>{'        Команды          '}</Text>
+              </TouchableOpacity>
             </ScrollView>
           </View>
           <View style={styles.mainDataContainer}>
@@ -220,14 +230,18 @@ export default class TableScreen extends Component {
                   marginTop: 20,
                   marginBottom: 20,
                 }}>
-                <Text>{statsList.name}</Text>
+                <Text>{tableList.name}</Text>
               </View>
-              {statsList.tableRows.map((item) => (
-                <Text>
-                  {item.team.short_name}.{item.team.logo}.{'\n'}.{item.games}.
-                  {item.wins}.{item.draws}.{item.loses}.{item.ga}.{' - '}.
-                  {item.gf}
-                </Text>
+              {tableList.tableRows.map((item) => (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.showApplication.bind(this, item.team.team_id)}>
+                  <Text>
+                    {item.team.short_name}.{item.team.logo}.{'\n'}.{item.games}.
+                    {item.wins}.{item.draws}.{item.loses}.{item.ga}.{' - '}.
+                    {item.gf}
+                  </Text>
+                </TouchableOpacity>
               ))}
             </View>
             <View
@@ -272,6 +286,39 @@ export default class TableScreen extends Component {
                   </Text>
                 ))}
               </View>
+            </View>
+
+            <View
+              style={{
+                display: this.state.focusedTab === '3' ? null : 'none',
+                overflow: 'hidden',
+              }}>
+              <View
+                style={{
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}>
+                <Text>{tableList.name}</Text>
+              </View>
+              {tableList.tableRows.map((item) => (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.showApplication.bind(this, item.team.team_id)}>
+                  <Text>
+                    {item.team.logo}.{item.team.short_name}
+                  </Text>
+                  <View
+                    style={{
+                      display:
+                        this.context.teamId === item.team.team_id
+                          ? null
+                          : 'none',
+                      overflow: 'hidden',
+                    }}>
+                    {TEAM_APPLICATION}
+                  </View>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
           {/*<Button*/}
