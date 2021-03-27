@@ -40,8 +40,6 @@ export default class TableScreen extends Component {
         console.log(error);
       });
 
-    // console.log(this.context.matchData._W.round_id, 'this');
-
     const round_id = this.context.matchData._W.round_id;
 
     await handler

@@ -29,10 +29,6 @@ export default class MatchScreen extends Component {
         this.setState({
           matchData: value,
         });
-
-        this.setState({
-          rosterList: value._W,
-        });
       })
       .catch((error) => {
         console.log(error);
@@ -193,11 +189,12 @@ export default class MatchScreen extends Component {
   };
 
   render() {
-    const matchD = this.context.matchData._W;
+    const matchData = this.context.matchData._W;
+
     if (
       this.context.matchId === 'empty' ||
       this.context.matchId === undefined ||
-      matchD === null
+      matchData === null
     ) {
       return (
         <View style={styles.container}>
@@ -209,29 +206,29 @@ export default class MatchScreen extends Component {
         </View>
       );
     } else {
-      let eventsList = this.eventPreparer(matchD);
-      let rosterList = this.rosterPreparer(matchD);
+      let eventsList = this.eventPreparer(matchData);
+      let rosterList = this.rosterPreparer(matchData);
       this.state.rosterList = rosterList;
 
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
             <Text>{this.context.matchId}</Text>
-            <Text>{matchD.start_dt}</Text>
+            <Text>{matchData.start_dt}</Text>
             <Text>
-              {matchD.team1.logo}.{matchD.gf}.{'      :      '}.{matchD.ga}.
-              {matchD.team2.logo}
+              {matchData.team1.logo}.{matchData.gf}.{'      :      '}.{matchData.ga}.
+              {matchData.team2.logo}
             </Text>
             <Text>
-              {matchD.team1.short_name}.{'            '}.
-              {matchD.team2.short_name}
+              {matchData.team1.short_name}.{'            '}.
+              {matchData.team2.short_name}
             </Text>
           </View>
           <View>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={this.tournamentRedirect.bind(this)}>
-              <Text>{matchD.tournament.short_name}</Text>
+              <Text>{matchData.tournament.short_name}</Text>
             </TouchableOpacity>
           </View>
           <View style={{height: 30, marginBottom: 30}}>
