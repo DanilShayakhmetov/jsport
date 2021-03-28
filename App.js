@@ -3,7 +3,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {FriendsContext} from './FriendsContext';
+import {JoinAppContext} from './JoinAppContext';
 import MatchScreen from './components/match/MatchComponent';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
@@ -94,7 +94,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <FriendsContext.Provider
+      <JoinAppContext.Provider
         value={{
           calendar: this.state.calendar,
           layoutHeight: this.state.layoutHeight,
@@ -112,7 +112,7 @@ class App extends React.Component {
             <Stack.Screen name="Team" component={TeamScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-      </FriendsContext.Provider>
+      </JoinAppContext.Provider>
     );
   }
 }

@@ -12,7 +12,7 @@ import {GET_TOURNAMENT_APPLICATION} from './queri/tournament/ApplicationQuery';
 import {GET_TEAM_MATCH} from './queri/team/TeamMatchQuery';
 import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
-import {FriendsContext} from '../FriendsContext';
+import {JoinAppContext} from '../JoinAppContext';
 
 const client = makeApolloClient();
 const today = new Date();
@@ -274,6 +274,6 @@ class Handler extends React.Component {
   }
 }
 
-Handler.contextType = FriendsContext;
+Handler.contextType = JoinAppContext;
 
 export default Handler;

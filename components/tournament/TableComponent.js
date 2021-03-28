@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {FriendsContext} from '../../FriendsContext';
+import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
@@ -397,7 +397,7 @@ export default class TableScreen extends Component {
     }
   }
 }
-TableScreen.contextType = FriendsContext;
+TableScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
-import {FriendsContext} from './FriendsContext';
+import {JoinAppContext} from './JoinAppContext';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class HomeScreen extends React.Component {
     }
   }
 }
-HomeScreen.contextType = FriendsContext;
+HomeScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {

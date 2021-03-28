@@ -10,7 +10,7 @@ import {
   Platform,
   AsyncStorage,
 } from 'react-native';
-import {FriendsContext} from '../../FriendsContext';
+import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
@@ -164,7 +164,7 @@ export default class MatchCenterScreen extends Component {
   }
 }
 
-MatchCenterScreen.contextType = FriendsContext;
+MatchCenterScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {

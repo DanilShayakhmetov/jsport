@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
-import {FriendsContext} from './FriendsContext';
+import {JoinAppContext} from './JoinAppContext';
 
 class MatchScreen extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class MatchScreen extends React.Component {
     );
   }
 }
-MatchScreen.contextType = FriendsContext;
+MatchScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {

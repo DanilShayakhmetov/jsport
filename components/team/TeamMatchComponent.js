@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {FriendsContext} from '../../FriendsContext';
+import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
@@ -138,7 +138,7 @@ export default class TeamScreen extends Component {
     }
   }
 }
-TeamScreen.contextType = FriendsContext;
+TeamScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {
