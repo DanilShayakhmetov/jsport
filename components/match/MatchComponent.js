@@ -216,8 +216,8 @@ export default class MatchScreen extends Component {
             <Text>{this.context.matchId}</Text>
             <Text>{matchData.start_dt}</Text>
             <Text>
-              {matchData.team1.logo}.{matchData.gf}.{'      :      '}.{matchData.ga}.
-              {matchData.team2.logo}
+              {matchData.team1.logo}.{matchData.gf}.{'      :      '}.
+              {matchData.ga}.{matchData.team2.logo}
             </Text>
             <Text>
               {matchData.team1.short_name}.{'            '}.
@@ -319,10 +319,10 @@ export default class MatchScreen extends Component {
               </View>
             </View>
           </View>
-          {/*<Button*/}
-          {/*  title="К списку матчей"*/}
-          {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
-          {/*/>*/}
+          <Button
+            title="Все турниры"
+            onPress={() => this.props.navigation.navigate('TournamentList')}
+          />
         </View>
       );
     }

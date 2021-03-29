@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_TOURNAMENT_LIST = gql`
-  query TournamentListQuery($tournamentsCount: Int!) {
-    tournaments(first: $tournamentsCount) {
+  query TournamentListQuery($seasonId: Int!) {
+    tournaments(first: 10, filters: {season_id: $seasonId}) {
       paginatorInfo {
         count
       }

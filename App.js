@@ -10,6 +10,7 @@ import Handler from './graphql/handler';
 import TableScreen from './components/tournament/TableComponent';
 import TeamScreen from './components/team/TeamMatchComponent';
 import TeamListScreen from './components/team/ListComponent';
+import TournamentListScreen from './components/tournament/ListComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -111,6 +112,7 @@ class App extends React.Component {
             <Stack.Screen name="TournamentTable" component={TableScreen} />
             <Stack.Screen name="Team" component={TeamScreen} />
             <Stack.Screen name="TeamList" component={TeamListScreen} />
+            <Stack.Screen name="TournamentList" component={TournamentListScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </JoinAppContext.Provider>

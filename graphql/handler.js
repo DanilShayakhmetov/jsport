@@ -142,17 +142,17 @@ class Handler extends React.Component {
       });
   }
 
-  static getTournamentList(tournamentsCount) {
+  static getTournamentList(seasonId) {
     return client
       .query({
         variables: {
-          tournamentsCount: tournamentsCount,
+          seasonId: seasonId,
         },
         query: GET_TOURNAMENT_LIST,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let tournaments = value.data;
+        return tournaments;
       })
       .catch((error) => {
         console.log(error);
@@ -223,7 +223,6 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let teams = value.data;
-        console.log(teams);
         return teams;
       })
       .catch((error) => {
@@ -255,7 +254,7 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let seasons = value.data;
-        console.log(seasons);
+        return seasons;
       })
       .catch((error) => {
         console.log(error);
