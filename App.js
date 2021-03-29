@@ -8,8 +8,8 @@ import MatchScreen from './components/match/MatchComponent';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
 import TableScreen from './components/tournament/TableComponent';
-import {empty} from '@apollo/client';
 import TeamScreen from './components/team/TeamMatchComponent';
+import TeamListScreen from './components/team/ListComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -110,6 +110,7 @@ class App extends React.Component {
             <Stack.Screen name="Match" component={MatchScreen} />
             <Stack.Screen name="TournamentTable" component={TableScreen} />
             <Stack.Screen name="Team" component={TeamScreen} />
+            <Stack.Screen name="TeamList" component={TeamListScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </JoinAppContext.Provider>

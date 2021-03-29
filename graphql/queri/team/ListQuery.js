@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_TEAM_LIST = gql`
-  query TeamListQuery($teamsCount: Int!) {
-    teams(first: $teamsCount) {
+  query TeamListQuery($seasonId: Int!) {
+    teams(first: 100, filters: {season_id: $seasonId}) {
       paginatorInfo {
         count
       }

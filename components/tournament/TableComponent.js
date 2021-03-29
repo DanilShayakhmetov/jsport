@@ -388,10 +388,10 @@ export default class TableScreen extends Component {
               ))}
             </View>
           </View>
-          {/*<Button*/}
-          {/*  title="К списку матчей"*/}
-          {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
-          {/*/>*/}
+          <Button
+            title="К списку матчей"
+            onPress={() => this.props.navigation.navigate('TeamList')}
+          />
         </View>
       );
     }

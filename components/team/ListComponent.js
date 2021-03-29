@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   Button,
   ScrollView,
@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Picker,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -19,15 +20,18 @@ export default class TeamListScreen extends Component {
       matchList: 'empty',
       rosterList: 'empty',
       focusedTab: '0',
+      chosen: 'Java',
+      seasonsList: 'empty',
+      teamsList: 'empty',
     };
   }
 
   async componentDidMount() {
     await handler
-      .getTeamMatch(this.context.teamData.team_id)
+      .getSeasons()
       .then((value) => {
         this.setState({
-          matchList: value.calendar.data,
+          seasonsList: value,
         });
       })
       .catch((error) => {
@@ -35,10 +39,10 @@ export default class TeamListScreen extends Component {
       });
 
     await handler
-      .getTeamRoster(this.context.teamData.team_id)
+      .getTeamList(1000777)
       .then((value) => {
         this.setState({
-          rosterList: value.team.players,
+          teamsList: value,
         });
       })
       .catch((error) => {
@@ -46,96 +50,23 @@ export default class TeamListScreen extends Component {
       });
   }
 
-  tabsHandler = (page) => {
-    console.log(this.context.focusedTab);
-    this.setState({
-      focusedTab: page,
-    });
-  };
-
   render() {
-    const matchList = this.state.matchList;
-    const rosterList = this.state.rosterList;
-    const team = this.context.teamData;
-    if (
-      this.state.matchList === 'empty' ||
-      this.state.matchList === undefined ||
-      this.state.rosterList === 'empty' ||
-      this.state.rosterList === undefined
-    ) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.topHeading}>Wait</Text>
-          <Button
-            title="Back to home"
-            onPress={() => this.props.navigation.navigate('MatchCenter')}
-          />
-        </View>
-      );
-    } else {
-      console.log(rosterList);
-      return (
-        <View style={styles.container}>
-          <View style={styles.titleText}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.tabsHandler.bind(this, '0')}>
-              <Text>
-                {team.logo}.{team.short_name}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{height: 30, marginBottom: 30}}>
-            <ScrollView horizontal={true} style={styles.scrollItem}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={this.tabsHandler.bind(this, '0')}>
-                <Text>{'        Матчи         '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.touchItem}
-                onPress={this.tabsHandler.bind(this, '1')}>
-                <Text>{'        Состав          '}</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-          <View style={styles.mainDataContainer}>
-            <Text>{this.state.focusedTab}</Text>
-            <View
-              style={{
-                display: this.state.focusedTab === '0' ? null : 'none',
-                overflow: 'hidden',
-              }}>
-              {matchList.map((item) => (
-                <Text>
-                  {item.team1.logo}.{'  +  '}.{item.team2.logo}.{' '}
-                  {item.team1.short_name}.{'   -   '}.{item.team2.short_name}.{' '}
-                  {'\n'}. {item.start_dt}
-                </Text>
-              ))}
-            </View>
-            <View
-              style={{
-                display: this.state.focusedTab === '1' ? null : 'none',
-                overflow: 'hidden',
-              }}>
-              <Text>1</Text>
-            </View>
-            {rosterList.map((item) => (
-              <Text>
-                {item.photo}.{item.last_name}.{item.first_name}.
-                {item.middle_name}
-              </Text>
-            ))}
-          </View>
-          {/*<Button*/}
-          {/*  title="К списку матчей"*/}
-          {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
-          {/*/>*/}
-        </View>
-      );
-    }
+    return (
+      <View style={styles.container}>
+        <Picker
+          selectedValue={this.context.chosen}
+          style={{height: 50, width: 150}}
+          onValueChange={(itemValue) => this.setState({chosen: itemValue})}>
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="js" />
+        </Picker>
+
+        {/*<Button*/}
+        {/*  title="К списку матчей"*/}
+        {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
+        {/*/>*/}
+      </View>
+    );
   }
 }
 TeamListScreen.contextType = JoinAppContext;

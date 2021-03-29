@@ -13,6 +13,7 @@ import {GET_TEAM_MATCH} from './queri/team/TeamMatchQuery';
 import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
 import {JoinAppContext} from '../JoinAppContext';
+import {GET_SEASONS} from './queri/season/SeasonQuery';
 
 const client = makeApolloClient();
 const today = new Date();
@@ -212,17 +213,18 @@ class Handler extends React.Component {
       });
   }
 
-  static getTeamList(teamsCount) {
+  static getTeamList(seasonId) {
     return client
       .query({
         variables: {
-          teamsCount: teamsCount,
+          seasonId: seasonId,
         },
         query: GET_TEAM_LIST,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let teams = value.data;
+        console.log(teams);
+        return teams;
       })
       .catch((error) => {
         console.log(error);
@@ -240,6 +242,20 @@ class Handler extends React.Component {
       .then(function (value) {
         let calendar = value.data;
         console.log(calendar);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getSeasons() {
+    return client
+      .query({
+        query: GET_SEASONS,
+      })
+      .then(function (value) {
+        let seasons = value.data;
+        console.log(seasons);
       })
       .catch((error) => {
         console.log(error);
