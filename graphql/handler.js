@@ -142,7 +142,8 @@ class Handler extends React.Component {
       });
   }
 
-  static getTournamentList(seasonId) {
+  static getTournamentList(season_id) {
+    let seasonId = parseInt(season_id);
     return client
       .query({
         variables: {
@@ -214,7 +215,8 @@ class Handler extends React.Component {
       });
   }
 
-  static getTeamList(seasonId) {
+  static getTeamList(season_id) {
+    let seasonId = parseInt(season_id);
     return client
       .query({
         variables: {

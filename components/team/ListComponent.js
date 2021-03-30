@@ -28,7 +28,9 @@ export default class TeamListScreen extends Component {
     await handler
       .getSeasons()
       .then((value) => {
-        let seasonId = value.seasons[value.seasons.length - 1].season_id;
+        let seasonId = parseInt(
+          value.seasons[value.seasons.length - 1].season_id,
+        );
         console.log(seasonId);
         this.setState({
           seasonsList: value,
@@ -55,7 +57,7 @@ export default class TeamListScreen extends Component {
   render() {
     let teamList = this.state.teamsList;
     let seasonsList = this.state.seasonsList;
-    console.log(teamList.teams);
+    // console.log(teamList.teams);
     if (
       teamList === 'empty' ||
       teamList === undefined ||
@@ -78,7 +80,7 @@ export default class TeamListScreen extends Component {
             selectedValue={this.state.seasonId}
             style={{height: 50, width: 150}}
             onValueChange={(itemValue) => {
-              this.setState({seasonId: itemValue});
+              this.setState({seasonId: parseInt(itemValue)});
               handler
                 .getTeamList(this.state.seasonId)
                 .then((value) => {
