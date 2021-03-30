@@ -26,6 +26,7 @@ export default class TeamScreen extends Component {
     await handler
       .getTeamMatch(this.context.teamData.team_id)
       .then((value) => {
+        console.log(value);
         this.setState({
           matchList: value.calendar.data,
         });

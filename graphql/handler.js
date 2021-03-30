@@ -178,7 +178,8 @@ class Handler extends React.Component {
       });
   }
 
-  static getTeamMatch(teamId) {
+  static getTeamMatch(team_id) {
+    let teamId = parseInt(team_id);
     return client
       .query({
         variables: {
