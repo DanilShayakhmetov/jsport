@@ -194,7 +194,8 @@ export default class ApplicationScreen extends Component {
               </TouchableOpacity>
             </ScrollView>
           </View>
-          <View style={styles.mainDataContainer}>
+          <ScrollView>
+            <View style={styles.mainDataContainer}>
             <Text>{this.state.focusedTab}</Text>
             <View
               style={{
@@ -276,10 +277,21 @@ export default class ApplicationScreen extends Component {
               </View>
             </View>
           </View>
-          {/*<Button*/}
-          {/*  title="К списку матчей"*/}
-          {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
-          {/*/>*/}
+          </ScrollView>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Button
+                title="матч центр"
+                onPress={() => this.props.navigation.navigate('MatchCenter')}
+            />
+            <Button
+                title="турниры"
+                onPress={() => this.props.navigation.navigate('TournamentList')}
+            />
+            <Button
+                title="команды"
+                onPress={() => this.props.navigation.navigate('TeamList')}
+            />
+          </View>
         </View>
       );
     }

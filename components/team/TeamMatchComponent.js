@@ -90,18 +90,28 @@ export default class TeamScreen extends Component {
             <ScrollView horizontal={true} style={styles.scrollItem}>
               <TouchableOpacity
                 activeOpacity={0.8}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '0' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '0')}>
                 <Text>{'        Матчи         '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={styles.touchItem}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '1' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '1')}>
                 <Text>{'        Состав          '}</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
-          <View style={styles.mainDataContainer}>
+          <ScrollView>
+            <View style={styles.mainDataContainer}>
             <Text>{this.state.focusedTab}</Text>
             <View
               style={{
@@ -130,10 +140,21 @@ export default class TeamScreen extends Component {
               </Text>
             ))}
           </View>
-          {/*<Button*/}
-          {/*  title="К списку матчей"*/}
-          {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
-          {/*/>*/}
+          </ScrollView>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Button
+                title="матч центр"
+                onPress={() => this.props.navigation.navigate('MatchCenter')}
+            />
+            <Button
+                title="турниры"
+                onPress={() => this.props.navigation.navigate('TournamentList')}
+            />
+            <Button
+                title="команды"
+                onPress={() => this.props.navigation.navigate('TeamList')}
+            />
+          </View>
         </View>
       );
     }

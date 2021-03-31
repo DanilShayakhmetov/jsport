@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Platform,
   AsyncStorage,
+  Button,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -58,7 +59,7 @@ export default class MatchCenterScreen extends Component {
     let calendar = [...this.context.calendar];
     calendar.forEach(function (value) {
       value.matchItems.forEach(function (match) {
-        match.visibility = match.item.start_dt.split(' ')[0] >= to;
+        match.visibility = match.item.start_dt.split(' ')[0] <= to;
       });
     });
     this.setState({
@@ -86,7 +87,9 @@ export default class MatchCenterScreen extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <ScrollView horizontal={true}>
+          <ScrollView
+            horizontal={true}
+            style={{fontFamily: 'OpenSans', fontSize: 14}}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={this.changeInterval.bind(this, 0, 0)}
@@ -114,7 +117,7 @@ export default class MatchCenterScreen extends Component {
               <Text>{'        Месяц           '}</Text>
             </TouchableOpacity>
           </ScrollView>
-          <ScrollView>
+          <ScrollView style={{fontFamily: 'OpenSans'}}>
             {this.getCalendar().map((item, number) => (
               <View>
                 {/*Header of the Expandable List Item*/}
@@ -158,6 +161,20 @@ export default class MatchCenterScreen extends Component {
               </View>
             ))}
           </ScrollView>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Button
+              title="матч центр"
+              onPress={() => this.props.navigation.navigate('MatchCenter')}
+            />
+            <Button
+              title="турниры"
+              onPress={() => this.props.navigation.navigate('TournamentList')}
+            />
+            <Button
+              title="команды"
+              onPress={() => this.props.navigation.navigate('TeamList')}
+            />
+          </View>
         </View>
       );
     }
@@ -169,8 +186,10 @@ MatchCenterScreen.contextType = JoinAppContext;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: 'OpenSans',
   },
   topHeading: {
     paddingLeft: 10,
@@ -183,6 +202,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'OpenSans',
   },
   separator: {
     height: 0.5,

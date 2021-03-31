@@ -235,17 +235,31 @@ export default class MatchScreen extends Component {
             <ScrollView horizontal={true} style={styles.scrollItem}>
               <TouchableOpacity
                 activeOpacity={0.8}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '0' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '0')}>
                 <Text>{'        События         '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={styles.touchItem}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '1' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '1')}>
                 <Text>{'        Статистика          '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '2' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '2')}>
                 <Text>{'        Составы          '}</Text>
               </TouchableOpacity>
@@ -295,34 +309,46 @@ export default class MatchScreen extends Component {
                   <Text>{'rosterList.team2.team_id'}</Text>
                 </TouchableOpacity>
               </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === '0' ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                {rosterList.team1.map((item) => (
-                  <Text>
-                    {item.position}.{item.name}.{'     rost          '}
-                  </Text>
-                ))}
-              </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === '1' ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                {rosterList.team2.map((item) => (
-                  <Text>
-                    {item.position}.{item.name}.{'     rost          '}
-                  </Text>
-                ))}
-              </View>
+              <ScrollView>
+                <View
+                  style={{
+                    display: this.state.focusedRoster === '0' ? null : 'none',
+                    overflow: 'hidden',
+                  }}>
+                  {rosterList.team1.map((item) => (
+                    <Text>
+                      {item.position}.{item.name}.{'     rost          '}
+                    </Text>
+                  ))}
+                </View>
+                <View
+                  style={{
+                    display: this.state.focusedRoster === '1' ? null : 'none',
+                    overflow: 'hidden',
+                  }}>
+                  {rosterList.team2.map((item) => (
+                    <Text>
+                      {item.position}.{item.name}.{'     rost          '}
+                    </Text>
+                  ))}
+                </View>
+              </ScrollView>
             </View>
           </View>
-          <Button
-            title="Все турниры"
-            onPress={() => this.props.navigation.navigate('TournamentList')}
-          />
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Button
+              title="матч центр"
+              onPress={() => this.props.navigation.navigate('MatchCenter')}
+            />
+            <Button
+              title="турниры"
+              onPress={() => this.props.navigation.navigate('TournamentList')}
+            />
+            <Button
+              title="команды"
+              onPress={() => this.props.navigation.navigate('TeamList')}
+            />
+          </View>
         </View>
       );
     }

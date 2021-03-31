@@ -79,7 +79,7 @@ class App extends React.Component {
     let to = handler.getDate(0, 1);
     console.log(from, to);
     await handler
-      .getMatchCalendar('2020-03-01', '2020-12-25')
+      .getMatchCalendar(from, to)
       .then((value) => {
         let calendar = handler.dataFilter(value);
         calendar = this.getSortedData(calendar);
@@ -106,7 +106,7 @@ class App extends React.Component {
           teamData: this.state.teamData,
         }}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator style={{fontFamily: 'OpenSans'}}>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
             <Stack.Screen name="TournamentTable" component={TableScreen} />
