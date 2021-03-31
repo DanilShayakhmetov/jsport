@@ -106,16 +106,16 @@ export default class TeamListScreen extends Component {
           </ScrollView>
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
             <Button
-                title="матч центр"
-                onPress={() => this.props.navigation.navigate('MatchCenter')}
+              title="матч центр"
+              onPress={() => this.props.navigation.navigate('MatchCenter')}
             />
             <Button
-                title="турниры"
-                onPress={() => this.props.navigation.navigate('TournamentList')}
+              title="турниры"
+              onPress={() => this.props.navigation.navigate('TournamentList')}
             />
             <Button
-                title="команды"
-                onPress={() => this.props.navigation.navigate('TeamList')}
+              title="команды"
+              onPress={() => this.props.navigation.navigate('TeamList')}
             />
           </View>
         </View>

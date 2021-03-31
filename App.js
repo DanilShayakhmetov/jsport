@@ -39,9 +39,12 @@ class App extends React.Component {
           let tournamentItem = {
             isExpanded: false,
             tournamentId: 0,
+            Data: 'empty',
             matchItems: [],
           };
           tournamentItem.tournamentId = calendar[i].tournament_id;
+          tournamentItem.Data = calendar[i].tournament;
+          console.log(tournamentItem.Data);
           tournamentList[calendar[i].tournament_id] = tournamentItem;
         }
       }
@@ -112,7 +115,10 @@ class App extends React.Component {
             <Stack.Screen name="TournamentTable" component={TableScreen} />
             <Stack.Screen name="Team" component={TeamScreen} />
             <Stack.Screen name="TeamList" component={TeamListScreen} />
-            <Stack.Screen name="TournamentList" component={TournamentListScreen} />
+            <Stack.Screen
+              name="TournamentList"
+              component={TournamentListScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </JoinAppContext.Provider>

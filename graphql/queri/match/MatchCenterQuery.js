@@ -25,8 +25,15 @@ export const GET_MATCH_CENTER = gql`
         ga
         gfp
         gap
-        stadium_id
         start_dt
+        tournament {
+          full_name
+          short_name
+        }
+        stadium {
+          name
+          address
+        }
       }
     }
   }

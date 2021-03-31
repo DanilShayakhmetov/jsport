@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {
-  LayoutAnimation,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  UIManager,
-  TouchableOpacity,
-  Platform,
-  AsyncStorage,
   Button,
+  LayoutAnimation,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -74,6 +73,7 @@ export default class MatchCenterScreen extends Component {
     } else {
       calendar = this.context.calendar;
     }
+
     return calendar;
   };
 
@@ -87,36 +87,38 @@ export default class MatchCenterScreen extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <ScrollView
-            horizontal={true}
-            style={{fontFamily: 'OpenSans', fontSize: 14}}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 0, 0)}
-              style={styles.header}>
-              <Text color={true ? 'red' : 'blue'}>
-                {'        Сегодня         '}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 1, 0)}
-              style={styles.header}>
-              <Text>{'        Завтра          '}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 7, 0)}
-              style={styles.header}>
-              <Text>{'        Неделя          '}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 0, 1)}
-              style={styles.header}>
-              <Text>{'        Месяц           '}</Text>
-            </TouchableOpacity>
-          </ScrollView>
+          <View style={{height: 50}}>
+            <ScrollView
+              horizontal={true}
+              style={{fontFamily: 'OpenSans', fontSize: 14}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 0, 0)}
+                style={styles.header}>
+                <Text color={true ? 'red' : 'blue'}>
+                  {'        Сегодня         '}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 1, 0)}
+                style={styles.header}>
+                <Text>{'        Завтра          '}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 7, 0)}
+                style={styles.header}>
+                <Text>{'        Неделя          '}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 0, 1)}
+                style={styles.header}>
+                <Text>{'        Месяц           '}</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
           <ScrollView style={{fontFamily: 'OpenSans'}}>
             {this.getCalendar().map((item, number) => (
               <View>
@@ -125,7 +127,7 @@ export default class MatchCenterScreen extends Component {
                   activeOpacity={0.8}
                   onPress={this.updateLayout.bind(this, item.tournamentId)}
                   style={styles.header}>
-                  <Text style={styles.headerText}>{item.tournamentId}</Text>
+                  <Text style={styles.headerText}>{item.Data.full_name}</Text>
                 </TouchableOpacity>
                 <View
                   style={{
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
     fontFamily: 'OpenSans',
   },
@@ -215,11 +217,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#606070',
     padding: 10,
+    fontFamily: 'OpenSans',
   },
   content: {
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: '#fff',
+    fontFamily: 'OpenSans',
   },
   hideItem: {
     display: 'none',

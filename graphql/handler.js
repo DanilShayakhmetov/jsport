@@ -41,6 +41,7 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let calendar = value.data.calendar.data;
+        console.log(calendar);
         return calendar;
       })
       .catch((error) => {
@@ -65,7 +66,8 @@ class Handler extends React.Component {
   }
 
   //GET TOURNAMENT NAMES
-  static getTournament(tournamentId) {
+  static getTournament(tournament_id) {
+    let tournamentId = parseInt(tournament_id);
     return client
       .query({
         variables: {tournamentId: tournamentId},
@@ -74,6 +76,7 @@ class Handler extends React.Component {
       .then(function (value) {
         let calendar = value.data;
         console.log(calendar);
+        return calendar;
       })
       .catch((error) => {
         console.log(error);
