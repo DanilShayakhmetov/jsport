@@ -3,11 +3,14 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {FriendsContext} from './FriendsContext';
+import {JoinAppContext} from './JoinAppContext';
 import MatchScreen from './components/match/MatchComponent';
 import MatchCenterScreen from './components/match/MatchCenterComponent';
 import Handler from './graphql/handler';
 import TableScreen from './components/tournament/TableComponent';
+import TeamScreen from './components/team/TeamMatchComponent';
+import TeamListScreen from './components/team/ListComponent';
+import TournamentListScreen from './components/tournament/ListComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -17,11 +20,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       calendar: 'empty',
-      matchData: 0,
+      teamCalendar: 'empty',
+      matchData: 'empty',
       tournamentData: 'empty',
+      teamData: 'empty',
       layoutHeight: 0,
       matchId: 'empty',
       tournamentId: 'empty',
+      teamId: 'empty',
     };
   }
 
@@ -33,9 +39,14 @@ class App extends React.Component {
           let tournamentItem = {
             isExpanded: false,
             tournamentId: 0,
+            Data: 'empty',
+            Stadium: 'empty',
             matchItems: [],
           };
           tournamentItem.tournamentId = calendar[i].tournament_id;
+          tournamentItem.Data = calendar[i].tournament;
+          tournamentItem.Stadium = calendar[i].stadium;
+          console.log(tournamentItem.Stadium);
           tournamentList[calendar[i].tournament_id] = tournamentItem;
         }
       }
@@ -73,7 +84,7 @@ class App extends React.Component {
     let to = handler.getDate(0, 1);
     console.log(from, to);
     await handler
-      .getMatchCalendar('2020-03-01', '2020-12-25')
+      .getMatchCalendar(from, to)
       .then((value) => {
         let calendar = handler.dataFilter(value);
         calendar = this.getSortedData(calendar);
@@ -89,22 +100,30 @@ class App extends React.Component {
 
   render() {
     return (
-      <FriendsContext.Provider
+      <JoinAppContext.Provider
         value={{
           calendar: this.state.calendar,
           layoutHeight: this.state.layoutHeight,
           matchId: this.state.matchId,
           matchData: this.state.matchData,
           tournamentData: this.state.tournamentData,
+          teamCalendar: this.state.teamCalendar,
+          teamData: this.state.teamData,
         }}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator style={{fontFamily: 'OpenSans'}}>
             <Stack.Screen name="MatchCenter" component={MatchCenterScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
             <Stack.Screen name="TournamentTable" component={TableScreen} />
+            <Stack.Screen name="Team" component={TeamScreen} />
+            <Stack.Screen name="TeamList" component={TeamListScreen} />
+            <Stack.Screen
+              name="TournamentList"
+              component={TournamentListScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
-      </FriendsContext.Provider>
+      </JoinAppContext.Provider>
     );
   }
 }

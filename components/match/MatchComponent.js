@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {FriendsContext} from '../../FriendsContext';
+import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
@@ -28,10 +28,6 @@ export default class MatchScreen extends Component {
       .then((value) => {
         this.setState({
           matchData: value,
-        });
-
-        this.setState({
-          rosterList: value._W,
         });
       })
       .catch((error) => {
@@ -193,11 +189,12 @@ export default class MatchScreen extends Component {
   };
 
   render() {
-    const matchD = this.context.matchData._W;
+    const matchData = this.context.matchData._W;
+
     if (
       this.context.matchId === 'empty' ||
       this.context.matchId === undefined ||
-      matchD === null
+      matchData === null
     ) {
       return (
         <View style={styles.container}>
@@ -209,48 +206,60 @@ export default class MatchScreen extends Component {
         </View>
       );
     } else {
-      let eventsList = this.eventPreparer(matchD);
-      let rosterList = this.rosterPreparer(matchD);
+      let eventsList = this.eventPreparer(matchData);
+      let rosterList = this.rosterPreparer(matchData);
       this.state.rosterList = rosterList;
-      // console.log('THIS------------->', this.state.rosterList);
-      // console.log(this.context.calendar);
 
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
             <Text>{this.context.matchId}</Text>
-            <Text>{matchD.start_dt}</Text>
+            <Text>{matchData.start_dt}</Text>
             <Text>
-              {matchD.team1.logo}.{matchD.gf}.{'      :      '}.{matchD.ga}.
-              {matchD.team2.logo}
+              {matchData.team1.logo}.{matchData.gf}.{'      :      '}.
+              {matchData.ga}.{matchData.team2.logo}
             </Text>
             <Text>
-              {matchD.team1.short_name}.{'            '}.
-              {matchD.team2.short_name}
+              {matchData.team1.short_name}.{'            '}.
+              {matchData.team2.short_name}
             </Text>
           </View>
           <View>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.tournamentRedirect.bind(this, '0')}>
-              <Text>{matchD.tournament.short_name}</Text>
+              onPress={this.tournamentRedirect.bind(this)}>
+              <Text>{matchData.tournament.short_name}</Text>
             </TouchableOpacity>
           </View>
           <View style={{height: 30, marginBottom: 30}}>
             <ScrollView horizontal={true} style={styles.scrollItem}>
               <TouchableOpacity
                 activeOpacity={0.8}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '0' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '0')}>
                 <Text>{'        События         '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={styles.touchItem}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '1' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '1')}>
                 <Text>{'        Статистика          '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
+                style={{
+                  borderBottomWidth: this.state.focusedTab === '2' ? 2 : 0,
+                  borderBottomColor: 'blue',
+                  overflow: 'hidden',
+                }}
                 onPress={this.tabsHandler.bind(this, '2')}>
                 <Text>{'        Составы          '}</Text>
               </TouchableOpacity>
@@ -300,40 +309,52 @@ export default class MatchScreen extends Component {
                   <Text>{'rosterList.team2.team_id'}</Text>
                 </TouchableOpacity>
               </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === '0' ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                {rosterList.team1.map((item) => (
-                  <Text>
-                    {item.position}.{item.name}.{'     rost          '}
-                  </Text>
-                ))}
-              </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === '1' ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                {rosterList.team2.map((item) => (
-                  <Text>
-                    {item.position}.{item.name}.{'     rost          '}
-                  </Text>
-                ))}
-              </View>
+              <ScrollView>
+                <View
+                  style={{
+                    display: this.state.focusedRoster === '0' ? null : 'none',
+                    overflow: 'hidden',
+                  }}>
+                  {rosterList.team1.map((item) => (
+                    <Text>
+                      {item.position}.{item.name}.{'     rost          '}
+                    </Text>
+                  ))}
+                </View>
+                <View
+                  style={{
+                    display: this.state.focusedRoster === '1' ? null : 'none',
+                    overflow: 'hidden',
+                  }}>
+                  {rosterList.team2.map((item) => (
+                    <Text>
+                      {item.position}.{item.name}.{'     rost          '}
+                    </Text>
+                  ))}
+                </View>
+              </ScrollView>
             </View>
           </View>
-          {/*<Button*/}
-          {/*  title="К списку матчей"*/}
-          {/*  onPress={() => this.props.navigation.navigate('MatchCenter')}*/}
-          {/*/>*/}
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Button
+              title="матч центр"
+              onPress={() => this.props.navigation.navigate('MatchCenter')}
+            />
+            <Button
+              title="турниры"
+              onPress={() => this.props.navigation.navigate('TournamentList')}
+            />
+            <Button
+              title="команды"
+              onPress={() => this.props.navigation.navigate('TeamList')}
+            />
+          </View>
         </View>
       );
     }
   }
 }
-MatchScreen.contextType = FriendsContext;
+MatchScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {

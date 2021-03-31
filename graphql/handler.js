@@ -12,7 +12,8 @@ import {GET_TOURNAMENT_APPLICATION} from './queri/tournament/ApplicationQuery';
 import {GET_TEAM_MATCH} from './queri/team/TeamMatchQuery';
 import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
-import {FriendsContext} from '../FriendsContext';
+import {JoinAppContext} from '../JoinAppContext';
+import {GET_SEASONS} from './queri/season/SeasonQuery';
 
 const client = makeApolloClient();
 const today = new Date();
@@ -40,6 +41,7 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let calendar = value.data.calendar.data;
+        console.log(calendar);
         return calendar;
       })
       .catch((error) => {
@@ -64,7 +66,8 @@ class Handler extends React.Component {
   }
 
   //GET TOURNAMENT NAMES
-  static getTournament(tournamentId) {
+  static getTournament(tournament_id) {
+    let tournamentId = parseInt(tournament_id);
     return client
       .query({
         variables: {tournamentId: tournamentId},
@@ -73,6 +76,7 @@ class Handler extends React.Component {
       .then(function (value) {
         let calendar = value.data;
         console.log(calendar);
+        return calendar;
       })
       .catch((error) => {
         console.log(error);
@@ -141,17 +145,18 @@ class Handler extends React.Component {
       });
   }
 
-  static getTournamentList(tournamentsCount) {
+  static getTournamentList(season_id) {
+    let seasonId = parseInt(season_id);
     return client
       .query({
         variables: {
-          tournamentsCount: tournamentsCount,
+          seasonId: seasonId,
         },
         query: GET_TOURNAMENT_LIST,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let tournaments = value.data;
+        return tournaments;
       })
       .catch((error) => {
         console.log(error);
@@ -168,15 +173,17 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_APPLICATION,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let application = value.data;
+        // console.log(application);
+        return application;
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  static getTeamMatch(teamId) {
+  static getTeamMatch(team_id) {
+    let teamId = parseInt(team_id);
     return client
       .query({
         variables: {
@@ -186,7 +193,8 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let calendar = value.data;
-        console.log(calendar);
+        return calendar;
+        // console.log(calendar);
       })
       .catch((error) => {
         console.log(error);
@@ -203,24 +211,25 @@ class Handler extends React.Component {
       })
       .then(function (value) {
         let calendar = value.data;
-        console.log(calendar);
+        return calendar;
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  static getTeamList(teamsCount) {
+  static getTeamList(season_id) {
+    let seasonId = parseInt(season_id);
     return client
       .query({
         variables: {
-          teamsCount: teamsCount,
+          seasonId: seasonId,
         },
         query: GET_TEAM_LIST,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        let teams = value.data;
+        return teams;
       })
       .catch((error) => {
         console.log(error);
@@ -238,6 +247,20 @@ class Handler extends React.Component {
       .then(function (value) {
         let calendar = value.data;
         console.log(calendar);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getSeasons() {
+    return client
+      .query({
+        query: GET_SEASONS,
+      })
+      .then(function (value) {
+        let seasons = value.data;
+        return seasons;
       })
       .catch((error) => {
         console.log(error);
@@ -266,8 +289,12 @@ class Handler extends React.Component {
     }
     return yyyy + '-' + mm + '-' + dd;
   }
+
+  static isUndefined(inputData) {
+    return inputData === 'empty' || inputData === undefined;
+  }
 }
 
-Handler.contextType = FriendsContext;
+Handler.contextType = JoinAppContext;
 
 export default Handler;

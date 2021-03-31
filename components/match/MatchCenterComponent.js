@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {
+  Button,
   LayoutAnimation,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  UIManager,
-  TouchableOpacity,
   Platform,
-  AsyncStorage,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View,
+  Image,
 } from 'react-native';
-import {FriendsContext} from '../../FriendsContext';
+import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 
 const handler = Handler;
@@ -31,10 +32,7 @@ export default class MatchCenterScreen extends Component {
   updateLayout = (index) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     let calendar = [];
-    if (
-      this.context.calendar === undefined ||
-      this.context.calendar === 'empty'
-    ) {
+    if (handler.isUndefined(this.context.calendar)) {
     } else {
       calendar = [...this.context.calendar];
       calendar.map((value, placeindex) =>
@@ -50,6 +48,7 @@ export default class MatchCenterScreen extends Component {
 
   matchRedirect = (matchId, matches) => {
     this.context.matchId = matchId;
+    this.context.tournamentId = matches.tournamentId;
     this.context.matchData = handler.getMatchMain(matchId);
     this.context.tournamentData = matches;
     return this.props.navigation.navigate('Match');
@@ -60,7 +59,7 @@ export default class MatchCenterScreen extends Component {
     let calendar = [...this.context.calendar];
     calendar.forEach(function (value) {
       value.matchItems.forEach(function (match) {
-        match.visibility = match.item.start_dt.split(' ')[0] >= to;
+        match.visibility = match.item.start_dt.split(' ')[0] <= to;
       });
     });
     this.setState({
@@ -68,73 +67,68 @@ export default class MatchCenterScreen extends Component {
     });
   };
 
+  getCalendar = () => {
+    var calendar = '';
+    if (this.state.filteredCalendar !== 'empty') {
+      calendar = handler.dataFilter(this.state.filteredCalendar);
+    } else {
+      calendar = this.context.calendar;
+    }
+
+    return calendar;
+  };
+
   render() {
-    if (
-      this.context.calendar === 'empty' ||
-      this.context.calendar === undefined
-    ) {
+    if (handler.isUndefined(this.context.calendar)) {
       return (
         <View style={styles.container}>
           <Text style={styles.topHeading}>Wait</Text>
         </View>
       );
     } else {
-      // console.log(this.context.calendar[0].matchItems[0].start_dt.split(' ')[0] < '2021-04-17');
-      // if (this.context.calendar[0].matchItems[0].start_dt.split(' ')[0] < '2021-04-17') {
-      //   this.context.calendar[0].matchItems[0] = {};
-      // }
-      // console.log(this.context.calendar[0].matchItems.start_dt);
-      // console.log(new Date());
-      // console.log(this.context.calendar[0].matchItems[0].visibility);
-      var calendar = '';
-      if (this.state.filteredCalendar !== 'empty') {
-        calendar = handler.dataFilter(this.state.filteredCalendar);
-      } else {
-        calendar = this.context.calendar;
-      }
-
-      // console.log(calendar[0].matchItems);
-
       return (
         <View style={styles.container}>
-          <ScrollView horizontal={true}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 0, 0)}
-              style={styles.header}>
-              <Text color={true ? 'red' : 'blue'}>
-                {'        Сегодня         '}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 1, 0)}
-              style={styles.header}>
-              <Text>{'        Завтра          '}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 7, 0)}
-              style={styles.header}>
-              <Text>{'        Неделя          '}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.changeInterval.bind(this, 0, 1)}
-              style={styles.header}>
-              <Text>{'        Месяц           '}</Text>
-            </TouchableOpacity>
-          </ScrollView>
-          <ScrollView>
-            {calendar.map((item, number) => (
+          <View style={{height: 50}}>
+            <ScrollView
+              horizontal={true}
+              style={{fontFamily: 'OpenSans', fontSize: 14}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 0, 0)}
+                style={styles.header}>
+                <Text color={true ? 'red' : 'blue'}>
+                  {'        Сегодня         '}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 1, 0)}
+                style={styles.header}>
+                <Text>{'        Завтра          '}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 7, 0)}
+                style={styles.header}>
+                <Text>{'        Неделя          '}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, 0, 1)}
+                style={styles.header}>
+                <Text>{'        Месяц           '}</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+          <ScrollView style={{fontFamily: 'OpenSans'}}>
+            {this.getCalendar().map((item, number) => (
               <View>
                 {/*Header of the Expandable List Item*/}
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={this.updateLayout.bind(this, item.tournamentId)}
                   style={styles.header}>
-                  <Text style={styles.headerText}>{item.tournamentId}</Text>
-                  {/*<Text style={styles.headerText}>{item.isExpanded.toString()}</Text>*/}
+                  <Text style={styles.headerText}>{item.Data.full_name}</Text>
                 </TouchableOpacity>
                 <View
                   style={{
@@ -155,12 +149,47 @@ export default class MatchCenterScreen extends Component {
                           this.matchRedirect(value.item.match_id, item)
                         }>
                         <Text style={styles.text}>
-                          {value.item.team1.short_name}.{value.item.team1.logo}.
-                          {':'}.{value.item.ga}.{value.item.team2.logo}.
-                          {value.item.team2.short_name}
+                          {value.item.team1.short_name}
+                          {/*.{value.item.team1.logo}*/}
+                        </Text>
+                        <Image
+                          style={styles.logo}
+                          source={{
+                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          }}
+                        />
+                        <Text
+                          style={{
+                            display: value.item.ga === null ? null : 'none',
+                            overflow: 'hidden',
+                          }}>
+                          {value.item.start_dt}
+                          {/*.{value.item.team2.logo}*/}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: '#606070',
+                            padding: 10,
+                            fontFamily: 'OpenSans',
+                            display: value.item.ga !== null ? null : 'none',
+                            margin: 10,
+                          }}>
+                          {value.item.ga}.{':'}.{value.item.gf}
+                          {/*.{value.item.team2.logo}*/}
+                        </Text>
+                        <Image
+                          style={styles.logo}
+                          source={{
+                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          }}
+                        />
+                        <Text style={styles.text}>
+                          .{value.item.team2.short_name}
                         </Text>
                         <Text style={styles.text}>
-                          {value.start_dt}.{value.stadium_id}.
+                          {value.start_dt}.{item.Stadium.name}.{'|'}.
+                          {item.Stadium.address}
                         </Text>
                         <View style={styles.separator} />
                       </TouchableOpacity>
@@ -170,19 +199,35 @@ export default class MatchCenterScreen extends Component {
               </View>
             ))}
           </ScrollView>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <Button
+              title="матч центр"
+              onPress={() => this.props.navigation.navigate('MatchCenter')}
+            />
+            <Button
+              title="турниры"
+              onPress={() => this.props.navigation.navigate('TournamentList')}
+            />
+            <Button
+              title="команды"
+              onPress={() => this.props.navigation.navigate('TeamList')}
+            />
+          </View>
         </View>
       );
     }
   }
 }
 
-MatchCenterScreen.contextType = FriendsContext;
+MatchCenterScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: 'OpenSans',
   },
   topHeading: {
     paddingLeft: 10,
@@ -193,8 +238,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
+    fontFamily: 'OpenSans',
   },
   separator: {
     height: 0.5,
@@ -207,13 +253,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#606070',
     padding: 10,
+    fontFamily: 'OpenSans',
   },
   content: {
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: '#fff',
+    fontFamily: 'OpenSans',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   hideItem: {
     display: 'none',
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  logo: {
+    width: 25,
+    height: 25,
+    borderRadius: 100,
   },
 });
