@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
+import {Icon} from 'react-native-elements';
 
 const handler = Handler;
 
@@ -196,101 +197,140 @@ export default class ApplicationScreen extends Component {
           </View>
           <ScrollView>
             <View style={styles.mainDataContainer}>
-            <Text>{this.state.focusedTab}</Text>
-            <View
-              style={{
-                display: this.state.focusedTab === '0' ? null : 'none',
-                overflow: 'hidden',
-              }}>
-              {matchList.map((item) => (
-                <Text>
-                  {item.item.team1.short_name}.{'   -   '}.
-                  {item.item.team2.short_name}. {'\n'}. {item.item.start_dt}
-                </Text>
-              ))}
-            </View>
-            <View
-              style={{
-                display: this.state.focusedTab === '1' ? null : 'none',
-                overflow: 'hidden',
-              }}>
+              <Text>{this.state.focusedTab}</Text>
               <View
                 style={{
-                  marginTop: 20,
-                  marginBottom: 20,
-                }}>
-                <Text>{statsList.name}</Text>
-              </View>
-              {statsList.tableRows.map((item) => (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.teamRedirect.bind(this, item.team.team_id)}>
-                  <Text>
-                    {item.team.short_name}.{item.team.logo}.{'\n'}.{item.games}.
-                    {item.wins}.{item.draws}.{item.loses}.{item.ga}.{' - '}.
-                    {item.gf}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <View
-              style={{
-                display: this.state.focusedTab === '2' ? null : 'none',
-                overflow: 'hidden',
-              }}>
-              <View
-                style={{
-                  marginBottom: 20,
-                }}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, '0')}>
-                  <Text>{'rosterList.team1.team_id'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, '1')}>
-                  <Text>{'rosterList.team2.team_id'}</Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === '0' ? null : 'none',
+                  display: this.state.focusedTab === '0' ? null : 'none',
                   overflow: 'hidden',
                 }}>
-                {rosterList.team1.map((item) => (
+                {matchList.map((item) => (
                   <Text>
-                    {item.position}.{item.name}.{'     rost          '}
+                    {item.item.team1.short_name}.{'   -   '}.
+                    {item.item.team2.short_name}. {'\n'}. {item.item.start_dt}
                   </Text>
                 ))}
               </View>
               <View
                 style={{
-                  display: this.state.focusedRoster === '1' ? null : 'none',
+                  display: this.state.focusedTab === '1' ? null : 'none',
                   overflow: 'hidden',
                 }}>
-                {rosterList.team2.map((item) => (
-                  <Text>
-                    {item.position}.{item.name}.{'     rost          '}
-                  </Text>
+                <View
+                  style={{
+                    marginTop: 20,
+                    marginBottom: 20,
+                  }}>
+                  <Text>{statsList.name}</Text>
+                </View>
+                {statsList.tableRows.map((item) => (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.teamRedirect.bind(this, item.team.team_id)}>
+                    <Text>
+                      {item.team.short_name}.{item.team.logo}.{'\n'}.
+                      {item.games}.{item.wins}.{item.draws}.{item.loses}.
+                      {item.ga}.{' - '}.{item.gf}
+                    </Text>
+                  </TouchableOpacity>
                 ))}
               </View>
+              <View
+                style={{
+                  display: this.state.focusedTab === '2' ? null : 'none',
+                  overflow: 'hidden',
+                }}>
+                <View
+                  style={{
+                    marginBottom: 20,
+                  }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.rosterHandler.bind(this, '0')}>
+                    <Text>{'rosterList.team1.team_id'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.rosterHandler.bind(this, '1')}>
+                    <Text>{'rosterList.team2.team_id'}</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    display: this.state.focusedRoster === '0' ? null : 'none',
+                    overflow: 'hidden',
+                  }}>
+                  {rosterList.team1.map((item) => (
+                    <Text>
+                      {item.position}.{item.name}.{'     rost          '}
+                    </Text>
+                  ))}
+                </View>
+                <View
+                  style={{
+                    display: this.state.focusedRoster === '1' ? null : 'none',
+                    overflow: 'hidden',
+                  }}>
+                  {rosterList.team2.map((item) => (
+                    <Text>
+                      {item.position}.{item.name}.{'     rost          '}
+                    </Text>
+                  ))}
+                </View>
+              </View>
             </View>
-          </View>
           </ScrollView>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Button
-                title="матч центр"
+          <View
+            style={{
+              width: 432,
+              height: 50,
+              alignSelf: 'center',
+              backgroundColor: 'lightGray',
+              borderTopWidth: 1,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginTop: 10,
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => this.props.navigation.navigate('MatchCenter')}
-            />
-            <Button
-                title="турниры"
+                style={{
+                  width: 144,
+                  color: 'gray',
+                }}>
+                <Icon
+                  name="ios-american-football"
+                  type="ionicon"
+                  color="#517fa4"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => this.props.navigation.navigate('TournamentList')}
-            />
-            <Button
-                title="команды"
+                style={{
+                  width: 144,
+                  color: 'gray',
+                  borderLeftWidth: 2,
+                  borderRightWidth: 2,
+                }}>
+                <Icon
+                  name="ios-trophy-outline"
+                  type="ionicon"
+                  color="#517fa4"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => this.props.navigation.navigate('TeamList')}
-            />
+                style={{
+                  width: 144,
+                  color: 'gray',
+                }}>
+                <Icon name="ios-people-sharp" type="ionicon" color="#517fa4" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       );
