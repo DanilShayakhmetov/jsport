@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
+import {Icon} from 'react-native-elements';
 
 const handler = Handler;
 
@@ -199,19 +200,58 @@ export default class MatchCenterScreen extends Component {
               </View>
             ))}
           </ScrollView>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Button
-              title="матч центр"
-              onPress={() => this.props.navigation.navigate('MatchCenter')}
-            />
-            <Button
-              title="турниры"
-              onPress={() => this.props.navigation.navigate('TournamentList')}
-            />
-            <Button
-              title="команды"
-              onPress={() => this.props.navigation.navigate('TeamList')}
-            />
+          <View
+            style={{
+              width: 432,
+              height: 50,
+              alignSelf: 'center',
+              backgroundColor: 'lightGray',
+              borderTopWidth: 1,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginTop: 10,
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('MatchCenter')}
+                style={{
+                  width: 144,
+                  color: 'gray',
+                }}>
+                <Icon
+                  name="ios-american-football"
+                  type="ionicon"
+                  color="#517fa4"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('TournamentList')}
+                style={{
+                  width: 144,
+                  color: 'gray',
+                  borderLeftWidth: 2,
+                  borderRightWidth: 2,
+                }}>
+                <Icon
+                  name="ios-trophy-outline"
+                  type="ionicon"
+                  color="#517fa4"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('TeamList')}
+                style={{
+                  width: 144,
+                  color: 'gray',
+                }}>
+                <Icon name="ios-people-sharp" type="ionicon" color="#517fa4" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       );
@@ -281,6 +321,6 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 100,
-    margin: 20,
+    margin: 5,
   },
 });
