@@ -40,11 +40,13 @@ class App extends React.Component {
             isExpanded: false,
             tournamentId: 0,
             Data: 'empty',
+            Stadium: 'empty',
             matchItems: [],
           };
           tournamentItem.tournamentId = calendar[i].tournament_id;
           tournamentItem.Data = calendar[i].tournament;
-          console.log(tournamentItem.Data);
+          tournamentItem.Stadium = calendar[i].stadium;
+          console.log(tournamentItem.Stadium);
           tournamentList[calendar[i].tournament_id] = tournamentItem;
         }
       }

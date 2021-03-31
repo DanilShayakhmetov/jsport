@@ -112,47 +112,47 @@ export default class TeamScreen extends Component {
           </View>
           <ScrollView>
             <View style={styles.mainDataContainer}>
-            <Text>{this.state.focusedTab}</Text>
-            <View
-              style={{
-                display: this.state.focusedTab === '0' ? null : 'none',
-                overflow: 'hidden',
-              }}>
-              {matchList.map((item) => (
+              <Text>{this.state.focusedTab}</Text>
+              <View
+                style={{
+                  display: this.state.focusedTab === '0' ? null : 'none',
+                  overflow: 'hidden',
+                }}>
+                {matchList.map((item) => (
+                  <Text>
+                    {item.team1.logo}.{'  +  '}.{item.team2.logo}.{' '}
+                    {item.team1.short_name}.{'   -   '}.{item.team2.short_name}.{' '}
+                    {'\n'}. {item.start_dt}
+                  </Text>
+                ))}
+              </View>
+              <View
+                style={{
+                  display: this.state.focusedTab === '1' ? null : 'none',
+                  overflow: 'hidden',
+                }}>
+                <Text>1</Text>
+              </View>
+              {rosterList.map((item) => (
                 <Text>
-                  {item.team1.logo}.{'  +  '}.{item.team2.logo}.{' '}
-                  {item.team1.short_name}.{'   -   '}.{item.team2.short_name}.{' '}
-                  {'\n'}. {item.start_dt}
+                  {item.photo}.{item.last_name}.{item.first_name}.
+                  {item.middle_name}
                 </Text>
               ))}
             </View>
-            <View
-              style={{
-                display: this.state.focusedTab === '1' ? null : 'none',
-                overflow: 'hidden',
-              }}>
-              <Text>1</Text>
-            </View>
-            {rosterList.map((item) => (
-              <Text>
-                {item.photo}.{item.last_name}.{item.first_name}.
-                {item.middle_name}
-              </Text>
-            ))}
-          </View>
           </ScrollView>
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
             <Button
-                title="матч центр"
-                onPress={() => this.props.navigation.navigate('MatchCenter')}
+              title="матч центр"
+              onPress={() => this.props.navigation.navigate('MatchCenter')}
             />
             <Button
-                title="турниры"
-                onPress={() => this.props.navigation.navigate('TournamentList')}
+              title="турниры"
+              onPress={() => this.props.navigation.navigate('TournamentList')}
             />
             <Button
-                title="команды"
-                onPress={() => this.props.navigation.navigate('TeamList')}
+              title="команды"
+              onPress={() => this.props.navigation.navigate('TeamList')}
             />
           </View>
         </View>

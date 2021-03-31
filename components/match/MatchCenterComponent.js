@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   UIManager,
   View,
+  Image,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -148,12 +149,47 @@ export default class MatchCenterScreen extends Component {
                           this.matchRedirect(value.item.match_id, item)
                         }>
                         <Text style={styles.text}>
-                          {value.item.team1.short_name}.{value.item.team1.logo}.
-                          {':'}.{value.item.ga}.{value.item.team2.logo}.
-                          {value.item.team2.short_name}
+                          {value.item.team1.short_name}
+                          {/*.{value.item.team1.logo}*/}
+                        </Text>
+                        <Image
+                          style={styles.logo}
+                          source={{
+                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          }}
+                        />
+                        <Text
+                          style={{
+                            display: value.item.ga === null ? null : 'none',
+                            overflow: 'hidden',
+                          }}>
+                          {value.item.start_dt}
+                          {/*.{value.item.team2.logo}*/}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: '#606070',
+                            padding: 10,
+                            fontFamily: 'OpenSans',
+                            display: value.item.ga !== null ? null : 'none',
+                            margin: 10,
+                          }}>
+                          {value.item.ga}.{':'}.{value.item.gf}
+                          {/*.{value.item.team2.logo}*/}
+                        </Text>
+                        <Image
+                          style={styles.logo}
+                          source={{
+                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          }}
+                        />
+                        <Text style={styles.text}>
+                          .{value.item.team2.short_name}
                         </Text>
                         <Text style={styles.text}>
-                          {value.start_dt}.{value.stadium_id}.
+                          {value.start_dt}.{item.Stadium.name}.{'|'}.
+                          {item.Stadium.address}
                         </Text>
                         <View style={styles.separator} />
                       </TouchableOpacity>
@@ -224,8 +260,26 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#fff',
     fontFamily: 'OpenSans',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   hideItem: {
     display: 'none',
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  logo: {
+    width: 25,
+    height: 25,
+    borderRadius: 100,
   },
 });
