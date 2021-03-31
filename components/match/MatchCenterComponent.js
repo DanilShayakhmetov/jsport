@@ -281,5 +281,6 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 100,
+    margin: 20,
   },
 });
