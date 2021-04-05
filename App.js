@@ -46,7 +46,6 @@ class App extends React.Component {
           tournamentItem.tournamentId = calendar[i].tournament_id;
           tournamentItem.Data = calendar[i].tournament;
           tournamentItem.Stadium = calendar[i].stadium;
-          console.log(tournamentItem.Stadium);
           tournamentList[calendar[i].tournament_id] = tournamentItem;
         }
       }
@@ -72,9 +71,12 @@ class App extends React.Component {
           tournamentList[match.tournament_id].matchItems.push(matchItem);
           tournamentList[calendar[i].tournament_id].tournamentId =
             calendar[i].tournament_id;
+          tournamentList[calendar[i].tournament_id].Stadium =
+            calendar[i].stadium;
         }
       }
     }
+
 
     return tournamentList;
   };

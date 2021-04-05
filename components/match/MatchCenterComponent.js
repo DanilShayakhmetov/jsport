@@ -188,9 +188,22 @@ export default class MatchCenterScreen extends Component {
                         <Text style={styles.text}>
                           .{value.item.team2.short_name}
                         </Text>
-                        <Text style={styles.text}>
-                          {value.start_dt}.{item.Stadium.name}.{'|'}.
-                          {item.Stadium.address}
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            fontFamily: 'OpenSans',
+                            display:
+                              item.Stadium === 'empty' || item.Stadium === null
+                                ? 'none'
+                                : null,
+                            margin: 5,
+                          }}>
+                          {value.item.start_dt}.{'|'}.
+                          {item.Stadium === null ? '-' : item.Stadium.name}
+                          .{'|'}.
+                          {item.Stadium === null
+                            ? '-'
+                            : item.Stadium.address}
                         </Text>
                         <View style={styles.separator} />
                       </TouchableOpacity>
