@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Picker,
+  Image,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -75,6 +76,7 @@ export default class TeamListScreen extends Component {
         </View>
       );
     } else {
+      console.log(teamList.teams.data);
       return (
         <View style={styles.container}>
           <Picker
@@ -98,11 +100,32 @@ export default class TeamListScreen extends Component {
               <Picker.Item label={season.title} value={season.season_id} />
             ))}
           </Picker>
-          <ScrollView>
+          <ScrollView
+            style={{
+              flex: 1,
+              backgroundColor: '#fff',
+              marginLeft: 10,
+            }}>
             {teamList.teams.data.map((team) => (
-              <Text>
-                {team.logo}.{'   -   '}.{team.short_name}
-              </Text>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: '#fff',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={styles.logo}
+                  source={{
+                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                  }}
+                />
+                <Text style={{marginLeft: 10}}>{team.full_name}</Text>
+                {/*<Text>*/}
+                {/*  {team.logo}.{'   -   '}.{team.full_name}*/}
+                {/*</Text>*/}
+              </View>
             ))}
           </ScrollView>
           <View
@@ -169,8 +192,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
   containerTop: {
     flex: 1,
@@ -199,5 +223,19 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignSelf: 'flex-start',
     marginLeft: 30,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  logo: {
+    width: 25,
+    height: 25,
+    borderRadius: 100,
+    margin: 5,
   },
 });
