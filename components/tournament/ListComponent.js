@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Picker,
+  Image,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -96,13 +97,49 @@ export default class TournamentListScreen extends Component {
               <Picker.Item label={season.title} value={season.season_id} />
             ))}
           </Picker>
-          <ScrollView>
+          <ScrollView
+            style={{
+              flex: 1,
+              backgroundColor: '#fff',
+              marginLeft: 10,
+              // alignItems: 'center',
+              // justifyContent: 'center',
+              // alignSelf: 'flex-start',
+            }}>
             {tournamentsList.tournaments.data.map((tournament) => (
-              <Text>
-                {tournament.start_dt}.{'   -   '}.{tournament.end_dt}
-                {tournament.cover}.{'   -   '}.{tournament.short_name}
-                {tournament.description}
-              </Text>
+              <View
+                style={{
+                  marginBottom: 10,
+                  // justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                    // justifyContent: 'center',
+                  }}>
+                  <Image
+                    style={styles.logo}
+                    source={{
+                      uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    }}
+                  />
+                  <View>
+                    <Text style={{padding: 15}}>
+                      {tournament.start_dt}.{'   -   '}.{tournament.end_dt}
+                    </Text>
+                    <Text style={{padding: 15}}>Колл-во команд</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text>
+                    {/*{tournament.cover}.{'   -   '}.{tournament.short_name}*/}
+                    {tournament.description}
+                  </Text>
+                </View>
+              </View>
             ))}
           </ScrollView>
           <View
@@ -169,8 +206,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
   containerTop: {
     flex: 1,
@@ -199,5 +237,19 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignSelf: 'flex-start',
     marginLeft: 30,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  logo: {
+    width: 200,
+    height: 120,
+    borderRadius: 20,
+    margin: 5,
   },
 });
