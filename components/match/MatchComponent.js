@@ -160,6 +160,10 @@ export default class MatchScreen extends Component {
             roster.team2.push(playerItem);
           }
         });
+        roster.team1.name = match.team1.full_name;
+        roster.team2.name = match.team2.full_name;
+        roster.team1.logo = match.team1.logo;
+        roster.team2.logo = match.team2.logo;
       }
     });
 
@@ -212,6 +216,7 @@ export default class MatchScreen extends Component {
       let rosterList = this.rosterPreparer(matchData);
       this.state.rosterList = rosterList;
       console.log(matchData);
+      console.log(rosterList);
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
@@ -229,7 +234,6 @@ export default class MatchScreen extends Component {
                   justifyContent: 'center',
                   width: 120,
                   alignItems: 'center',
-
                 }}>
                 <Image
                   style={styles.logo}
@@ -260,7 +264,7 @@ export default class MatchScreen extends Component {
           </View>
           <View
             style={{
-              marginBottom: 40,
+              marginBottom: 15,
               flexDirection: 'row',
               flexWrap: 'wrap',
               alignItems: 'flex-start',
@@ -275,7 +279,7 @@ export default class MatchScreen extends Component {
             </TouchableOpacity>
             <Text style={styles.borderItems}>{matchData.stadium.name}</Text>
           </View>
-          <View style={{height: 30, marginBottom: 30}}>
+          <View style={{height: 30, marginBottom: 5}}>
             <ScrollView horizontal={true} style={styles.scrollItem}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -310,7 +314,6 @@ export default class MatchScreen extends Component {
             </ScrollView>
           </View>
           <View style={styles.mainDataContainer}>
-            <Text>{this.state.focusedTab}</Text>
             <View
               style={{
                 display: this.state.focusedTab === '0' ? null : 'none',
@@ -327,10 +330,60 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === '1' ? null : 'none',
                 overflow: 'hidden',
               }}>
-              {eventsList.map((item) => (
-                <Text>
-                  {item.event}.{item.time}.{'stats'}
+              <View
+                style={{
+                  width: '100%',
+                  marginBottom: 5,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}>
+                <Text
+                  style={{
+                    width: '40%',
+                  }}>
+                  Команда
                 </Text>
+                <Text
+                  style={{
+                    width: '10%',
+                  }}>
+                  И
+                </Text>
+                <Text
+                  style={{
+                    width: '10%',
+                  }}>
+                  В
+                </Text>
+                <Text
+                  style={{
+                    width: '10%',
+                  }}>
+                  Н
+                </Text>
+                <Text
+                  style={{
+                    width: '10%',
+                  }}>
+                  П
+                </Text>
+                <View
+                  style={{
+                    width: '20%',
+                    alignItems: 'flex-end',
+                    alignSelf: 'flex-end',
+                  }}>
+                  <Text>О</Text>
+                </View>
+              </View>
+              {eventsList.map((item) => (
+                <View>
+                  <Text>
+                    {item.event}.{item.time}.{'stats'}
+                  </Text>
+                </View>
               ))}
             </View>
             <View
@@ -341,16 +394,32 @@ export default class MatchScreen extends Component {
               <View
                 style={{
                   marginBottom: 20,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
                 }}>
                 <TouchableOpacity
+                  style={styles.borderItems}
                   activeOpacity={0.8}
                   onPress={this.rosterHandler.bind(this, '0')}>
-                  <Text>{'rosterList.team1.team_id'}</Text>
+                  <Image
+                    style={styles.logo}
+                    source={{
+                      uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    }}
+                  />
+                  <Text>{rosterList.team1.name}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  style={styles.borderItems}
                   activeOpacity={0.8}
                   onPress={this.rosterHandler.bind(this, '1')}>
-                  <Text>{'rosterList.team2.team_id'}</Text>
+                  <Image
+                    style={styles.logo}
+                    source={{
+                      uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    }}
+                  />
+                  <Text>{rosterList.team2.name}</Text>
                 </TouchableOpacity>
               </View>
               <ScrollView>
@@ -360,9 +429,11 @@ export default class MatchScreen extends Component {
                     overflow: 'hidden',
                   }}>
                   {rosterList.team1.map((item) => (
-                    <Text>
-                      {item.position}.{item.name}.{'     rost          '}
-                    </Text>
+                    <View>
+                      <Text>
+                        {item.number}.{item.name}.{item.position}
+                      </Text>
+                    </View>
                   ))}
                 </View>
                 <View
@@ -371,9 +442,11 @@ export default class MatchScreen extends Component {
                     overflow: 'hidden',
                   }}>
                   {rosterList.team2.map((item) => (
-                    <Text>
-                      {item.position}.{item.name}.{'     rost          '}
-                    </Text>
+                    <View>
+                      <Text>
+                        {item.number}.{item.name}.{item.position}
+                      </Text>
+                    </View>
                   ))}
                 </View>
               </ScrollView>
@@ -451,7 +524,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   touchItem: {
     borderBottomColor: 'blue',
@@ -463,7 +536,8 @@ const styles = StyleSheet.create({
   },
   mainDataContainer: {
     flex: 1,
-    marginBottom: 100,
+    marginBottom: 25,
+    padding: 20,
   },
   image: {
     width: 150,
@@ -481,10 +555,13 @@ const styles = StyleSheet.create({
   },
 
   borderItems: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5,
     padding: 5,
     margin: 5,
+    alignItems: 'center',
   },
 });
