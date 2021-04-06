@@ -247,6 +247,7 @@ export default class MatchScreen extends Component {
                   justifyContent: 'center',
                   width: 120,
                   alignItems: 'center',
+
                 }}>
                 <Image
                   style={styles.logo}
