@@ -14,7 +14,6 @@ import Handler from '../../graphql/handler';
 import {Icon} from 'react-native-elements';
 
 const handler = Handler;
-var TEAM_LIST = 'empty';
 
 export default class TeamListScreen extends Component {
   constructor(props) {
