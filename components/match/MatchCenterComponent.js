@@ -233,6 +233,7 @@ export default class MatchCenterScreen extends Component {
                             style={{
                               fontSize: 14,
                               fontFamily: 'OpenSans',
+                              color: 'gray',
                               display:
                                 item.Stadium === 'empty' ||
                                 item.Stadium === null
@@ -240,7 +241,8 @@ export default class MatchCenterScreen extends Component {
                                   : null,
                               margin: 5,
                             }}>
-                            {value.item.start_dt}.{'|'}.
+                            {value.item.start_dt}
+                            {' | '}
                             {item.Stadium === null ? '-' : item.Stadium.name}
                           </Text>
                         </View>
@@ -347,8 +349,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   matchList_headerText: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 18,
+    fontWeight: 'bold',
     fontFamily: 'OpenSans',
   },
   matchItem_container: {
@@ -378,7 +380,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   matchItem_topBlock: {
     flex: 1,
     paddingLeft: 10,
@@ -401,35 +402,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-
-  matchItem_topBlockText: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'OpenSans',
-  },
-  matchItem_bottomBlockText: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'OpenSans',
-  },
-
-  topHeading: {
-    paddingLeft: 10,
-    fontSize: 20,
-  },
-  header: {
-    backgroundColor: '#F5FCFF',
-    padding: 16,
-  },
-  headerText: {
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: 'OpenSans',
-  },
   separator: {
     height: 0.5,
     backgroundColor: '#808080',
@@ -443,28 +415,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: 'OpenSans',
     width: '70%',
-  },
-  content: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: '#fff',
-    fontFamily: 'OpenSans',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  hideItem: {
-    display: 'none',
-  },
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2,
-    overflow: 'hidden',
-    borderWidth: 3,
-    borderColor: 'white',
   },
   logo: {
     width: 25,
