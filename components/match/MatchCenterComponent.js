@@ -360,13 +360,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   matchItem_team1: {
-    width: '33%',
+    width: '40%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   matchItem_team2: {
-    width: '33%',
+    width: '40%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   matchItem_score: {
-    width: '33%',
+    width: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   matchItem_topBlock: {
@@ -432,6 +442,7 @@ const styles = StyleSheet.create({
     color: '#606070',
     padding: 10,
     fontFamily: 'OpenSans',
+    width: '70%',
   },
   content: {
     paddingLeft: 10,
