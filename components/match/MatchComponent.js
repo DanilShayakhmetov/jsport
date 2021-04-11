@@ -177,10 +177,10 @@ export default class MatchScreen extends Component {
     };
   };
 
-  tabsHandler = (page) => {
+  tabsHandler = (tab) => {
     console.log(this.context.focusedTab);
     this.setState({
-      focusedTab: page,
+      focusedTab: tab,
     });
   };
 

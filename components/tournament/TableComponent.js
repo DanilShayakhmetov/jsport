@@ -116,10 +116,10 @@ export default class TableScreen extends Component {
     return roster;
   };
 
-  tabsHandler = (page) => {
+  tabsHandler = (tab) => {
     console.log(this.context.focusedTab);
     this.setState({
-      focusedTab: page,
+      focusedTab: tab,
     });
   };
 

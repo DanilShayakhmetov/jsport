@@ -117,10 +117,10 @@ export default class ApplicationScreen extends Component {
     return roster;
   };
 
-  tabsHandler = (page) => {
+  tabsHandler = (tab) => {
     console.log(this.context.focusedTab);
     this.setState({
-      focusedTab: page,
+      focusedTab: tab,
     });
   };
 
