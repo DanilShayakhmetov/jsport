@@ -18,7 +18,7 @@ export default class MatchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focusedTab: '0',
+      focusedTab: 0,
       focusedRoster: '0',
       eventsList: '',
       statsList: '',
@@ -227,7 +227,7 @@ export default class MatchScreen extends Component {
                 flexWrap: 'wrap',
                 justifyContent: 'center',
                 alignItems: 'center',
-                padding: 20,
+                padding: 10,
               }}>
               <View
                 style={{
@@ -244,7 +244,7 @@ export default class MatchScreen extends Component {
                 <Text>{matchData.team1.full_name}</Text>
               </View>
               <Text>
-                {matchData.gf}.{'      :      '}.{matchData.ga}
+                {matchData.gf}{'      :      '}{matchData.ga}
               </Text>
               <View
                 style={{
@@ -262,14 +262,7 @@ export default class MatchScreen extends Component {
               </View>
             </View>
           </View>
-          <View
-            style={{
-              marginBottom: 15,
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-            }}>
+          <View style={styles.containerBottom}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={this.tournamentRedirect.bind(this)}>
@@ -279,36 +272,36 @@ export default class MatchScreen extends Component {
             </TouchableOpacity>
             <Text style={styles.borderItems}>{matchData.stadium.name}</Text>
           </View>
-          <View style={{height: 30, marginBottom: 5}}>
+          <View style={styles.tabsContainer}>
             <ScrollView horizontal={true} style={styles.scrollItem}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '0' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 0 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '0')}>
+                onPress={this.tabsHandler.bind(this, 0)}>
                 <Text>{'        События         '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '1' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 1 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '1')}>
+                onPress={this.tabsHandler.bind(this, 1)}>
                 <Text>{'        Статистика          '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '2' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 2 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '2')}>
+                onPress={this.tabsHandler.bind(this, 2)}>
                 <Text>{'        Составы          '}</Text>
               </TouchableOpacity>
             </ScrollView>
@@ -316,7 +309,7 @@ export default class MatchScreen extends Component {
           <View style={styles.mainDataContainer}>
             <View
               style={{
-                display: this.state.focusedTab === '0' ? null : 'none',
+                display: this.state.focusedTab === 0 ? null : 'none',
                 overflow: 'hidden',
               }}>
               {eventsList.map((item) => (
@@ -327,7 +320,7 @@ export default class MatchScreen extends Component {
             </View>
             <View
               style={{
-                display: this.state.focusedTab === '1' ? null : 'none',
+                display: this.state.focusedTab === 1 ? null : 'none',
                 overflow: 'hidden',
               }}>
               <View
@@ -388,7 +381,7 @@ export default class MatchScreen extends Component {
             </View>
             <View
               style={{
-                display: this.state.focusedTab === '2' ? null : 'none',
+                display: this.state.focusedTab === 2 ? null : 'none',
                 overflow: 'hidden',
               }}>
               <View
@@ -444,7 +437,9 @@ export default class MatchScreen extends Component {
                   {rosterList.team2.map((item) => (
                     <View>
                       <Text>
-                        {item.number}.{item.name}.{item.position}
+                        {item.number}
+                        {item.name}
+                        {item.position}
                       </Text>
                     </View>
                   ))}
@@ -524,6 +519,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 5,
+  },
+  containerBottom: {
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  tabsContainer: {
+    height: 30,
     marginBottom: 5,
   },
   touchItem: {
