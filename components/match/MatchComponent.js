@@ -220,7 +220,12 @@ export default class MatchScreen extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
-            <Text>{matchData.start_dt}</Text>
+            <Text
+              style={{
+                marginBottom: 25,
+              }}>
+              {matchData.start_dt}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -244,7 +249,9 @@ export default class MatchScreen extends Component {
                 <Text>{matchData.team1.full_name}</Text>
               </View>
               <Text>
-                {matchData.gf}{'      :      '}{matchData.ga}
+                {matchData.gf}
+                {'      :      '}
+                {matchData.ga}
               </Text>
               <View
                 style={{

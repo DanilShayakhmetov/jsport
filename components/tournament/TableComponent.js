@@ -17,8 +17,8 @@ export default class TableScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focusedTab: '0',
-      focusedRoster: '0',
+      focusedTab: 0,
+      focusedRoster: 0,
       matchList: 'empty',
       tableList: 'empty',
       players: 'empty',
@@ -201,7 +201,7 @@ export default class TableScreen extends Component {
           PLAYERS = disapproved;
         }
 
-        this.tabsHandler('3');
+        this.tabsHandler(3);
       });
   };
 
@@ -238,7 +238,7 @@ export default class TableScreen extends Component {
           <View style={styles.titleText}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.tabsHandler.bind(this, '0')}>
+              onPress={this.tabsHandler.bind(this, 0)}>
               <Text>
                 {matchD.tournament.short_name}. {'\n'}
               </Text>
@@ -249,41 +249,41 @@ export default class TableScreen extends Component {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '0' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 0 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '0')}>
+                onPress={this.tabsHandler.bind(this, 0)}>
                 <Text>{'        Матчи         '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '1' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 1 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '1')}>
+                onPress={this.tabsHandler.bind(this, 1)}>
                 <Text>{'        Таблица          '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '2' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 2 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '2')}>
+                onPress={this.tabsHandler.bind(this, 2)}>
                 <Text>{'        Статистика          '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '3' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 3 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '3')}>
+                onPress={this.tabsHandler.bind(this, 3)}>
                 <Text>{'        Команды          '}</Text>
               </TouchableOpacity>
             </ScrollView>
@@ -293,7 +293,7 @@ export default class TableScreen extends Component {
               <Text>{this.state.focusedTab}</Text>
               <View
                 style={{
-                  display: this.state.focusedTab === '0' ? null : 'none',
+                  display: this.state.focusedTab === 0 ? null : 'none',
                   overflow: 'hidden',
                 }}>
                 {matchList.map((item) => (
@@ -305,7 +305,7 @@ export default class TableScreen extends Component {
               </View>
               <View
                 style={{
-                  display: this.state.focusedTab === '1' ? null : 'none',
+                  display: this.state.focusedTab === 1 ? null : 'none',
                   overflow: 'hidden',
                 }}>
                 <View
@@ -329,7 +329,7 @@ export default class TableScreen extends Component {
               </View>
               <View
                 style={{
-                  display: this.state.focusedTab === '2' ? null : 'none',
+                  display: this.state.focusedTab === 2 ? null : 'none',
                   overflow: 'hidden',
                 }}>
                 <View
@@ -338,18 +338,18 @@ export default class TableScreen extends Component {
                   }}>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={this.rosterHandler.bind(this, '0')}>
+                    onPress={this.rosterHandler.bind(this, 0)}>
                     <Text>{'rosterList.team1.team_id'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={this.rosterHandler.bind(this, '1')}>
+                    onPress={this.rosterHandler.bind(this, 1)}>
                     <Text>{'rosterList.team2.team_id'}</Text>
                   </TouchableOpacity>
                 </View>
                 <View
                   style={{
-                    display: this.state.focusedRoster === '0' ? null : 'none',
+                    display: this.state.focusedRoster === 0 ? null : 'none',
                     overflow: 'hidden',
                   }}>
                   {rosterList.team1.map((item) => (
@@ -360,7 +360,7 @@ export default class TableScreen extends Component {
                 </View>
                 <View
                   style={{
-                    display: this.state.focusedRoster === '1' ? null : 'none',
+                    display: this.state.focusedRoster === 1 ? null : 'none',
                     overflow: 'hidden',
                   }}>
                   {rosterList.team2.map((item) => (
@@ -373,7 +373,7 @@ export default class TableScreen extends Component {
 
               <View
                 style={{
-                  display: this.state.focusedTab === '3' ? null : 'none',
+                  display: this.state.focusedTab === 3 ? null : 'none',
                   overflow: 'hidden',
                 }}>
                 <View
