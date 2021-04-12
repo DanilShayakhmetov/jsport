@@ -235,6 +235,7 @@ export default class TableScreen extends Component {
     } else {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
+      console.log(tableList);
       return (
         <View style={styles.container}>
           <View style={styles.titleText}>
@@ -262,7 +263,7 @@ export default class TableScreen extends Component {
               </View>
             </View>
           </View>
-          <View style={{height: 30, marginBottom: 30}}>
+          <View style={{height: 30, marginBottom: 10}}>
             <ScrollView horizontal={true} style={styles.scrollItem}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -306,16 +307,28 @@ export default class TableScreen extends Component {
               </TouchableOpacity>
             </ScrollView>
           </View>
-          <ScrollView>
-            <View style={styles.mainDataContainer}>
-              <View
-                style={{
-                  display: this.state.focusedTab === 0 ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                <View>
-                  <Text>Список этапов</Text>
-                </View>
+          <View
+            style={{
+              height: 30,
+              marginBottom: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontFamily: 'OpenSans',
+              fontSize: 16,
+              borderWidth: 2,
+              borderRadius: 10,
+              borderColor: 'lightgray',
+              padding: 5,
+            }}>
+            <Text>{tableList.name}</Text>
+          </View>
+          <View style={styles.mainDataContainer}>
+            <View
+              style={{
+                display: this.state.focusedTab === 0 ? null : 'none',
+                overflow: 'hidden',
+              }}>
+              <ScrollView>
                 {matchList.map((item) => (
                   <View
                     style={{
@@ -356,94 +369,221 @@ export default class TableScreen extends Component {
                     </View>
                   </View>
                 ))}
-              </View>
+              </ScrollView>
+            </View>
+            <View
+              style={{
+                display: this.state.focusedTab === 1 ? null : 'none',
+                overflow: 'hidden',
+              }}>
               <View
                 style={{
-                  display: this.state.focusedTab === 1 ? null : 'none',
-                  overflow: 'hidden',
+                  width: '100%',
+                  marginBottom: 5,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
                 }}>
                 <View
                   style={{
-                    marginTop: 20,
-                    marginBottom: 20,
+                    width: '45%',
                   }}>
-                  <Text>{tableList.name}</Text>
+                  <Text>Команда</Text>
                 </View>
+                <View
+                  style={{
+                    width: '55%',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                  }}>
+                  <Text
+                    style={{
+                      width: '15%',
+                    }}>
+                    И
+                  </Text>
+                  <Text
+                    style={{
+                      width: '15%',
+                    }}>
+                    В
+                  </Text>
+                  <Text
+                    style={{
+                      width: '15%',
+                    }}>
+                    Н
+                  </Text>
+                  <Text
+                    style={{
+                      width: '15%',
+                    }}>
+                    П
+                  </Text>
+                  <View
+                    style={{
+                      width: '40%',
+                      alignItems: 'flex-end',
+                      alignSelf: 'flex-end',
+                    }}>
+                    <Text>О</Text>
+                  </View>
+                </View>
+              </View>
+              <ScrollView>
                 {tableList.tableRows.map((item) => (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={this.showApplication.bind(this, item.team)}>
-                    <Text>
-                      {item.team.short_name}.{item.team.logo}.{'\n'}.
-                      {item.games}.{item.wins}.{item.draws}.{item.loses}.
-                      {item.ga}.{' - '}.{item.gf}
-                    </Text>
+                    <View
+                      style={{
+                        width: '100%',
+                        marginBottom: 5,
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-start',
+                      }}>
+                      <View
+                        style={{
+                          width: '45%',
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            width: '60%',
+                            margin: 10,
+                          }}>
+                          {item.team.full_name}
+                        </Text>
+                        <Image
+                          style={styles.teamLogo}
+                          source={{
+                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          }}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          width: '55%',
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                        }}>
+                        <Text
+                          style={{
+                            width: '15%',
+                          }}>
+                          {item.games}
+                        </Text>
+                        <Text
+                          style={{
+                            width: '15%',
+                          }}>
+                          {item.wins}
+                        </Text>
+                        <Text
+                          style={{
+                            width: '15%',
+                          }}>
+                          {item.draws}
+                        </Text>
+                        <Text
+                          style={{
+                            width: '15%',
+                          }}>
+                          {item.loses}
+                        </Text>
+                        <View
+                          style={{
+                            width: '40%',
+                            alignItems: 'flex-end',
+                            alignSelf: 'flex-end',
+                          }}>
+                          <Text>
+                            {item.ga}.{' - '}.{item.gf}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
                   </TouchableOpacity>
                 ))}
+              </ScrollView>
+            </View>
+            <View
+              style={{
+                display: this.state.focusedTab === 2 ? null : 'none',
+                overflow: 'hidden',
+              }}>
+              <View
+                style={{
+                  marginBottom: 20,
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.rosterHandler.bind(this, 0)}>
+                  <Text>{'rosterList.team1.team_id'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.rosterHandler.bind(this, 1)}>
+                  <Text>{'rosterList.team2.team_id'}</Text>
+                </TouchableOpacity>
               </View>
               <View
                 style={{
-                  display: this.state.focusedTab === 2 ? null : 'none',
+                  display: this.state.focusedRoster === 0 ? null : 'none',
                   overflow: 'hidden',
                 }}>
-                <View
-                  style={{
-                    marginBottom: 20,
-                  }}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={this.rosterHandler.bind(this, 0)}>
-                    <Text>{'rosterList.team1.team_id'}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={this.rosterHandler.bind(this, 1)}>
-                    <Text>{'rosterList.team2.team_id'}</Text>
-                  </TouchableOpacity>
-                </View>
-                <View
-                  style={{
-                    display: this.state.focusedRoster === 0 ? null : 'none',
-                    overflow: 'hidden',
-                  }}>
+                <ScrollView>
                   {rosterList.team1.map((item) => (
                     <Text>
                       {item.position}.{item.name}.{'     rost          '}
                     </Text>
                   ))}
-                </View>
-                <View
-                  style={{
-                    display: this.state.focusedRoster === 1 ? null : 'none',
-                    overflow: 'hidden',
-                  }}>
+                </ScrollView>
+              </View>
+              <View
+                style={{
+                  display: this.state.focusedRoster === 1 ? null : 'none',
+                  overflow: 'hidden',
+                }}>
+                <ScrollView>
                   {rosterList.team2.map((item) => (
                     <Text>
                       {item.position}.{item.name}.{'     rost          '}
                     </Text>
                   ))}
-                </View>
+                </ScrollView>
               </View>
+            </View>
 
-              <View
-                style={{
-                  display: this.state.focusedTab === 3 ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                <View
-                  style={{
-                    marginTop: 20,
-                    marginBottom: 20,
-                  }}>
-                  <Text>{tableList.name}</Text>
-                </View>
+            <View
+              style={{
+                display: this.state.focusedTab === 3 ? null : 'none',
+                overflow: 'hidden',
+              }}>
+              <ScrollView>
                 {tableList.tableRows.map((item) => (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={this.showApplication.bind(this, item.team)}>
-                    <Text>
-                      {item.team.logo}.{item.team.short_name}
-                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                      }}>
+                      <Image
+                        style={styles.teamLogo}
+                        source={{
+                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }}
+                      />
+                      <Text>{item.team.full_name}</Text>
+                    </View>
                     <View
                       style={{
                         display:
@@ -456,9 +596,9 @@ export default class TableScreen extends Component {
                     </View>
                   </TouchableOpacity>
                 ))}
-              </View>
+              </ScrollView>
             </View>
-          </ScrollView>
+          </View>
           <View
             style={{
               width: 432,
@@ -524,7 +664,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 10,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   containerTop: {
@@ -545,6 +685,7 @@ const styles = StyleSheet.create({
   mainDataContainer: {
     flex: 1,
     marginBottom: 100,
+    padding: 10,
   },
   titleText: {
     marginTop: 10,
