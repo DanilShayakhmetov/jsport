@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   Button,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,6 +10,7 @@ import {
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
+import {Icon} from 'react-native-elements';
 
 const handler = Handler;
 var PLAYERS = <Text>{''}</Text>;
@@ -236,13 +238,29 @@ export default class TableScreen extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.titleText}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={this.tabsHandler.bind(this, 0)}>
-              <Text>
-                {matchD.tournament.short_name}. {'\n'}
-              </Text>
-            </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
+              <Image
+                style={styles.logo}
+                source={{
+                  uri: 'https://reactnative.dev/img/tiny_logo.png',
+                }}
+              />
+              <View>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={this.tabsHandler.bind(this, 0)}>
+                  <Text style={{fontFamily: 'OpenSans', fontSize: 18}}>
+                    {matchD.tournament.short_name}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
           <View style={{height: 30, marginBottom: 30}}>
             <ScrollView horizontal={true} style={styles.scrollItem}>
@@ -290,17 +308,53 @@ export default class TableScreen extends Component {
           </View>
           <ScrollView>
             <View style={styles.mainDataContainer}>
-              <Text>{this.state.focusedTab}</Text>
               <View
                 style={{
                   display: this.state.focusedTab === 0 ? null : 'none',
                   overflow: 'hidden',
                 }}>
+                <View>
+                  <Text>Список этапов</Text>
+                </View>
                 {matchList.map((item) => (
-                  <Text>
-                    {item.item.team1.short_name}.{'   -   '}.
-                    {item.item.team2.short_name}. {'\n'}. {item.item.start_dt}
-                  </Text>
+                  <View
+                    style={{
+                      height: 30,
+                      marginBottom: 30,
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                    }}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        marginRight: 10,
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        style={styles.teamLogo}
+                        source={{
+                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }}
+                      />
+                      <Image
+                        style={styles.teamLogo}
+                        source={{
+                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }}
+                      />
+                    </View>
+                    <View>
+                      <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
+                        {item.item.team1.full_name}
+                        {'   -   '}
+                        {item.item.team2.full_name}
+                      </Text>
+                      <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
+                        {item.item.start_dt}
+                      </Text>
+                    </View>
+                  </View>
                 ))}
               </View>
               <View
@@ -405,19 +459,58 @@ export default class TableScreen extends Component {
               </View>
             </View>
           </ScrollView>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Button
-              title="матч центр"
-              onPress={() => this.props.navigation.navigate('MatchCenter')}
-            />
-            <Button
-              title="турниры"
-              onPress={() => this.props.navigation.navigate('TournamentList')}
-            />
-            <Button
-              title="команды"
-              onPress={() => this.props.navigation.navigate('TeamList')}
-            />
+          <View
+            style={{
+              width: 432,
+              height: 50,
+              alignSelf: 'center',
+              backgroundColor: 'lightGray',
+              borderTopWidth: 1,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginTop: 10,
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('MatchCenter')}
+                style={{
+                  width: 144,
+                  color: 'gray',
+                }}>
+                <Icon
+                  name="ios-american-football"
+                  type="ionicon"
+                  color="#517fa4"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('TournamentList')}
+                style={{
+                  width: 144,
+                  color: 'gray',
+                  borderLeftWidth: 2,
+                  borderRightWidth: 2,
+                }}>
+                <Icon
+                  name="ios-trophy-outline"
+                  type="ionicon"
+                  color="#517fa4"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('TeamList')}
+                style={{
+                  width: 144,
+                  color: 'gray',
+                }}>
+                <Icon name="ios-people-sharp" type="ionicon" color="#517fa4" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       );
@@ -430,6 +523,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -453,12 +547,25 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   titleText: {
-    marginTop: 50,
+    marginTop: 10,
+    marginBottom: 10,
     fontSize: 200,
     fontWeight: 'bold',
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'flex-start',
-    marginLeft: 30,
+  },
+  logo: {
+    width: 100,
+    height: 60,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginRight: 10,
+  },
+  teamLogo: {
+    width: 25,
+    height: 25,
+    borderRadius: 100,
+    margin: 5,
   },
 });
