@@ -205,24 +205,47 @@ export default class TableScreen extends Component {
             style={{
               flexDirection: 'row',
               flexWrap: 'wrap',
+              justifyContent: 'flex-start',
+              marginLeft: 10,
             }}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.showApplication.bind(this, team, 1)}>
-              <Text>{'        Заявленные          '}</Text>
+              onPress={this.showApplication.bind(this, team, 1)}
+              style={{margin: 5}}>
+              <Text style={{borderWidth: 1, borderRadius: 5}}>
+                {'        Заявленные          '}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.showApplication.bind(this, team, 0)}>
-              <Text>{'        Отзаявленные          '}</Text>
+              onPress={this.showApplication.bind(this, team, 0)}
+              style={{margin: 5}}>
+              <Text style={{borderWidth: 1, borderRadius: 5}}>
+                {'        Отзаявленные          '}
+              </Text>
             </TouchableOpacity>
+
             {players.disapproved.map((player) => (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.teamRedirect.bind(this, team)}>
-                <Text>
-                  {player.player_id}.{'   -   '}.
-                </Text>
+                onPress={this.teamRedirect.bind(this, team)}
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: 3,
+                }}>
+                <Text style={{width: '5%'}}>{player.player.number}</Text>
+                <Image
+                  style={styles.teamLogo}
+                  source={{
+                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                  }}
+                />
+                <Text style={{width: '25%'}}>{player.player.last_name}</Text>
+                <Text style={{width: '25%'}}>{player.player.first_name}</Text>
+                <Text style={{width: '25%'}}>{player.player.middle_name}</Text>
               </TouchableOpacity>
             ))}
           </View>
