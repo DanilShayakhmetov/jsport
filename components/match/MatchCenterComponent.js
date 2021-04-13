@@ -84,7 +84,7 @@ export default class MatchCenterScreen extends Component {
   render() {
     if (handler.isUndefined(this.context.calendar)) {
       return (
-        <View style={styles.container}>
+        <View>
           <Text style={styles.topHeading}>Wait</Text>
         </View>
       );
@@ -257,7 +257,7 @@ export default class MatchCenterScreen extends Component {
           <View
             style={{
               width: 432,
-              height: 50,
+              height: 40,
               alignSelf: 'center',
               backgroundColor: 'lightGray',
               borderTopWidth: 1,
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'OpenSans',
+    padding: 20,
   },
   tabs_container: {
     height: 50,

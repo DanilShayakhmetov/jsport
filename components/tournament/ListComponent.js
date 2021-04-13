@@ -14,6 +14,7 @@ import Handler from '../../graphql/handler';
 import {Icon} from 'react-native-elements';
 
 const handler = Handler;
+const regex = /(<([^>]+)>)/gi;
 
 export default class TournamentListScreen extends Component {
   constructor(props) {
@@ -136,7 +137,7 @@ export default class TournamentListScreen extends Component {
                 <View>
                   <Text>
                     {/*{tournament.cover}.{'   -   '}.{tournament.short_name}*/}
-                    {tournament.description}
+                    {tournament.description.replace(regex, '')}
                   </Text>
                 </View>
               </View>

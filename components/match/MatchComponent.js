@@ -203,12 +203,8 @@ export default class MatchScreen extends Component {
       matchData === null
     ) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.topHeading}>Wait</Text>
-          <Button
-            title="Back to home"
-            onPress={() => this.props.navigation.navigate('MatchCenter')}
-          />
+        <View>
+          <Text>Wait</Text>
         </View>
       );
     } else {
@@ -223,6 +219,9 @@ export default class MatchScreen extends Component {
             <Text
               style={{
                 marginBottom: 25,
+                fontSize: 16,
+                color: '#606070',
+                fontFamily: 'OpenSans',
               }}>
               {matchData.start_dt}
             </Text>
@@ -248,7 +247,14 @@ export default class MatchScreen extends Component {
                 />
                 <Text>{matchData.team1.full_name}</Text>
               </View>
-              <Text>
+              <Text
+                style={{
+                  margin: 25,
+                  fontSize: 20,
+                  color: '#606070',
+                  fontFamily: 'OpenSans',
+                  fontWeight: 'bold',
+                }}>
                 {matchData.gf}
                 {'      :      '}
                 {matchData.ga}
@@ -265,7 +271,15 @@ export default class MatchScreen extends Component {
                     uri: 'https://reactnative.dev/img/tiny_logo.png',
                   }}
                 />
-                <Text>{matchData.team2.full_name}</Text>
+                <Text
+                  style={{
+                    marginBottom: 25,
+                    fontSize: 16,
+                    color: '#606070',
+                    fontFamily: 'OpenSans',
+                  }}>
+                  {matchData.team2.full_name}
+                </Text>
               </View>
             </View>
           </View>
@@ -402,7 +416,7 @@ export default class MatchScreen extends Component {
                   activeOpacity={0.8}
                   onPress={this.rosterHandler.bind(this, '0')}>
                   <Image
-                    style={styles.logo}
+                    style={styles.logoMini}
                     source={{
                       uri: 'https://reactnative.dev/img/tiny_logo.png',
                     }}
@@ -414,7 +428,7 @@ export default class MatchScreen extends Component {
                   activeOpacity={0.8}
                   onPress={this.rosterHandler.bind(this, '1')}>
                   <Image
-                    style={styles.logo}
+                    style={styles.logoMini}
                     source={{
                       uri: 'https://reactnative.dev/img/tiny_logo.png',
                     }}
@@ -561,12 +575,17 @@ const styles = StyleSheet.create({
     borderColor: 'white',
   },
   logo: {
-    width: 25,
-    height: 25,
-    borderRadius: 100,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     margin: 5,
   },
-
+  logoMini: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    margin: 2,
+  },
   borderItems: {
     flexDirection: 'row',
     flexWrap: 'wrap',

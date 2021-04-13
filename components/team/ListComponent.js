@@ -66,12 +66,8 @@ export default class TeamListScreen extends Component {
       seasonsList === undefined
     ) {
       return (
-        <View style={styles.container}>
+        <View>
           <Text>Wait</Text>
-          <Button
-            title="К списку матчей"
-            onPress={() => this.props.navigation.navigate('MatchCenter')}
-          />
         </View>
       );
     } else {

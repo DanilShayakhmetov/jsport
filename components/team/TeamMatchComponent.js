@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   Button,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,7 +20,7 @@ export default class TeamScreen extends Component {
     this.state = {
       matchList: 'empty',
       rosterList: 'empty',
-      focusedTab: '0',
+      focusedTab: 0,
     };
   }
 
@@ -66,24 +67,34 @@ export default class TeamScreen extends Component {
       this.state.rosterList === undefined
     ) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.topHeading}>Wait</Text>
-          <Button
-            title="Back to home"
-            onPress={() => this.props.navigation.navigate('MatchCenter')}
-          />
+        <View>
+          <Text>Wait</Text>
         </View>
       );
     } else {
       console.log(rosterList);
       return (
         <View style={styles.container}>
-          <View style={styles.titleText}>
+          <View>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={this.tabsHandler.bind(this, '0')}>
-              <Text>
-                {team.logo}.{team.short_name}
+              onPress={this.tabsHandler.bind(this, 0)}
+              style={styles.titleText}>
+              <Image
+                style={styles.logo}
+                source={{
+                  uri: 'https://reactnative.dev/img/tiny_logo.png',
+                }}
+              />
+              <Text
+                style={{
+                  marginLeft: 20,
+                  fontSize: 22,
+                  color: '#606070',
+                  fontFamily: 'OpenSans',
+                  fontWeight: 'bold',
+                }}>
+                {team.short_name}
               </Text>
             </TouchableOpacity>
           </View>
@@ -92,60 +103,136 @@ export default class TeamScreen extends Component {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '0' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 0 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '0')}>
+                onPress={this.tabsHandler.bind(this, 0)}>
                 <Text>{'        Матчи         '}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  borderBottomWidth: this.state.focusedTab === '1' ? 2 : 0,
+                  borderBottomWidth: this.state.focusedTab === 1 ? 2 : 0,
                   borderBottomColor: 'blue',
                   overflow: 'hidden',
                 }}
-                onPress={this.tabsHandler.bind(this, '1')}>
+                onPress={this.tabsHandler.bind(this, 1)}>
                 <Text>{'        Состав          '}</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
           <ScrollView>
             <View style={styles.mainDataContainer}>
-              <Text>{this.state.focusedTab}</Text>
               <View
                 style={{
-                  display: this.state.focusedTab === '0' ? null : 'none',
+                  display: this.state.focusedTab === 0 ? null : 'none',
                   overflow: 'hidden',
                 }}>
                 {matchList.map((item) => (
-                  <Text>
-                    {item.team1.logo}.{'  +  '}.{item.team2.logo}.{' '}
-                    {item.team1.short_name}.{'   -   '}.{item.team2.short_name}.{' '}
-                    {'\n'}. {item.start_dt}
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      margin: 10,
+                    }}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        marginRight: 20,
+                      }}>
+                      <Image
+                        style={styles.teamLogo}
+                        source={{
+                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }}
+                      />
+                      <Image
+                        style={styles.teamLogo}
+                        source={{
+                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: '#606070',
+                          fontFamily: 'OpenSans',
+                          fontWeight: 'bold',
+                        }}>
+                        {item.team1.short_name}
+                        {'   -   '}
+                        {item.team2.short_name}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: 'gray',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {item.start_dt}
+                      </Text>
+                    </View>
+                  </View>
                 ))}
               </View>
               <View
                 style={{
-                  display: this.state.focusedTab === '1' ? null : 'none',
+                  display: this.state.focusedTab === 1 ? null : 'none',
                   overflow: 'hidden',
                 }}>
-                <Text>1</Text>
+                {rosterList.map((item) => (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      margin: 10,
+                    }}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        marginRight: 20,
+                      }}>
+                      <Image
+                        style={styles.playerLogo}
+                        source={{
+                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        }}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: '#606070',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {item.last_name}
+                        {item.first_name}
+                        {item.middle_name}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: 'gray',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {item.start_dt}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
               </View>
-              {rosterList.map((item) => (
-                <Text>
-                  {item.photo}.{item.last_name}.{item.first_name}.
-                  {item.middle_name}
-                </Text>
-              ))}
             </View>
           </ScrollView>
           <View
             style={{
               width: 432,
-              height: 50,
+              height: 40,
               alignSelf: 'center',
               backgroundColor: 'lightGray',
               borderTopWidth: 1,
@@ -206,8 +293,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
+    padding: 20,
   },
   containerTop: {
     flex: 1,
@@ -229,12 +317,30 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   titleText: {
-    marginTop: 50,
+    marginBottom: 25,
     fontSize: 200,
     fontWeight: 'bold',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignSelf: 'flex-start',
-    marginLeft: 30,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    borderRadius: 80 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  teamLogo: {
+    width: 25,
+    height: 25,
+    borderRadius: 100,
+    marginLeft: -5,
+  },
+  playerLogo: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
 });
