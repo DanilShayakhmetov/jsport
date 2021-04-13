@@ -25,6 +25,9 @@ export default class TeamScreen extends Component {
   }
 
   async componentDidMount() {
+    this.props.navigation.setOptions({
+      title: this.context.tournamentData.Data.full_name,
+    });
     await handler
       .getTeamMatch(this.context.teamData.team_id)
       .then((value) => {

@@ -85,10 +85,11 @@ export default class MatchCenterScreen extends Component {
     if (handler.isUndefined(this.context.calendar)) {
       return (
         <View>
-          <Text style={styles.topHeading}>Wait</Text>
+          <Text>Wait</Text>
         </View>
       );
     } else {
+      console.log(this.getCalendar());
       return (
         <View style={styles.container}>
           <View style={styles.tabs_container}>

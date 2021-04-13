@@ -28,6 +28,9 @@ export default class TableScreen extends Component {
   }
 
   async componentDidMount() {
+    this.props.navigation.setOptions({
+      title: this.context.tournamentData.Data.full_name,
+    });
     await this.context.matchData
       .then((value) => {
         this.setState({

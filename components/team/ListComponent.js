@@ -26,6 +26,9 @@ export default class TeamListScreen extends Component {
   }
 
   async componentDidMount() {
+    this.props.navigation.setOptions({
+      title: this.context.tournamentData.Data.full_name,
+    });
     await handler
       .getSeasons()
       .then((value) => {

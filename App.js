@@ -114,11 +114,27 @@ class App extends React.Component {
         }}>
         <NavigationContainer>
           <Stack.Navigator style={{fontFamily: 'OpenSans'}}>
-            <Stack.Screen name="MatchCenter" component={MatchCenterScreen} options={{ title: 'Awesome app' }}/>
-            <Stack.Screen name="Match" component={MatchScreen} />
-            <Stack.Screen name="TournamentTable" component={TableScreen} />
-            <Stack.Screen name="Team" component={TeamScreen} />
-            <Stack.Screen name="TeamList" component={TeamListScreen} />
+            <Stack.Screen
+              name="MatchCenter"
+              component={MatchCenterScreen}
+              options={{title: 'Турниры'}}
+            />
+            <Stack.Screen
+              name="Match"
+              component={MatchScreen}
+            />
+            <Stack.Screen
+              name="TournamentTable"
+              component={TableScreen}
+            />
+            <Stack.Screen
+              name="Team"
+              component={TeamScreen}
+            />
+            <Stack.Screen
+              name="TeamList"
+              component={TeamListScreen}
+            />
             <Stack.Screen
               name="TournamentList"
               component={TournamentListScreen}

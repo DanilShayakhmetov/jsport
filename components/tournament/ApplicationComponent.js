@@ -25,6 +25,9 @@ export default class ApplicationScreen extends Component {
   }
 
   async componentDidMount() {
+    this.props.navigation.setOptions({
+      title: this.context.tournamentData.Data.full_name,
+    });
     await this.context.matchData
       .then((value) => {
         this.setState({
@@ -39,8 +42,6 @@ export default class ApplicationScreen extends Component {
         console.log(error);
       });
 
-    console.log(this.context.matchData._W.round_id, 'this');
-
     const round_id = this.context.matchData._W.round_id;
 
     await handler
@@ -53,6 +54,9 @@ export default class ApplicationScreen extends Component {
       .catch((error) => {
         console.log(error);
       });
+    this.props.navigation.setOptions({
+      title: this.context.tournamentData.Data.full_name,
+    });
   }
 
   //Отвечает за ненужнй раздел, просто заглушка
