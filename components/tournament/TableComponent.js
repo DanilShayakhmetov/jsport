@@ -280,12 +280,8 @@ export default class TableScreen extends Component {
       matchD === null
     ) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.topHeading}>Wait</Text>
-          <Button
-            title="Back to home"
-            onPress={() => this.props.navigation.navigate('MatchCenter')}
-          />
+        <View>
+          <Text>Wait</Text>
         </View>
       );
     } else {
