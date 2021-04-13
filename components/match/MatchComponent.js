@@ -52,8 +52,10 @@ export default class MatchScreen extends Component {
         let eventItem = {
           time: '',
           event: '',
+          color: '',
         };
-        eventItem.event = goal.situation + goal.player_id;
+        eventItem.event = 'ГОЛ';
+        eventItem.color = 'lightblue';
         eventItem.time = goal.minute;
         eventsList.push(eventItem);
       });
@@ -64,8 +66,10 @@ export default class MatchScreen extends Component {
         let eventItem = {
           time: '',
           event: '',
+          color: '',
         };
-        eventItem.event = card.reason + card.player_id;
+        eventItem.event = 'ЖК';
+        eventItem.color = 'yellow';
         eventItem.time = card.minute;
         eventsList.push(eventItem);
       });
@@ -76,8 +80,10 @@ export default class MatchScreen extends Component {
         let eventItem = {
           time: '',
           event: '',
+          color: '',
         };
-        eventItem.event = card.reason + card.player_id;
+        eventItem.event = 'КК';
+        eventItem.color = 'red';
         eventItem.time = card.minute;
         eventsList.push(eventItem);
       });
@@ -88,22 +94,24 @@ export default class MatchScreen extends Component {
         let eventItem = {
           time: '',
           event: '',
+          color: '',
         };
-        eventItem.event = card.result + card.player_id;
+        eventItem.event = 'ПЕНАЛЬТИ';
+        eventItem.color = 'blue';
         eventItem.time = card.minute;
         eventsList.push(eventItem);
       });
     }
 
-    for (let i = 0; i < eventsList.length - 1; i++) {
-      for (let j = 1; j < eventsList.length; j++) {
-        if (eventsList[i].time > eventsList[j].time) {
-          let buff = eventsList[i];
-          eventsList[i] = eventsList[j];
-          eventsList[j] = buff;
-        }
-      }
-    }
+    // for (let i = 0; i < eventsList.length - 1; i++) {
+    //   for (let j = 1; j < eventsList.length; j++) {
+    //     if (parseInt(eventsList[i].time) > parseInt(eventsList[j].time)) {
+    //       let buff = eventsList[i];
+    //       eventsList[i] = eventsList[j];
+    //       eventsList[j] = buff;
+    //     }
+    //   }
+    // }
 
     return eventsList;
   };
@@ -336,11 +344,36 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === 0 ? null : 'none',
                 overflow: 'hidden',
               }}>
-              {eventsList.map((item) => (
-                <Text>
-                  {item.event}.{item.time}.{'events'}
-                </Text>
-              ))}
+              <ScrollView>
+                {eventsList.map((item) => (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: 5,
+                      width: 400,
+                    }}>
+                    <Text
+                      style={{
+                        margin: 5,
+                        padding: 5,
+                        backgroundColor: item.color,
+                        borderWidth: 2,
+                        borderRadius: 5,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      {item.event}
+                    </Text>
+                    <Text>
+                      {item.time}
+                      {"'"}
+                    </Text>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
             <View
               style={{
