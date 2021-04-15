@@ -20,8 +20,9 @@ export default class MatchScreen extends Component {
     this.state = {
       focusedTab: 0,
       focusedRoster: '0',
-      eventsList: '',
-      statsList: '',
+      eventsList: undefined,
+      statsList: undefined,
+      rosterList: undefined,
     };
   }
 
@@ -33,6 +34,13 @@ export default class MatchScreen extends Component {
       .then((value) => {
         this.setState({
           matchData: value,
+        });
+        console.log(value);
+        this.setState({
+          eventList: this.eventPreparer(value),
+        });
+        this.setState({
+          rosterList: this.rosterPreparer(value),
         });
       })
       .catch((error) => {
@@ -102,16 +110,6 @@ export default class MatchScreen extends Component {
         eventsList.push(eventItem);
       });
     }
-
-    // for (let i = 0; i < eventsList.length - 1; i++) {
-    //   for (let j = 1; j < eventsList.length; j++) {
-    //     if (parseInt(eventsList[i].time) > parseInt(eventsList[j].time)) {
-    //       let buff = eventsList[i];
-    //       eventsList[i] = eventsList[j];
-    //       eventsList[j] = buff;
-    //     }
-    //   }
-    // }
 
     return eventsList;
   };
@@ -206,12 +204,13 @@ export default class MatchScreen extends Component {
   };
 
   render() {
-    const matchData = this.context.matchData._W;
-
+    const matchData = this.state.matchData;
+    const eventsList = this.state.eventList;
+    const rosterList = this.state.rosterList;
     if (
-      this.context.matchId === 'empty' ||
-      this.context.matchId === undefined ||
-      matchData === null
+      rosterList === undefined ||
+      eventsList === undefined ||
+      matchData === undefined
     ) {
       return (
         <View>
@@ -219,12 +218,6 @@ export default class MatchScreen extends Component {
         </View>
       );
     } else {
-      let eventsList = this.eventPreparer(matchData);
-      let rosterList = this.rosterPreparer(matchData);
-      this.state.rosterList = rosterList;
-      console.log(matchData);
-      console.log(rosterList);
-      handler.getFormedDate(matchData.start_dt);
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
