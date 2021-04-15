@@ -205,7 +205,7 @@ export default class MatchCenterScreen extends Component {
                               style={{
                                 fontSize: 16,
                                 color: '#606070',
-                                padding: 10,
+                                padding: 5,
                                 fontFamily: 'OpenSans',
                                 display: value.item.ga !== null ? null : 'none',
                                 margin: 10,

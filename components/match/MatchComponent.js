@@ -481,7 +481,9 @@ export default class MatchScreen extends Component {
                   {rosterList.team1.map((item) => (
                     <View>
                       <Text>
-                        {item.number}.{item.name}.{item.position}
+                        {item.number}
+                        {item.name}
+                        {item.position}
                       </Text>
                     </View>
                   ))}

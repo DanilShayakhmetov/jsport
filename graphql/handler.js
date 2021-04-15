@@ -23,15 +23,6 @@ class Handler extends React.Component {
     super(props);
   }
 
-  getDate = (year, month, date) => {
-    const d = new Date(year, month, date);
-    const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-    const mo = new Intl.DateTimeFormat('en', {month: 'short'}).format(d);
-    const da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
-    const resultDate = `${ye}-${mo}-${da}`;
-    // console.log(resultDate);
-  };
-
   //GET MATCH CALENDAR FOR MATCH CENTER
   static getMatchCalendar(from, to) {
     return client
@@ -40,14 +31,12 @@ class Handler extends React.Component {
         query: GET_MATCH_CENTER,
       })
       .then(function (value) {
-        let calendar = value.data.calendar.data;
-        console.log(calendar);
-        return calendar;
+        // console.log(calendar);
+        return value.data.calendar.data;
       })
       .catch((error) => {
         error;
       });
-    // console.log(this.state.responseAPI);
   }
 
   //GET MATCH PROFILE PAGE
@@ -74,14 +63,11 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
-        return calendar;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(this.state.responseAPI);
   }
 
   //GET ROUND DATA UNIVERSAL 1003807 1003808  1003809
@@ -92,15 +78,11 @@ class Handler extends React.Component {
         query: GET_ROUND,
       })
       .then(function (value) {
-        let round;
-        round = value.data.round;
-        // console.log(round);
-        return round;
+        return value.data.round;
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(this.state.responseAPI);
   }
 
   //GET TOURNAMENT SCHEDULE START PAGE
@@ -116,13 +98,11 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_SCHEDULE,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(this.state.responseAPI);
   }
 
   static getTournamentTable(tournamentId, roundId, from, to) {
@@ -155,8 +135,7 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_LIST,
       })
       .then(function (value) {
-        let tournaments = value.data;
-        return tournaments;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -173,9 +152,7 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_APPLICATION,
       })
       .then(function (value) {
-        let application = value.data;
-        // console.log(application);
-        return application;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -192,9 +169,7 @@ class Handler extends React.Component {
         query: GET_TEAM_MATCH,
       })
       .then(function (value) {
-        let calendar = value.data;
-        return calendar;
-        // console.log(calendar);
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -210,8 +185,7 @@ class Handler extends React.Component {
         query: GET_TEAM_ROSTER,
       })
       .then(function (value) {
-        let calendar = value.data;
-        return calendar;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -228,8 +202,7 @@ class Handler extends React.Component {
         query: GET_TEAM_LIST,
       })
       .then(function (value) {
-        let teams = value.data;
-        return teams;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -245,8 +218,7 @@ class Handler extends React.Component {
         query: GET_TEAM_LIST,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -259,8 +231,7 @@ class Handler extends React.Component {
         query: GET_SEASONS,
       })
       .then(function (value) {
-        let seasons = value.data;
-        return seasons;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);

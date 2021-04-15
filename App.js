@@ -138,6 +138,7 @@ class App extends React.Component {
             <Stack.Screen
               name="TournamentList"
               component={TournamentListScreen}
+              options={{title: 'Список турниров'}}
             />
           </Stack.Navigator>
         </NavigationContainer>
