@@ -224,6 +224,7 @@ export default class MatchScreen extends Component {
       this.state.rosterList = rosterList;
       console.log(matchData);
       console.log(rosterList);
+      handler.getFormedDate(matchData.start_dt);
       return (
         <View style={styles.container}>
           <View style={styles.containerTop} key={'qwe'}>
@@ -234,7 +235,7 @@ export default class MatchScreen extends Component {
                 color: '#606070',
                 fontFamily: 'OpenSans',
               }}>
-              {matchData.start_dt}
+              {handler.getFormedDate(matchData.start_dt)}
             </Text>
             <View
               style={{

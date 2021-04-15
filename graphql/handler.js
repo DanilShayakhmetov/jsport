@@ -17,6 +17,20 @@ import {GET_SEASONS} from './queri/season/SeasonQuery';
 
 const client = makeApolloClient();
 const today = new Date();
+const listOfMonth = {
+  '01': 'января',
+  '02': 'февраля',
+  '03': 'марта',
+  '04': 'апреля',
+  '05': 'мая',
+  '06': 'июня',
+  '07': 'июля',
+  '08': 'августа',
+  '09': 'сентября',
+  '10': 'октября',
+  '11': 'ноября',
+  '12': 'декабря',
+};
 
 class Handler extends React.Component {
   constructor(props) {
@@ -263,6 +277,14 @@ class Handler extends React.Component {
 
   static isUndefined(inputData) {
     return inputData === 'empty' || inputData === undefined;
+  }
+
+  static getFormedDate(dateString) {
+    let date = dateString.split(' ')[0].split('-');
+    let time = dateString.split(' ')[1].split(':');
+    date[1] = listOfMonth[date[1]];
+    console.log(date, time);
+    return date[2] + ' ' + date[1] + ' , ' + time[0] + ':' + time[1];
   }
 }
 
