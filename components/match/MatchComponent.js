@@ -138,10 +138,7 @@ export default class MatchScreen extends Component {
             position: '',
           };
           playerItem.id = player.player_id;
-          playerItem.name =
-            player.last_name +
-            ' ' +
-            player.first_name;
+          playerItem.name = player.last_name + ' ' + player.first_name;
           playerItem.position = player.position_id;
           if (playersSubstitiutions !== undefined) {
             playersSubstitiutions.forEach(function (substitution) {
@@ -404,93 +401,91 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === 2 ? null : 'none',
                 overflow: 'hidden',
               }}>
-              <View style={styles.rosterTabs_container}>
-                <TouchableOpacity
-                  style={[
-                    styles.rosterTabsItem,
-                    this.state.focusedRoster === 0
-                      ? styles.rosterTabsItem_chosen
-                      : styles.rosterTabsItem_default,
-                  ]}
-                  activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, 0)}>
-                  <Image
-                    style={styles.logoMini}
-                    source={{
-                      uri: 'https://reactnative.dev/img/tiny_logo.png',
-                    }}
-                  />
-                  <Text
+              <View style={styles.rosterList_container}>
+                <View style={styles.rosterTabs_container}>
+                  <TouchableOpacity
+                    style={[
+                      styles.rosterTabsItem,
+                      this.state.focusedRoster === 0
+                        ? styles.rosterTabsItem_chosen
+                        : styles.rosterTabsItem_default,
+                    ]}
+                    activeOpacity={0.8}
+                    onPress={this.rosterHandler.bind(this, 0)}>
+                    <Image
+                      style={styles.logoMini}
+                      source={{
+                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color:
+                          this.state.focusedRoster === 0 ? '#3498db' : 'black',
+                      }}>
+                      {rosterList.team1.name}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.rosterTabsItem,
+                      this.state.focusedRoster === 1
+                        ? styles.rosterTabsItem_chosen
+                        : styles.rosterTabsItem_default,
+                    ]}
+                    activeOpacity={0.8}
+                    onPress={this.rosterHandler.bind(this, 1)}>
+                    <Image
+                      style={styles.logoMini}
+                      source={{
+                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color:
+                          this.state.focusedRoster === 1 ? '#3498db' : 'black',
+                      }}>
+                      {rosterList.team2.name}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <ScrollView
+                  style={{
+                    marginBottom: 26,
+                  }}>
+                  <View
                     style={{
-                      color:
-                        this.state.focusedRoster === 0 ? '#3498db' : 'black',
+                      display: this.state.focusedRoster === 0 ? null : 'none',
+                      overflow: 'hidden',
                     }}>
-                    {rosterList.team1.name}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    styles.rosterTabsItem,
-                    this.state.focusedRoster === 1
-                      ? styles.rosterTabsItem_chosen
-                      : styles.rosterTabsItem_default,
-                  ]}
-                  activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, 1)}>
-                  <Image
-                    style={styles.logoMini}
-                    source={{
-                      uri: 'https://reactnative.dev/img/tiny_logo.png',
-                    }}
-                  />
-                  <Text
+                    {rosterList.team1.map((item) => (
+                      <View style={styles.rosterList_item}>
+                        <Text style={styles.rosterList_itemText}>
+                          {item.number}
+                          {item.name}
+                          {item.position}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                  <View
                     style={{
-                      color:
-                        this.state.focusedRoster === 1 ? '#3498db' : 'black',
+                      display: this.state.focusedRoster === 1 ? null : 'none',
+                      overflow: 'hidden',
                     }}>
-                    {rosterList.team2.name}
-                  </Text>
-                </TouchableOpacity>
+                    {rosterList.team2.map((item) => (
+                      <View style={styles.rosterList_item}>
+                        <Text style={styles.rosterList_itemText}>
+                          {item.number}
+                          {item.name}
+                          {item.position}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                </ScrollView>
               </View>
-              <ScrollView
-                style={{
-                  marginBottom: 26,
-                }}>
-                <View
-                  style={{
-                    display: this.state.focusedRoster === 0 ? null : 'none',
-                    overflow: 'hidden',
-                  }}>
-                  {rosterList.team1.map((item) => (
-                    <View style={styles.rosterList_container}>
-                      <View style={styles.rosterList_item}>
-                        <Text style={styles.rosterList_itemText}>
-                          {item.number}
-                          {item.name}
-                          {item.position}
-                        </Text>
-                      </View>
-                    </View>
-                  ))}
-                </View>
-                <View
-                  style={{
-                    display: this.state.focusedRoster === 1 ? null : 'none',
-                    overflow: 'hidden',
-                  }}>
-                  {rosterList.team2.map((item) => (
-                    <View style={styles.rosterList_container}>
-                      <View style={styles.rosterList_item}>
-                        <Text style={styles.rosterList_itemText}>
-                          {item.number}
-                          {item.name}
-                          {item.position}
-                        </Text>
-                      </View>
-                    </View>
-                  ))}
-                </View>
-              </ScrollView>
             </View>
           </View>
           <View
@@ -703,7 +698,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    width: 200,
+    justifyContent: 'flex-start',
   },
   rosterTabsItem: {
     flexDirection: 'row',
@@ -726,8 +722,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#3498db',
   },
   rosterList_container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
