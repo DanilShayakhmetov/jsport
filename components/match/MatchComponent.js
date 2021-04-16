@@ -11,8 +11,10 @@ import {
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 import {Icon} from 'react-native-elements';
+import soccerBall from '../../src/images/soccer-ball.png';
 
 const handler = Handler;
+const EVENT_IMAGE = Image.resolveAssetSource(soccerBall).uri;
 
 export default class MatchScreen extends Component {
   constructor(props) {
@@ -324,18 +326,12 @@ export default class MatchScreen extends Component {
                       margin: 5,
                       width: 400,
                     }}>
-                    <Text
-                      style={{
-                        margin: 5,
-                        padding: 5,
-                        backgroundColor: item.color,
-                        borderWidth: 2,
-                        borderRadius: 5,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      {item.event}
-                    </Text>
+                    <Image
+                      style={styles.eventList_image}
+                      source={{
+                        uri: EVENT_IMAGE,
+                      }}
+                    />
                     <Text>
                       {item.time}
                       {"'"}
@@ -638,6 +634,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     color: '#3498db',
     borderBottomColor: '#3498db',
+  },
+  eventList_image: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    margin: 10,
   },
   scrollItem: {
     flex: 1,
