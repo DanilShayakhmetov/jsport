@@ -21,7 +21,7 @@ export default class MatchScreen extends Component {
     super(props);
     this.state = {
       focusedTab: 0,
-      focusedRoster: '0',
+      focusedRoster: 0,
       eventsList: undefined,
       statsList: undefined,
       rosterList: undefined,
@@ -406,41 +406,58 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === 2 ? null : 'none',
                 overflow: 'hidden',
               }}>
-              <View
-                style={{
-                  marginBottom: 20,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                }}>
+              <View style={styles.rosterTabs_container}>
                 <TouchableOpacity
-                  style={styles.borderItems}
+                  style={[
+                    styles.rosterTabsItem,
+                    this.state.focusedRoster === 0
+                      ? styles.rosterTabsItem_chosen
+                      : styles.rosterTabsItem_default,
+                  ]}
                   activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, '0')}>
+                  onPress={this.rosterHandler.bind(this, 0)}>
                   <Image
                     style={styles.logoMini}
                     source={{
                       uri: 'https://reactnative.dev/img/tiny_logo.png',
                     }}
                   />
-                  <Text>{rosterList.team1.name}</Text>
+                  <Text
+                    style={{
+                      color:
+                        this.state.focusedRoster === 0 ? '#3498db' : 'black',
+                    }}>
+                    {rosterList.team1.name}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.borderItems}
+                  style={[
+                    styles.rosterTabsItem,
+                    this.state.focusedRoster === 1
+                      ? styles.rosterTabsItem_chosen
+                      : styles.rosterTabsItem_default,
+                  ]}
                   activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, '1')}>
+                  onPress={this.rosterHandler.bind(this, 1)}>
                   <Image
                     style={styles.logoMini}
                     source={{
                       uri: 'https://reactnative.dev/img/tiny_logo.png',
                     }}
                   />
-                  <Text>{rosterList.team2.name}</Text>
+                  <Text
+                    style={{
+                      color:
+                        this.state.focusedRoster === 1 ? '#3498db' : 'black',
+                    }}>
+                    {rosterList.team2.name}
+                  </Text>
                 </TouchableOpacity>
               </View>
               <ScrollView>
                 <View
                   style={{
-                    display: this.state.focusedRoster === '0' ? null : 'none',
+                    display: this.state.focusedRoster === 0 ? null : 'none',
                     overflow: 'hidden',
                   }}>
                   {rosterList.team1.map((item) => (
@@ -455,7 +472,7 @@ export default class MatchScreen extends Component {
                 </View>
                 <View
                   style={{
-                    display: this.state.focusedRoster === '1' ? null : 'none',
+                    display: this.state.focusedRoster === 1 ? null : 'none',
                     overflow: 'hidden',
                   }}>
                   {rosterList.team2.map((item) => (
@@ -636,18 +653,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#3498db',
   },
   eventList_image: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     margin: 10,
-  },
-  scrollItem: {
-    flex: 1,
   },
   mainDataContainer: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    width: '100%',
   },
   image: {
     width: 150,
@@ -679,128 +694,29 @@ const styles = StyleSheet.create({
     margin: 5,
     alignItems: 'center',
   },
-});
-
-const stysles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  matchData: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  matchData_date: {
-    fontSize: 18,
-    color: '#95a5a6',
-    fontFamily: 'OpenSans',
-  },
-  matchData_container: {
-    fontSize: 18,
-    color: '#95a5a6',
-    fontFamily: 'OpenSans',
-  },
-  matchData_team1: {
-    justifyContent: 'center',
-    width: 120,
-    alignItems: 'center',
-  },
-  matchData_team2: {
-    justifyContent: 'center',
-    width: 120,
-    alignItems: 'center',
-  },
-  matchData_score: {
-    margin: 25,
-    fontSize: 20,
-    color: '#606070',
-    fontFamily: 'OpenSans',
-    fontWeight: 'bold',
-  },
-
-  containerBottom: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    marginBottom: 15,
-  },
-  tabsContainer: {
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: 60,
+  rosterTabs_container: {
+    marginBottom: 20,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  tabsItem: {
-    overflow: 'hidden',
-    fontFamily: 'OpenSans',
-    justifyContent: 'center',
+  rosterTabsItem: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 3,
+    margin: 5,
     alignItems: 'center',
-    fontSize: 18,
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginLeft: 25,
-    marginRight: 25,
-    height: 40,
   },
-  tabsItem_default: {
-    borderBottomWidth: 0,
+  rosterTabsItem_default: {
+    backgroundColor: '#fff',
     color: 'lightgray',
     borderBottomColor: 'lightgray',
   },
-  tabsItem_chosen: {
-    borderBottomWidth: 3,
+  rosterTabsItem_chosen: {
+    backgroundColor: 'lightgray',
     color: '#3498db',
     borderBottomColor: '#3498db',
-  },
-  scrollItem: {
-    flex: 1,
-  },
-  mainDataContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-  },
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2,
-    overflow: 'hidden',
-    borderWidth: 3,
-    borderColor: 'white',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    margin: 5,
-  },
-  logoMini: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    margin: 2,
-  },
-  borderItems: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    padding: 5,
-    margin: 5,
-    alignItems: 'center',
   },
 });
