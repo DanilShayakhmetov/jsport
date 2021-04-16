@@ -141,9 +141,7 @@ export default class MatchScreen extends Component {
           playerItem.name =
             player.last_name +
             ' ' +
-            player.first_name +
-            ' ' +
-            player.middle_name;
+            player.first_name;
           playerItem.position = player.position_id;
           if (playersSubstitiutions !== undefined) {
             playersSubstitiutions.forEach(function (substitution) {
@@ -454,19 +452,24 @@ export default class MatchScreen extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <ScrollView>
+              <ScrollView
+                style={{
+                  marginBottom: 26,
+                }}>
                 <View
                   style={{
                     display: this.state.focusedRoster === 0 ? null : 'none',
                     overflow: 'hidden',
                   }}>
                   {rosterList.team1.map((item) => (
-                    <View>
-                      <Text>
-                        {item.number}
-                        {item.name}
-                        {item.position}
-                      </Text>
+                    <View style={styles.rosterList_container}>
+                      <View style={styles.rosterList_item}>
+                        <Text style={styles.rosterList_itemText}>
+                          {item.number}
+                          {item.name}
+                          {item.position}
+                        </Text>
+                      </View>
                     </View>
                   ))}
                 </View>
@@ -476,12 +479,14 @@ export default class MatchScreen extends Component {
                     overflow: 'hidden',
                   }}>
                   {rosterList.team2.map((item) => (
-                    <View>
-                      <Text>
-                        {item.number}
-                        {item.name}
-                        {item.position}
-                      </Text>
+                    <View style={styles.rosterList_container}>
+                      <View style={styles.rosterList_item}>
+                        <Text style={styles.rosterList_itemText}>
+                          {item.number}
+                          {item.name}
+                          {item.position}
+                        </Text>
+                      </View>
                     </View>
                   ))}
                 </View>
@@ -626,7 +631,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: 60,
+    height: 40,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -695,9 +700,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rosterTabs_container: {
-    marginBottom: 20,
+    marginBottom: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   rosterTabsItem: {
     flexDirection: 'row',
@@ -718,5 +724,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     color: '#3498db',
     borderBottomColor: '#3498db',
+  },
+  rosterList_container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    width: 400,
+  },
+  rosterList_item: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    margin: 5,
+    width: 200,
+  },
+
+  rosterList_itemText: {
+    fontSize: 18,
+    color: 'black',
+    fontFamily: 'OpenSans',
   },
 });
