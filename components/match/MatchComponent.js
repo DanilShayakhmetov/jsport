@@ -57,16 +57,33 @@ export default class MatchScreen extends Component {
     let redCardItems = match.redCards;
     let shootoutItems = match.shootouts;
 
+    let teams = [match.team1, match.team2];
+    let playersList = {};
+    teams.forEach(function (team) {
+      if (team.players !== undefined) {
+        team.players.forEach(function (player) {
+          playersList[player.player_id] =
+            player.last_name + ' ' + player.first_name;
+        });
+      }
+    });
+
+    console.log(goalItems);
+    console.log(playersList);
+
     if (goalItems !== undefined) {
       goalItems.forEach(function (goal) {
         let eventItem = {
           time: '',
           event: '',
           color: '',
+          team: '',
+          name: '',
         };
         eventItem.event = 'ГОЛ';
         eventItem.color = 'lightblue';
         eventItem.time = goal.minute;
+        eventItem.name = playersList[goal.player_id];
         eventsList.push(eventItem);
       });
     }
@@ -77,6 +94,8 @@ export default class MatchScreen extends Component {
           time: '',
           event: '',
           color: '',
+          team: '',
+          name: '',
         };
         eventItem.event = 'ЖК';
         eventItem.color = 'yellow';
@@ -91,6 +110,8 @@ export default class MatchScreen extends Component {
           time: '',
           event: '',
           color: '',
+          team: '',
+          name: '',
         };
         eventItem.event = 'КК';
         eventItem.color = 'red';
@@ -105,6 +126,8 @@ export default class MatchScreen extends Component {
           time: '',
           event: '',
           color: '',
+          team: '',
+          name: '',
         };
         eventItem.event = 'ПЕНАЛЬТИ';
         eventItem.color = 'blue';
@@ -175,6 +198,21 @@ export default class MatchScreen extends Component {
 
     return roster;
   };
+
+  // playersList = (match) => {
+  //   let teams = [match.team1, match.team2];
+  //   let playersList = [];
+  //   teams.forEach(function (team) {
+  //     if (team.players !== undefined) {
+  //       team.players.forEach(function (player) {
+  //         playersList[player.player_id] =
+  //           player.last_name + ' ' + player.first_name;
+  //       });
+  //     }
+  //   });
+  //
+  //   return playersList;
+  // };
 
   statsPreparer = (match) => {
     return {
@@ -317,19 +355,34 @@ export default class MatchScreen extends Component {
                       flexDirection: 'row',
                       flexWrap: 'wrap',
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'flex-start',
                       margin: 5,
                       width: 400,
                     }}>
+                    <Text
+                      style={{
+                        marginLeft: 125,
+                        fontSize: 18,
+                        color: 'black',
+                        fontFamily: 'OpenSans',
+                      }}>
+                      {item.time}
+                      {"'"}
+                    </Text>
                     <Image
                       style={styles.eventList_image}
                       source={{
                         uri: EVENT_IMAGE,
                       }}
                     />
-                    <Text>
-                      {item.time}
-                      {"'"}
+                    <Text
+                      style={{
+                        width: 140,
+                        fontSize: 18,
+                        color: 'black',
+                        fontFamily: 'OpenSans',
+                      }}>
+                      {item.name}
                     </Text>
                   </View>
                 ))}
@@ -656,7 +709,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    margin: 10,
+    margin: 20,
   },
   mainDataContainer: {
     flex: 1,
@@ -698,13 +751,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: 200,
+    width: 300,
     justifyContent: 'flex-start',
   },
   rosterTabsItem: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: 'gray',
     borderRadius: 5,
     padding: 3,
@@ -733,7 +786,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     margin: 5,
-    width: 200,
+    width: 300,
   },
 
   rosterList_itemText: {
