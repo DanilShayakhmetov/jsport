@@ -227,46 +227,44 @@ export default class MatchScreen extends Component {
             <View style={styles.matchData_container}>
               <View style={styles.matchData_team}>
                 <Image
-                  style={styles.logo}
+                  style={styles.matchData_teamLogo}
                   source={{
                     uri: 'https://reactnative.dev/img/tiny_logo.png',
                   }}
                 />
-                <Text>{matchData.team1.full_name}</Text>
+                <Text style={styles.matchData_teamName}>
+                  {matchData.team1.full_name}
+                </Text>
               </View>
               <Text style={styles.matchData_score}>
                 {matchData.gf}
-                {'      :      '}
+                {':'}
                 {matchData.ga}
               </Text>
               <View style={styles.matchData_team}>
                 <Image
-                  style={styles.logo}
+                  style={styles.matchData_teamLogo}
                   source={{
                     uri: 'https://reactnative.dev/img/tiny_logo.png',
                   }}
                 />
-                <Text
-                  style={{
-                    marginBottom: 25,
-                    fontSize: 16,
-                    color: '#606070',
-                    fontFamily: 'OpenSans',
-                  }}>
+                <Text style={styles.matchData_teamName}>
                   {matchData.team2.full_name}
                 </Text>
               </View>
             </View>
           </View>
-          <View style={styles.containerBottom}>
+          <View style={styles.matchData_additional}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={this.tournamentRedirect.bind(this)}>
-              <Text style={styles.borderItems}>
+              <Text style={styles.matchData_additionalText}>
                 {matchData.tournament.short_name}
               </Text>
             </TouchableOpacity>
-            <Text style={styles.borderItems}>{matchData.stadium.name}</Text>
+            <Text style={styles.matchData_additionalText}>
+              {matchData.stadium.name}
+            </Text>
           </View>
           <View style={styles.tabsContainer}>
             <TouchableOpacity
@@ -564,9 +562,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   matchData_score: {
-    margin: 25,
-    fontSize: 20,
-    color: '#606070',
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 35,
+    color: 'black',
     fontFamily: 'OpenSans',
     fontWeight: 'bold',
   },
@@ -575,14 +574,39 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: 'center',
   },
-  containerBottom: {
+  matchData_teamName: {
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 'OpenSans',
+  },
+  matchData_teamLogo: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    margin: 5,
+  },
+  matchData_additional: {
     backgroundColor: '#fff',
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    paddingBottom: 20,
     marginBottom: 15,
+  },
+  matchData_additionalText: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    fontSize: 18,
+    color: '#95a5a6',
+    fontFamily: 'OpenSans',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 5,
+    margin: 5,
+    alignItems: 'center',
   },
   tabsContainer: {
     backgroundColor: '#fff',
@@ -708,7 +732,6 @@ const stysles = StyleSheet.create({
   },
   tabsContainer: {
     backgroundColor: '#fff',
-
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
