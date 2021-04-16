@@ -220,30 +220,12 @@ export default class MatchScreen extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <View style={styles.containerTop} key={'qwe'}>
-            <Text
-              style={{
-                marginBottom: 25,
-                fontSize: 16,
-                color: '#606070',
-                fontFamily: 'OpenSans',
-              }}>
+          <View style={styles.matchData} key={'qwe'}>
+            <Text style={styles.matchData_date}>
               {handler.getFormedDate(matchData.start_dt)}
             </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 10,
-              }}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  width: 120,
-                  alignItems: 'center',
-                }}>
+            <View style={styles.matchData_container}>
+              <View style={styles.matchData_team}>
                 <Image
                   style={styles.logo}
                   source={{
@@ -252,24 +234,12 @@ export default class MatchScreen extends Component {
                 />
                 <Text>{matchData.team1.full_name}</Text>
               </View>
-              <Text
-                style={{
-                  margin: 25,
-                  fontSize: 20,
-                  color: '#606070',
-                  fontFamily: 'OpenSans',
-                  fontWeight: 'bold',
-                }}>
+              <Text style={styles.matchData_score}>
                 {matchData.gf}
                 {'      :      '}
                 {matchData.ga}
               </Text>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  width: 120,
-                  alignItems: 'center',
-                }}>
+              <View style={styles.matchData_team}>
                 <Image
                   style={styles.logo}
                   source={{
@@ -299,38 +269,45 @@ export default class MatchScreen extends Component {
             <Text style={styles.borderItems}>{matchData.stadium.name}</Text>
           </View>
           <View style={styles.tabsContainer}>
-            <ScrollView horizontal={true} style={styles.scrollItem}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 0 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 0)}>
-                <Text>{'        События         '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 1 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 1)}>
-                <Text>{'        Статистика          '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 2 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 2)}>
-                <Text>{'        Составы          '}</Text>
-              </TouchableOpacity>
-            </ScrollView>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 0)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 0
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'События'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 1)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 1
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Статистика'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 2)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 2
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Составы'}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.mainDataContainer}>
             <View
@@ -563,40 +540,213 @@ MatchScreen.contextType = JoinAppContext;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'lightgray',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  containerTop: {
+  matchData: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 5,
+    width: '100%',
   },
-  containerBottom: {
-    marginBottom: 5,
+  matchData_date: {
+    fontSize: 18,
+    color: '#95a5a6',
+    fontFamily: 'OpenSans',
+  },
+  matchData_container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  matchData_score: {
+    margin: 25,
+    fontSize: 20,
+    color: '#606070',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
+  },
+  matchData_team: {
+    justifyContent: 'center',
+    width: 120,
+    alignItems: 'center',
+  },
+  containerBottom: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 15,
   },
   tabsContainer: {
-    height: 30,
-    marginBottom: 5,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 60,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
-  touchItem: {
-    borderBottomColor: 'blue',
-    borderBottomWidth: 2,
+  tabsItem: {
+    overflow: 'hidden',
+    fontFamily: 'OpenSans',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 25,
+    marginRight: 25,
+    height: 40,
+  },
+  tabsItem_default: {
+    borderBottomWidth: 0,
+    color: 'lightgray',
+    borderBottomColor: 'lightgray',
+  },
+  tabsItem_chosen: {
+    borderBottomWidth: 3,
+    color: '#3498db',
+    borderBottomColor: '#3498db',
   },
   scrollItem: {
     flex: 1,
-    height: 10,
   },
   mainDataContainer: {
     flex: 1,
-    marginBottom: 25,
+    backgroundColor: '#fff',
     padding: 20,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 150 / 2,
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    margin: 5,
+  },
+  logoMini: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    margin: 2,
+  },
+  borderItems: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 5,
+    margin: 5,
+    alignItems: 'center',
+  },
+});
+
+const stysles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  matchData: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  matchData_date: {
+    fontSize: 18,
+    color: '#95a5a6',
+    fontFamily: 'OpenSans',
+  },
+  matchData_container: {
+    fontSize: 18,
+    color: '#95a5a6',
+    fontFamily: 'OpenSans',
+  },
+  matchData_team1: {
+    justifyContent: 'center',
+    width: 120,
+    alignItems: 'center',
+  },
+  matchData_team2: {
+    justifyContent: 'center',
+    width: 120,
+    alignItems: 'center',
+  },
+  matchData_score: {
+    margin: 25,
+    fontSize: 20,
+    color: '#606070',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
+  },
+
+  containerBottom: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 15,
+  },
+  tabsContainer: {
+    backgroundColor: '#fff',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 60,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tabsItem: {
+    overflow: 'hidden',
+    fontFamily: 'OpenSans',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 25,
+    marginRight: 25,
+    height: 40,
+  },
+  tabsItem_default: {
+    borderBottomWidth: 0,
+    color: 'lightgray',
+    borderBottomColor: 'lightgray',
+  },
+  tabsItem_chosen: {
+    borderBottomWidth: 3,
+    color: '#3498db',
+    borderBottomColor: '#3498db',
+  },
+  scrollItem: {
+    flex: 1,
+  },
+  mainDataContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
   },
   image: {
     width: 150,
