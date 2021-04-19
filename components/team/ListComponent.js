@@ -61,7 +61,6 @@ export default class TeamListScreen extends Component {
   render() {
     let teamList = this.state.teamsList;
     let seasonsList = this.state.seasonsList;
-    // console.log(teamList.teams);
     if (
       teamList === 'empty' ||
       teamList === undefined ||
@@ -74,7 +73,6 @@ export default class TeamListScreen extends Component {
         </View>
       );
     } else {
-      console.log(teamList.teams.data);
       return (
         <View style={styles.container}>
           <Picker
@@ -85,7 +83,6 @@ export default class TeamListScreen extends Component {
               handler
                 .getTeamList(this.state.seasonId)
                 .then((value) => {
-                  console.log(value);
                   this.setState({
                     teamsList: value,
                   });
@@ -116,13 +113,10 @@ export default class TeamListScreen extends Component {
                 <Image
                   style={styles.logo}
                   source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    uri: handler.getTeamImageURI(team.team_id, team.logo),
                   }}
                 />
                 <Text style={{marginLeft: 10}}>{team.full_name}</Text>
-                {/*<Text>*/}
-                {/*  {team.logo}.{'   -   '}.{team.full_name}*/}
-                {/*</Text>*/}
               </View>
             ))}
           </ScrollView>

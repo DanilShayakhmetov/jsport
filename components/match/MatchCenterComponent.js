@@ -200,7 +200,7 @@ export default class MatchCenterScreen extends Component {
                             <Image
                               style={styles.logo}
                               source={{
-                                uri: handler.getImageURI(
+                                uri: handler.getTeamImageURI(
                                   value.item.team1.team_id,
                                   value.item.team1.logo,
                                 ),
@@ -212,8 +212,10 @@ export default class MatchCenterScreen extends Component {
                               style={{
                                 display: value.item.ga === null ? null : 'none',
                                 overflow: 'hidden',
+                                alignItems: 'center',
+                                justifyContent: 'center',
                               }}>
-                              {value.item.start_dt}
+                              {handler.getFormedDateShort(value.item.start_dt)}
                             </Text>
                             <Text
                               style={{
@@ -233,7 +235,7 @@ export default class MatchCenterScreen extends Component {
                             <Image
                               style={styles.logo}
                               source={{
-                                uri: handler.getImageURI(
+                                uri: handler.getTeamImageURI(
                                   value.item.team2.team_id,
                                   value.item.team2.logo,
                                 ),
@@ -396,6 +398,8 @@ const styles = StyleSheet.create({
     width: '20%',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   matchItem_topBlock: {
     flex: 1,

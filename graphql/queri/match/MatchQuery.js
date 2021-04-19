@@ -69,42 +69,42 @@ export const GET_MATCH = gql`
         status
         goalkeeper
       }
-#      stats1 {
-#        team_id
-#        goals_first_half
-#        shoots_first_half
-#        shoots_overall
-#        shoots_target_first_half
-#        shoots_target_overall
-#        corners_first_half
-#        corners_overall
-#        postbar_first_half
-#        postbar_overall
-#        fouls_first_half
-#        fouls_overall
-#        offsides_overall
-#        referee_mark
-#        discipline_mark
-#        attendance
-#      }
-#      stats2 {
-#        team_id
-#        goals_first_half
-#        shoots_first_half
-#        shoots_overall
-#        shoots_target_first_half
-#        shoots_target_overall
-#        corners_first_half
-#        corners_overall
-#        postbar_first_half
-#        postbar_overall
-#        fouls_first_half
-#        fouls_overall
-#        offsides_overall
-#        referee_mark
-#        discipline_mark
-#        attendance
-#      }
+      stats1 {
+        team_id
+        goals_first_half
+        shoots_first_half
+        shoots_overall
+        shoots_target_first_half
+        shoots_target_overall
+        corners_first_half
+        corners_overall
+        postbar_first_half
+        postbar_overall
+        fouls_first_half
+        fouls_overall
+        offsides_overall
+        referee_mark
+        discipline_mark
+        attendance
+      }
+      stats2 {
+        team_id
+        goals_first_half
+        shoots_first_half
+        shoots_overall
+        shoots_target_first_half
+        shoots_target_overall
+        corners_first_half
+        corners_overall
+        postbar_first_half
+        postbar_overall
+        fouls_first_half
+        fouls_overall
+        offsides_overall
+        referee_mark
+        discipline_mark
+        attendance
+      }
       goals {
         team_id
         player_id

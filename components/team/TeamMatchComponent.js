@@ -75,7 +75,6 @@ export default class TeamScreen extends Component {
         </View>
       );
     } else {
-      console.log(rosterList);
       return (
         <View style={styles.container}>
           <View>
@@ -86,7 +85,7 @@ export default class TeamScreen extends Component {
               <Image
                 style={styles.logo}
                 source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
+                  uri: handler.getTeamImageURI(team.team_id, team.logo),
                 }}
               />
               <Text
@@ -132,7 +131,7 @@ export default class TeamScreen extends Component {
                   display: this.state.focusedTab === 0 ? null : 'none',
                   overflow: 'hidden',
                 }}>
-                {matchList.map((item) => (
+                {matchList.map((match) => (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -148,13 +147,19 @@ export default class TeamScreen extends Component {
                       <Image
                         style={styles.teamLogo}
                         source={{
-                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          uri: handler.getTeamImageURI(
+                            match.team1.team_id,
+                            match.team1.logo,
+                          ),
                         }}
                       />
                       <Image
                         style={styles.teamLogo}
                         source={{
-                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          uri: handler.getTeamImageURI(
+                            match.team2.team_id,
+                            match.team2.logo,
+                          ),
                         }}
                       />
                     </View>
@@ -166,9 +171,9 @@ export default class TeamScreen extends Component {
                           fontFamily: 'OpenSans',
                           fontWeight: 'bold',
                         }}>
-                        {item.team1.short_name}
+                        {match.team1.short_name}
                         {'   -   '}
-                        {item.team2.short_name}
+                        {match.team2.short_name}
                       </Text>
                       <Text
                         style={{
@@ -176,7 +181,7 @@ export default class TeamScreen extends Component {
                           color: 'gray',
                           fontFamily: 'OpenSans',
                         }}>
-                        {item.start_dt}
+                        {match.start_dt}
                       </Text>
                     </View>
                   </View>
@@ -187,7 +192,7 @@ export default class TeamScreen extends Component {
                   display: this.state.focusedTab === 1 ? null : 'none',
                   overflow: 'hidden',
                 }}>
-                {rosterList.map((item) => (
+                {rosterList.map((player) => (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -203,7 +208,10 @@ export default class TeamScreen extends Component {
                       <Image
                         style={styles.playerLogo}
                         source={{
-                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          uri: handler.getPlayerImageURI(
+                            player.player_id,
+                            player.photo,
+                          ),
                         }}
                       />
                     </View>
@@ -214,9 +222,9 @@ export default class TeamScreen extends Component {
                           color: '#606070',
                           fontFamily: 'OpenSans',
                         }}>
-                        {item.last_name}
-                        {item.first_name}
-                        {item.middle_name}
+                        {player.last_name}
+                        {player.first_name}
+                        {player.middle_name}
                       </Text>
                       <Text
                         style={{
@@ -224,7 +232,7 @@ export default class TeamScreen extends Component {
                           color: 'gray',
                           fontFamily: 'OpenSans',
                         }}>
-                        {item.start_dt}
+                        {player.start_dt}
                       </Text>
                     </View>
                   </View>

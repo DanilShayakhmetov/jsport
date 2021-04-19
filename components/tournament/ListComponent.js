@@ -34,7 +34,6 @@ export default class TournamentListScreen extends Component {
       .getSeasons()
       .then((value) => {
         let seasonId = value.seasons[value.seasons.length - 1].season_id;
-        console.log(seasonId);
         this.setState({
           seasonsList: value,
           seasonId: seasonId,
@@ -47,7 +46,6 @@ export default class TournamentListScreen extends Component {
     await handler
       .getTournamentList(this.state.seasonId)
       .then((value) => {
-        console.log(value);
         this.setState({
           tournamentsList: value,
         });
@@ -84,7 +82,6 @@ export default class TournamentListScreen extends Component {
               handler
                 .getTournamentList(this.state.seasonId)
                 .then((value) => {
-                  console.log(value);
                   this.setState({
                     tournamentsList: value,
                   });

@@ -193,7 +193,10 @@ export default class TableScreen extends Component {
                 <Image
                   style={styles.teamLogo}
                   source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    uri: handler.getPlayerImageURI(
+                      player.player.player_id,
+                      player.player.photo,
+                    ),
                   }}
                 />
                 <Text style={{width: '25%'}}>{player.player.last_name}</Text>
@@ -243,7 +246,10 @@ export default class TableScreen extends Component {
                 <Image
                   style={styles.teamLogo}
                   source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    uri: handler.getPlayerImageURI(
+                      player.player.player_id,
+                      player.player.photo,
+                    ),
                   }}
                 />
                 <Text style={{width: '25%'}}>{player.player.last_name}</Text>
@@ -258,7 +264,6 @@ export default class TableScreen extends Component {
         } else {
           PLAYERS = disapproved;
         }
-
         this.tabsHandler(3);
       });
   };
@@ -287,7 +292,6 @@ export default class TableScreen extends Component {
     } else {
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
-      console.log(tableList);
       return (
         <View style={styles.container}>
           <View style={styles.titleText}>
@@ -300,9 +304,11 @@ export default class TableScreen extends Component {
               }}>
               <Image
                 style={styles.logo}
-                source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
+                source={
+                  {
+                    // uri: handler.getImageURI(item.team1.team_id, item.team1.logo),
+                  }
+                }
               />
               <View>
                 <TouchableOpacity
@@ -381,7 +387,7 @@ export default class TableScreen extends Component {
                 overflow: 'hidden',
               }}>
               <ScrollView>
-                {matchList.map((item) => (
+                {matchList.map((match) => (
                   <View
                     style={{
                       height: 30,
@@ -399,24 +405,30 @@ export default class TableScreen extends Component {
                       <Image
                         style={styles.teamLogo}
                         source={{
-                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          uri: handler.getTeamImageURI(
+                            match.item.team1.team_id,
+                            match.item.team1.logo,
+                          ),
                         }}
                       />
                       <Image
                         style={styles.teamLogo}
                         source={{
-                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          uri: handler.getTeamImageURI(
+                            match.item.team2.team_id,
+                            match.item.team2.logo,
+                          ),
                         }}
                       />
                     </View>
                     <View>
                       <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
-                        {item.item.team1.full_name}
+                        {match.item.team1.full_name}
                         {'   -   '}
-                        {item.item.team2.full_name}
+                        {match.item.team2.full_name}
                       </Text>
                       <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
-                        {item.item.start_dt}
+                        {match.item.start_dt}
                       </Text>
                     </View>
                   </View>
@@ -514,7 +526,10 @@ export default class TableScreen extends Component {
                         <Image
                           style={styles.teamLogo}
                           source={{
-                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                            uri: handler.getTeamImageURI(
+                              item.team.team_id,
+                              item.team.logo,
+                            ),
                           }}
                         />
                       </View>
@@ -631,7 +646,10 @@ export default class TableScreen extends Component {
                       <Image
                         style={styles.teamLogo}
                         source={{
-                          uri: 'https://reactnative.dev/img/tiny_logo.png',
+                          uri: handler.getTeamImageURI(
+                            item.team.team_id,
+                            item.team.logo,
+                          ),
                         }}
                       />
                       <Text>{item.team.full_name}</Text>

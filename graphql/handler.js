@@ -286,11 +286,15 @@ class Handler extends React.Component {
     let date = dateString.split(' ')[0].split('-');
     let time = dateString.split(' ')[1].split(':');
     date[1] = listOfMonth[date[1]];
-    console.log(date, time);
     return date[2] + ' ' + date[1] + ' , ' + time[0] + ':' + time[1];
   }
 
-  static getImageURI(teamId, image) {
+  static getFormedDateShort(dateString) {
+    let date = dateString.split(' ')[0].split('-');
+    return date[2] + '.' + date[1];
+  }
+
+  static getTeamImageURI(teamId, image) {
     if (teamId === null || image === null) {
       return 'https://nflperm.ru/assets/936085a3/football_logo_173x173.png';
     } else {
@@ -300,6 +304,21 @@ class Handler extends React.Component {
         '/logo/' +
         image.split('.')[0] +
         '_100x100.' +
+        image.split('.')[1]
+      );
+    }
+  }
+
+  static getPlayerImageURI(teamId, image) {
+    if (teamId === null || image === null) {
+      return 'https://nflperm.ru/assets/c59c7ff4/football_photo_thumb.png';
+    } else {
+      return (
+        'https://st.joinsport.io/player/' +
+        teamId +
+        '/photo/' +
+        image.split('.')[0] +
+        '_thumb.' +
         image.split('.')[1]
       );
     }

@@ -43,6 +43,9 @@ export default class MatchScreen extends Component {
         this.setState({
           rosterList: this.rosterPreparer(value),
         });
+        this.setState({
+          statsList: this.statsPreparer(value),
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -67,11 +70,10 @@ export default class MatchScreen extends Component {
         });
       }
     });
-    console.log(match.team1, 'team');
+
     events.forEach(function (event) {
       if (event !== undefined) {
         event.forEach(function (item) {
-          console.log(event, 'event');
           let eventItem = {
             logo: '',
             time: '',
@@ -90,7 +92,6 @@ export default class MatchScreen extends Component {
         });
       }
     });
-    console.log(eventsList);
     return eventsList;
   };
 
@@ -182,10 +183,12 @@ export default class MatchScreen extends Component {
     const matchData = this.state.matchData;
     const eventsList = this.state.eventList;
     const rosterList = this.state.rosterList;
+    const statsList = this.state.statsList;
     if (
       rosterList === undefined ||
       eventsList === undefined ||
-      matchData === undefined
+      matchData === undefined ||
+      statsList === undefined
     ) {
       return (
         <View>
@@ -193,6 +196,7 @@ export default class MatchScreen extends Component {
         </View>
       );
     } else {
+      console.log(matchData);
       return (
         <View style={styles.container}>
           <View style={styles.matchData} key={'qwe'}>
@@ -204,7 +208,7 @@ export default class MatchScreen extends Component {
                 <Image
                   style={styles.matchData_teamLogo}
                   source={{
-                    uri: handler.getImageURI(
+                    uri: handler.getTeamImageURI(
                       matchData.team1.team_id,
                       matchData.team1.logo,
                     ),
@@ -223,7 +227,7 @@ export default class MatchScreen extends Component {
                 <Image
                   style={styles.matchData_teamLogo}
                   source={{
-                    uri: handler.getImageURI(
+                    uri: handler.getTeamImageURI(
                       matchData.team2.team_id,
                       matchData.team2.logo,
                     ),
@@ -402,13 +406,6 @@ export default class MatchScreen extends Component {
                   <Text>О</Text>
                 </View>
               </View>
-              {eventsList.map((item) => (
-                <View>
-                  <Text>
-                    {item.event}.{item.time}.{'stats'}
-                  </Text>
-                </View>
-              ))}
             </View>
             <View
               style={{
@@ -429,7 +426,7 @@ export default class MatchScreen extends Component {
                     <Image
                       style={styles.logoMini}
                       source={{
-                        uri: handler.getImageURI(
+                        uri: handler.getTeamImageURI(
                           matchData.team1.team_id,
                           matchData.team1.logo,
                         ),
@@ -455,7 +452,7 @@ export default class MatchScreen extends Component {
                     <Image
                       style={styles.logoMini}
                       source={{
-                        uri: handler.getImageURI(
+                        uri: handler.getTeamImageURI(
                           matchData.team2.team_id,
                           matchData.team2.logo,
                         ),
@@ -484,7 +481,6 @@ export default class MatchScreen extends Component {
                         <Text style={styles.rosterList_itemText}>
                           {item.number}
                           {item.name}
-                          {item.position}
                         </Text>
                       </View>
                     ))}
@@ -499,7 +495,6 @@ export default class MatchScreen extends Component {
                         <Text style={styles.rosterList_itemText}>
                           {item.number}
                           {item.name}
-                          {item.position}
                         </Text>
                       </View>
                     ))}
