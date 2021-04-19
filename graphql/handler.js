@@ -291,14 +291,18 @@ class Handler extends React.Component {
   }
 
   static getImageURI(teamId, image) {
-    return (
-      'https://st.joinsport.io/team/' +
-      teamId +
-      '/logo/' +
-      image.split('.')[0] +
-      '_100x100.' +
-      image.split('.')[1]
-    );
+    if (teamId === null || image === null) {
+      return 'https://nflperm.ru/assets/936085a3/football_logo_173x173.png';
+    } else {
+      return (
+        'https://st.joinsport.io/team/' +
+        teamId +
+        '/logo/' +
+        image.split('.')[0] +
+        '_100x100.' +
+        image.split('.')[1]
+      );
+    }
   }
 }
 
