@@ -11,7 +11,7 @@ import {
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 import {Icon} from 'react-native-elements';
-import soccerBall from '../../src/images/soccer-ball.png';
+import soccerBall from '../../assets/images/soccer-ball.png';
 
 const handler = Handler;
 const EVENT_IMAGE = Image.resolveAssetSource(soccerBall).uri;
@@ -199,21 +199,6 @@ export default class MatchScreen extends Component {
     return roster;
   };
 
-  // playersList = (match) => {
-  //   let teams = [match.team1, match.team2];
-  //   let playersList = [];
-  //   teams.forEach(function (team) {
-  //     if (team.players !== undefined) {
-  //       team.players.forEach(function (player) {
-  //         playersList[player.player_id] =
-  //           player.last_name + ' ' + player.first_name;
-  //       });
-  //     }
-  //   });
-  //
-  //   return playersList;
-  // };
-
   statsPreparer = (match) => {
     return {
       team1: match.stats1,
@@ -264,7 +249,10 @@ export default class MatchScreen extends Component {
                 <Image
                   style={styles.matchData_teamLogo}
                   source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    uri: handler.getImageURI(
+                      matchData.team1.team_id,
+                      matchData.team1.logo,
+                    ),
                   }}
                 />
                 <Text style={styles.matchData_teamName}>
@@ -280,7 +268,10 @@ export default class MatchScreen extends Component {
                 <Image
                   style={styles.matchData_teamLogo}
                   source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                    uri: handler.getImageURI(
+                      matchData.team2.team_id,
+                      matchData.team2.logo,
+                    ),
                   }}
                 />
                 <Text style={styles.matchData_teamName}>
@@ -468,7 +459,10 @@ export default class MatchScreen extends Component {
                     <Image
                       style={styles.logoMini}
                       source={{
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        uri: handler.getImageURI(
+                          matchData.team1.team_id,
+                          matchData.team1.logo,
+                        ),
                       }}
                     />
                     <Text
@@ -491,7 +485,10 @@ export default class MatchScreen extends Component {
                     <Image
                       style={styles.logoMini}
                       source={{
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        uri: handler.getImageURI(
+                          matchData.team2.team_id,
+                          matchData.team2.logo,
+                        ),
                       }}
                     />
                     <Text
