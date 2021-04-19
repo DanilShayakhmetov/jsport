@@ -28,6 +28,7 @@ export default class MatchCenterScreen extends Component {
     this.state = {
       filteredCalendar: 'empty',
       focusedTab: 0,
+      imageList: undefined,
     };
   }
 
@@ -89,7 +90,7 @@ export default class MatchCenterScreen extends Component {
         </View>
       );
     } else {
-      console.log(this.getCalendar());
+      console.log(this.context.imageList);
       return (
         <View style={styles.container}>
           <View style={styles.tabs_container}>
@@ -187,8 +188,10 @@ export default class MatchCenterScreen extends Component {
                             <Image
                               style={styles.logo}
                               source={{
-                                uri:
-                                  'https://reactnative.dev/img/tiny_logo.png',
+                                uri: handler.getImageURI(
+                                  value.item.team1.team_id,
+                                  value.item.team1.logo,
+                                ),
                               }}
                             />
                           </View>
@@ -199,7 +202,6 @@ export default class MatchCenterScreen extends Component {
                                 overflow: 'hidden',
                               }}>
                               {value.item.start_dt}
-                              {/*.{value.item.team2.logo}*/}
                             </Text>
                             <Text
                               style={{
@@ -213,15 +215,16 @@ export default class MatchCenterScreen extends Component {
                               {value.item.ga}
                               {' : '}
                               {value.item.gf}
-                              {/*.{value.item.team2.logo}*/}
                             </Text>
                           </View>
                           <View style={styles.matchItem_team2}>
                             <Image
                               style={styles.logo}
                               source={{
-                                uri:
-                                  'https://reactnative.dev/img/tiny_logo.png',
+                                uri: handler.getImageURI(
+                                  value.item.team2.team_id,
+                                  value.item.team2.logo,
+                                ),
                               }}
                             />
                             <Text style={styles.text}>

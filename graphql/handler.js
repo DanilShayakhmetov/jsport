@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import {Image} from 'react-native';
 import makeApolloClient from './apollo';
 import {GET_MATCH_CENTER} from './queri/match/MatchCenterQuery';
 import {GET_MATCH} from './queri/match/MatchQuery';
@@ -14,6 +15,8 @@ import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
 import {JoinAppContext} from '../JoinAppContext';
 import {GET_SEASONS} from './queri/season/SeasonQuery';
+import teamLogo from '../assets/images/team_logo.png';
+import soccerBall from '../assets/images/soccer-ball.png';
 
 const client = makeApolloClient();
 const today = new Date();
@@ -27,9 +30,9 @@ const listOfMonth = {
   '07': 'июля',
   '08': 'августа',
   '09': 'сентября',
-  '10': 'октября',
-  '11': 'ноября',
-  '12': 'декабря',
+  10: 'октября',
+  11: 'ноября',
+  12: 'декабря',
 };
 
 class Handler extends React.Component {
@@ -285,6 +288,17 @@ class Handler extends React.Component {
     date[1] = listOfMonth[date[1]];
     console.log(date, time);
     return date[2] + ' ' + date[1] + ' , ' + time[0] + ':' + time[1];
+  }
+
+  static getImageURI(teamId, image) {
+    return (
+      'https://st.joinsport.io/team/' +
+      teamId +
+      '/logo/' +
+      image.split('.')[0] +
+      '_100x100.' +
+      image.split('.')[1]
+    );
   }
 }
 

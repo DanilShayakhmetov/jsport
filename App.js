@@ -28,6 +28,7 @@ class App extends React.Component {
       matchId: 'empty',
       tournamentId: 'empty',
       teamId: 'empty',
+      imageList: {},
     };
   }
 
@@ -65,6 +66,8 @@ class App extends React.Component {
         let match = calendar[i];
         if (match.tournament_id in tournamentList) {
           matchItem.item = match;
+          this.state.imageList[match.team1.team_id] = match.team1.logo;
+          this.state.imageList[match.team2.team_id] = match.team2.logo;
           if (match.start_dt.split(' ')[0] === currentDate) {
             matchItem.visibility = true;
           }
@@ -111,6 +114,7 @@ class App extends React.Component {
           tournamentData: this.state.tournamentData,
           teamCalendar: this.state.teamCalendar,
           teamData: this.state.teamData,
+          imageList: this.state.imageList,
         }}>
         <NavigationContainer>
           <Stack.Navigator style={{fontFamily: 'OpenSans'}}>
