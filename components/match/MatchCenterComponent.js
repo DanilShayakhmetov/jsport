@@ -97,6 +97,19 @@ export default class MatchCenterScreen extends Component {
             <ScrollView horizontal={true}>
               <TouchableOpacity
                 activeOpacity={0.8}
+                onPress={this.changeInterval.bind(this, -1, 0, -1)}>
+                <Text
+                  style={[
+                    styles.tabsItem,
+                    this.state.focusedTab === -1
+                      ? styles.tabsItem_chosen
+                      : styles.tabsItem_default,
+                  ]}>
+                  {'        Вчера         '}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={this.changeInterval.bind(this, 0, 0, 0)}>
                 <Text
                   style={[
@@ -183,7 +196,6 @@ export default class MatchCenterScreen extends Component {
                           <View style={styles.matchItem_team1}>
                             <Text style={styles.text}>
                               {value.item.team1.full_name}
-                              {/*.{value.item.team1.logo}*/}
                             </Text>
                             <Image
                               style={styles.logo}

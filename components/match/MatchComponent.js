@@ -37,7 +37,6 @@ export default class MatchScreen extends Component {
         this.setState({
           matchData: value,
         });
-        console.log(value);
         this.setState({
           eventList: this.eventPreparer(value),
         });
@@ -52,11 +51,12 @@ export default class MatchScreen extends Component {
 
   eventPreparer = (match) => {
     let eventsList = [];
-    let goalItems = match.goals;
-    let yellowCardItems = match.yellowCards;
-    let redCardItems = match.redCards;
-    let shootoutItems = match.shootouts;
-
+    let events = [
+      match.goals,
+      match.yellowCards,
+      match.redCards,
+      match.shootouts,
+    ];
     let teams = [match.team1, match.team2];
     let playersList = {};
     teams.forEach(function (team) {
@@ -67,75 +67,30 @@ export default class MatchScreen extends Component {
         });
       }
     });
-
-    console.log(goalItems);
-    console.log(playersList);
-
-    if (goalItems !== undefined) {
-      goalItems.forEach(function (goal) {
-        let eventItem = {
-          time: '',
-          event: '',
-          color: '',
-          team: '',
-          name: '',
-        };
-        eventItem.event = 'ГОЛ';
-        eventItem.color = 'lightblue';
-        eventItem.time = goal.minute;
-        eventItem.name = playersList[goal.player_id];
-        eventsList.push(eventItem);
-      });
-    }
-
-    if (yellowCardItems !== undefined) {
-      yellowCardItems.forEach(function (card) {
-        let eventItem = {
-          time: '',
-          event: '',
-          color: '',
-          team: '',
-          name: '',
-        };
-        eventItem.event = 'ЖК';
-        eventItem.color = 'yellow';
-        eventItem.time = card.minute;
-        eventsList.push(eventItem);
-      });
-    }
-
-    if (redCardItems !== undefined) {
-      redCardItems.forEach(function (card) {
-        let eventItem = {
-          time: '',
-          event: '',
-          color: '',
-          team: '',
-          name: '',
-        };
-        eventItem.event = 'КК';
-        eventItem.color = 'red';
-        eventItem.time = card.minute;
-        eventsList.push(eventItem);
-      });
-    }
-
-    if (shootoutItems !== undefined) {
-      shootoutItems.forEach(function (card) {
-        let eventItem = {
-          time: '',
-          event: '',
-          color: '',
-          team: '',
-          name: '',
-        };
-        eventItem.event = 'ПЕНАЛЬТИ';
-        eventItem.color = 'blue';
-        eventItem.time = card.minute;
-        eventsList.push(eventItem);
-      });
-    }
-
+    console.log(match.team1, 'team');
+    events.forEach(function (event) {
+      if (event !== undefined) {
+        event.forEach(function (item) {
+          console.log(event, 'event');
+          let eventItem = {
+            logo: '',
+            time: '',
+            team: '',
+            name: '',
+          };
+          if (parseInt(item.team_id) === parseInt(match.team1.team_id)) {
+            eventItem.team = 1;
+          } else {
+            eventItem.team = 2;
+          }
+          eventItem.logo = 'ГОЛ';
+          eventItem.time = item.minute;
+          eventItem.name = playersList[item.player_id];
+          eventsList.push(eventItem);
+        });
+      }
+    });
+    console.log(eventsList);
     return eventsList;
   };
 
@@ -341,40 +296,55 @@ export default class MatchScreen extends Component {
               }}>
               <ScrollView>
                 {eventsList.map((item) => (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      margin: 5,
-                      width: 400,
-                    }}>
-                    <Text
-                      style={{
-                        marginLeft: 125,
-                        fontSize: 18,
-                        color: 'black',
-                        fontFamily: 'OpenSans',
-                      }}>
-                      {item.time}
-                      {"'"}
-                    </Text>
+                  <View style={styles.eventList_container}>
+                    <View style={styles.eventList_team1}>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                          display: item.team === 2 ? null : 'none',
+                        }}>
+                        {item.time}
+                        {"'"}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                          display: item.team === 1 ? null : 'none',
+                        }}>
+                        {item.name}
+                      </Text>
+                    </View>
                     <Image
                       style={styles.eventList_image}
                       source={{
                         uri: EVENT_IMAGE,
                       }}
                     />
-                    <Text
-                      style={{
-                        width: 140,
-                        fontSize: 18,
-                        color: 'black',
-                        fontFamily: 'OpenSans',
-                      }}>
-                      {item.name}
-                    </Text>
+                    <View style={styles.eventList_team2}>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                          display: item.team === 2 ? null : 'none',
+                        }}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                          display: item.team === 1 ? null : 'none',
+                        }}>
+                        {item.time}
+                        {"'"}
+                      </Text>
+                    </View>
                   </View>
                 ))}
               </ScrollView>
@@ -702,11 +672,34 @@ const styles = StyleSheet.create({
     color: '#3498db',
     borderBottomColor: '#3498db',
   },
+  eventList_container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    margin: 5,
+    width: 400,
+  },
+
+  eventList_team1: {
+    width: '40%',
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  eventList_team2: {
+    width: '40%',
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   eventList_image: {
-    width: 40,
+    width: '10%',
     height: 40,
     borderRadius: 20,
-    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
   },
   mainDataContainer: {
     flex: 1,
