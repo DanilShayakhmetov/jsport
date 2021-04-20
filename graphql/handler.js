@@ -15,8 +15,8 @@ import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
 import {JoinAppContext} from '../JoinAppContext';
 import {GET_SEASONS} from './queri/season/SeasonQuery';
-import teamLogo from '../assets/images/team_logo.png';
-import soccerBall from '../assets/images/soccer-ball.png';
+import {GET_PLAYER_STATS} from './queri/player/StatsQuery';
+import {GET_TOURNAMENT_STATS} from "./queri/tournament/StatsQuery";
 
 const client = makeApolloClient();
 const today = new Date();
@@ -176,6 +176,24 @@ class Handler extends React.Component {
       });
   }
 
+  static getTournamentStats(tournament_id) {
+    let tournamentId = parseInt(tournament_id);
+    return client
+      .query({
+        variables: {
+          tournamentId: tournamentId,
+        },
+        query: GET_TOURNAMENT_STATS,
+      })
+      .then(function (value) {
+        console.log(value);
+        return value;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   static getTeamMatch(team_id) {
     let teamId = parseInt(team_id);
     return client
@@ -226,16 +244,18 @@ class Handler extends React.Component {
       });
   }
 
-  static getPlayerStats(teamsCount) {
+  static getPlayerStats(player_id) {
+    let playerId = parseInt(player_id);
     return client
       .query({
         variables: {
-          teamsCount: teamsCount,
+          playerId: player_id,
         },
-        query: GET_TEAM_LIST,
+        query: GET_PLAYER_STATS,
       })
       .then(function (value) {
-        return value.data;
+        console.log(value.data.stats.data);
+        return value.data.stats.data;
       })
       .catch((error) => {
         console.log(error);

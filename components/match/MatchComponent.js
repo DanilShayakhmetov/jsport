@@ -43,9 +43,19 @@ export default class MatchScreen extends Component {
         this.setState({
           rosterList: this.rosterPreparer(value),
         });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    const round_id = this.context.matchData._W.round_id;
+    await handler
+      .getRound(round_id)
+      .then((value) => {
         this.setState({
-          statsList: this.statsPreparer(value),
+          tableList: value,
         });
+        console.log(value);
       })
       .catch((error) => {
         console.log(error);
@@ -155,13 +165,6 @@ export default class MatchScreen extends Component {
     return roster;
   };
 
-  statsPreparer = (match) => {
-    return {
-      team1: match.stats1,
-      team2: match.stats2,
-    };
-  };
-
   tabsHandler = (tab) => {
     console.log(this.context.focusedTab);
     this.setState({
@@ -183,12 +186,12 @@ export default class MatchScreen extends Component {
     const matchData = this.state.matchData;
     const eventsList = this.state.eventList;
     const rosterList = this.state.rosterList;
-    const statsList = this.state.statsList;
+    const tableList = this.state.tableList;
     if (
       rosterList === undefined ||
       eventsList === undefined ||
       matchData === undefined ||
-      statsList === undefined
+      tableList === undefined
     ) {
       return (
         <View>
@@ -406,6 +409,58 @@ export default class MatchScreen extends Component {
                   <Text>О</Text>
                 </View>
               </View>
+              <ScrollView>
+                {tableList.tableRows.map((row) => (
+                  <View
+                    style={{
+                      width: '100%',
+                      marginBottom: 5,
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}>
+                    <Text
+                      style={{
+                        width: '40%',
+                      }}>
+                      {row.team.full_name}
+                    </Text>
+                    <Text
+                      style={{
+                        width: '10%',
+                      }}>
+                      {row.games}
+                    </Text>
+                    <Text
+                      style={{
+                        width: '10%',
+                      }}>
+                      {row.wins}
+                    </Text>
+                    <Text
+                      style={{
+                        width: '10%',
+                      }}>
+                      {row.draws}
+                    </Text>
+                    <Text
+                      style={{
+                        width: '10%',
+                      }}>
+                      {row.losses}
+                    </Text>
+                    <View
+                      style={{
+                        width: '20%',
+                        alignItems: 'flex-end',
+                        alignSelf: 'flex-end',
+                      }}>
+                      <Text>{row.points}</Text>
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
             <View
               style={{
