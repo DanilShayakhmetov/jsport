@@ -8,3 +8,18 @@ react-native run-android
 npx react-native run-ios --simulator="iPhone 8"
 lsof -i:8080
 
+//icons
+
+FontAwesome
+
+
+trophy
+shield
+soccer-ball-o
+
+ionicons
+
+football-outline
+trophy-outline
+ios-shield-outline
+ios-trophy-outline

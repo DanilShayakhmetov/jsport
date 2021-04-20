@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
-import {Icon} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const handler = Handler;
 var PLAYERS = <Text>{''}</Text>;
@@ -673,7 +673,7 @@ export default class TableScreen extends Component {
           <View
             style={{
               width: 432,
-              height: 50,
+              height: 40,
               alignSelf: 'center',
               backgroundColor: 'lightGray',
               borderTopWidth: 1,
@@ -691,11 +691,7 @@ export default class TableScreen extends Component {
                   width: 144,
                   color: 'gray',
                 }}>
-                <Icon
-                  name="ios-american-football"
-                  type="ionicon"
-                  color="#517fa4"
-                />
+                <Icon name="football-outline" size={30} color="#517fa4" />
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -706,11 +702,7 @@ export default class TableScreen extends Component {
                   borderLeftWidth: 2,
                   borderRightWidth: 2,
                 }}>
-                <Icon
-                  name="ios-trophy-outline"
-                  type="ionicon"
-                  color="#517fa4"
-                />
+                <Icon name="trophy-outline" size={30} color="#517fa4" />
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -719,7 +711,7 @@ export default class TableScreen extends Component {
                   width: 144,
                   color: 'gray',
                 }}>
-                <Icon name="ios-people-sharp" type="ionicon" color="#517fa4" />
+                <Icon name="shield-outline" size={30} color="#517fa4" />
               </TouchableOpacity>
             </View>
           </View>
