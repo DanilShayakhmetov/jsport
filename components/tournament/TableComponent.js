@@ -290,6 +290,7 @@ export default class TableScreen extends Component {
         </View>
       );
     } else {
+      console.log(this.context.tournamentData);
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
       return (
