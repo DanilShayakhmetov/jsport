@@ -90,8 +90,6 @@ export default class MatchCenterScreen extends Component {
         </View>
       );
     } else {
-      // console.log(handler.getPlayerStats(2492679));
-      console.log(handler.getTournamentStats(1016004));
       return (
         <View style={styles.container}>
           <View style={styles.tabs_container}>

@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 
 export const GET_TOURNAMENT_STATS = gql`
-  query TournamentStatsQuery($tournamentId: Int!, $seasonId: Int!) {
+  query TournamentStatsQuery($tournamentId: Int!) {
     stats(
-      filters: {tournament_id: $tournamentId, season_id: $seasonId}
+      filters: {tournament_id: $tournamentId}
       sorters: [{column: GOALS, order: DESC}]
       groupers: [PLAYER]
-      aggregates: [GOALS, YELLOW_CARDS]
+      aggregates: [GAMES, GOALS, YELLOW_CARDS]
     ) {
       data {
         player {
@@ -19,6 +19,7 @@ export const GET_TOURNAMENT_STATS = gql`
           full_name
         }
         goals
+        games
         yellow_cards
       }
     }

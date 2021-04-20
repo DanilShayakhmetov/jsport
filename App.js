@@ -23,6 +23,7 @@ class App extends React.Component {
       teamCalendar: 'empty',
       matchData: 'empty',
       tournamentData: 'empty',
+      tournamentStats: 'empty',
       teamData: 'empty',
       layoutHeight: 0,
       matchId: 'empty',
@@ -101,6 +102,18 @@ class App extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+    // console.log(handler.getTournamentStats(1016004));
+
+    await handler
+      .getTournamentStats(this.context.calendar.tournamentId)
+      .then((value) => {
+        this.setState({
+          tournamentStats: value,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -112,6 +125,7 @@ class App extends React.Component {
           matchId: this.state.matchId,
           matchData: this.state.matchData,
           tournamentData: this.state.tournamentData,
+          tournamentStats: this.state.tournamentStats,
           teamCalendar: this.state.teamCalendar,
           teamData: this.state.teamData,
           imageList: this.state.imageList,
@@ -123,22 +137,10 @@ class App extends React.Component {
               component={MatchCenterScreen}
               options={{title: 'Турниры'}}
             />
-            <Stack.Screen
-              name="Match"
-              component={MatchScreen}
-            />
-            <Stack.Screen
-              name="TournamentTable"
-              component={TableScreen}
-            />
-            <Stack.Screen
-              name="Team"
-              component={TeamScreen}
-            />
-            <Stack.Screen
-              name="TeamList"
-              component={TeamListScreen}
-            />
+            <Stack.Screen name="Match" component={MatchScreen} />
+            <Stack.Screen name="TournamentTable" component={TableScreen} />
+            <Stack.Screen name="Team" component={TeamScreen} />
+            <Stack.Screen name="TeamList" component={TeamListScreen} />
             <Stack.Screen
               name="TournamentList"
               component={TournamentListScreen}
