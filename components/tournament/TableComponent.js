@@ -45,18 +45,18 @@ export default class TableScreen extends Component {
         console.log(error);
       });
 
-    const round_id = this.context.matchData._W.round_id;
-
-    await handler
-      .getRound(round_id)
-      .then((value) => {
-        this.setState({
-          tableList: value,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // const round_id = this.context.matchData._W.round_id;
+    //
+    // await handler
+    //   .getRound(round_id)
+    //   .then((value) => {
+    //     this.setState({
+    //       tableList: value,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   //Отвечает за ненужнй раздел, просто заглушка
@@ -276,7 +276,7 @@ export default class TableScreen extends Component {
   render() {
     const matchD = this.context.matchData._W;
     const matchList = this.context.tournamentData.matchItems;
-    const tableList = this.state.tableList;
+    const tableList = this.context.tableList;
     if (
       tableList === 'empty' ||
       tableList === undefined ||
@@ -562,7 +562,7 @@ export default class TableScreen extends Component {
                           style={{
                             width: '15%',
                           }}>
-                          {item.loses}
+                          {item.losses}
                         </Text>
                         <View
                           style={{
