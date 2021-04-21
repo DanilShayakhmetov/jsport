@@ -16,7 +16,7 @@ import {GET_TEAM_LIST} from './queri/team/ListQuery';
 import {JoinAppContext} from '../JoinAppContext';
 import {GET_SEASONS} from './queri/season/SeasonQuery';
 import {GET_PLAYER_STATS} from './queri/player/StatsQuery';
-import {GET_TOURNAMENT_STATS} from "./queri/tournament/StatsQuery";
+import {GET_TOURNAMENT_STATS} from './queri/tournament/StatsQuery';
 
 const client = makeApolloClient();
 const today = new Date();
