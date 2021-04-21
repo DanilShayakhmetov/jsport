@@ -59,6 +59,11 @@ export default class TeamScreen extends Component {
     });
   };
 
+  playerStatsRedirect = (playerId) => {
+    this.context.playerId = playerId;
+    return this.props.navigation.navigate('PlayerStats');
+  };
+
   render() {
     const matchList = this.state.matchList;
     const rosterList = this.state.rosterList;
@@ -199,42 +204,49 @@ export default class TeamScreen extends Component {
                       flexWrap: 'wrap',
                       margin: 10,
                     }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        marginRight: 20,
-                      }}>
-                      <Image
-                        style={styles.playerLogo}
-                        source={{
-                          uri: handler.getPlayerImageURI(
-                            player.player_id,
-                            player.photo,
-                          ),
-                        }}
-                      />
-                    </View>
-                    <View>
-                      <Text
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={this.playerStatsRedirect.bind(
+                        this,
+                        player.player_id,
+                      )}>
+                      <View
                         style={{
-                          fontSize: 18,
-                          color: '#606070',
-                          fontFamily: 'OpenSans',
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          marginRight: 20,
                         }}>
-                        {player.last_name}
-                        {player.first_name}
-                        {player.middle_name}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          color: 'gray',
-                          fontFamily: 'OpenSans',
-                        }}>
-                        {player.start_dt}
-                      </Text>
-                    </View>
+                        <Image
+                          style={styles.playerLogo}
+                          source={{
+                            uri: handler.getPlayerImageURI(
+                              player.player_id,
+                              player.photo,
+                            ),
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: '#606070',
+                            fontFamily: 'OpenSans',
+                          }}>
+                          {player.last_name}
+                          {player.first_name}
+                          {player.middle_name}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: 'gray',
+                            fontFamily: 'OpenSans',
+                          }}>
+                          {player.start_dt}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 ))}
               </View>

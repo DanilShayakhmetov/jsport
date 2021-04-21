@@ -243,12 +243,14 @@ class Handler extends React.Component {
       });
   }
 
-  static getPlayerStats(player_id) {
+  static getPlayerStats(player_id, season_id) {
     let playerId = parseInt(player_id);
+    let seasonId = parseInt(season_id);
     return client
       .query({
         variables: {
-          playerId: player_id,
+          playerId: playerId,
+          seasonId: seasonId,
         },
         query: GET_PLAYER_STATS,
       })

@@ -11,6 +11,8 @@ import TableScreen from './components/tournament/TableComponent';
 import TeamScreen from './components/team/TeamMatchComponent';
 import TeamListScreen from './components/team/ListComponent';
 import TournamentListScreen from './components/tournament/ListComponent';
+import PlayerStatsComponent from "./components/player/PlayerStatsComponent";
+import PlayerStatsScreen from "./components/player/PlayerStatsComponent";
 
 const Stack = createStackNavigator();
 const handler = Handler;
@@ -28,6 +30,7 @@ class App extends React.Component {
       matchId: 'empty',
       tournamentId: 'empty',
       teamId: 'empty',
+      playerId: 'empty',
       imageList: {},
       tableList: {},
     };
@@ -117,6 +120,7 @@ class App extends React.Component {
           teamCalendar: this.state.teamCalendar,
           teamData: this.state.teamData,
           imageList: this.state.imageList,
+          playerId: this.state.playerId,
         }}>
         <NavigationContainer>
           <Stack.Navigator style={{fontFamily: 'OpenSans'}}>
@@ -134,6 +138,7 @@ class App extends React.Component {
               component={TournamentListScreen}
               options={{title: 'Список турниров'}}
             />
+            <Stack.Screen name="PlayerStats" component={PlayerStatsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </JoinAppContext.Provider>

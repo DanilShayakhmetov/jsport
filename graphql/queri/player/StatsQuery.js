@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
 export const GET_PLAYER_STATS = gql`
-  query PlayerStatsQuery($playerId: Int!) {
+  query PlayerStatsQuery($playerId: Int!, $seasonId: Int!) {
     stats(
-      filters: {player_id: $playerId}
+      filters: {player_id: $playerId, season_id: $seasonId}
       sorters: [{column: GOALS, order: DESC}]
-      groupers: [SEASON]
+      groupers: [TOURNAMENT]
       aggregates: [GAMES, GOALS, ASSISTS, YELLOW_CARDS, RED_CARDS]
     ) {
       data {
@@ -13,6 +13,7 @@ export const GET_PLAYER_STATS = gql`
           player_id
           first_name
           last_name
+          birthday
           photo
         }
         team {
