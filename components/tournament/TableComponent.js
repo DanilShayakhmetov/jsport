@@ -22,7 +22,6 @@ export default class TableScreen extends Component {
       focusedTab: 0,
       focusedRoster: 0,
       matchList: 'empty',
-      tableList: 'empty',
       players: 'empty',
     };
   }
@@ -45,18 +44,32 @@ export default class TableScreen extends Component {
         console.log(error);
       });
 
-    // const round_id = this.context.matchData._W.round_id;
-    //
-    // await handler
-    //   .getRound(round_id)
-    //   .then((value) => {
-    //     this.setState({
-    //       tableList: value,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const round_id = this.context.matchData._W.round_id;
+    const tournament_id = this.context.matchData._W.tournament_id;
+    console.log(this.context.matchData._W.tournament_id, 'this------<');
+    await handler
+      .getRound(round_id)
+      .then((value) => {
+        this.setState({
+          tableList: value,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    await handler
+      .getTournamentStats(tournament_id)
+      .then((value) => {
+        this.setState({
+          tournamentStats: value,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(this.state.tournamentStats);
   }
 
   //Отвечает за ненужнй раздел, просто заглушка
@@ -276,7 +289,7 @@ export default class TableScreen extends Component {
   render() {
     const matchD = this.context.matchData._W;
     const matchList = this.context.tournamentData.matchItems;
-    const tableList = this.context.tableList;
+    const tableList = this.state.tableList;
     if (
       tableList === 'empty' ||
       tableList === undefined ||

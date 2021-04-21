@@ -186,8 +186,7 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_STATS,
       })
       .then(function (value) {
-        console.log(value);
-        return value;
+        return value.data.stats.data;
       })
       .catch((error) => {
         console.log(error);

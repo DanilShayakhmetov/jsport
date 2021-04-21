@@ -23,7 +23,6 @@ class App extends React.Component {
       teamCalendar: 'empty',
       matchData: 'empty',
       tournamentData: 'empty',
-      tournamentStats: 'empty',
       teamData: 'empty',
       layoutHeight: 0,
       matchId: 'empty',
@@ -126,11 +125,9 @@ class App extends React.Component {
           matchId: this.state.matchId,
           matchData: this.state.matchData,
           tournamentData: this.state.tournamentData,
-          tournamentStats: this.state.tournamentStats,
           teamCalendar: this.state.teamCalendar,
           teamData: this.state.teamData,
           imageList: this.state.imageList,
-          tableList: this.state.tableList,
         }}>
         <NavigationContainer>
           <Stack.Navigator style={{fontFamily: 'OpenSans'}}>
