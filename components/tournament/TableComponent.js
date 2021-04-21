@@ -21,7 +21,6 @@ export default class TableScreen extends Component {
     this.state = {
       focusedTab: 0,
       focusedRoster: 0,
-      matchList: 'empty',
       players: 'empty',
     };
   }
@@ -46,7 +45,6 @@ export default class TableScreen extends Component {
 
     const round_id = this.context.matchData._W.round_id;
     const tournament_id = this.context.matchData._W.tournament_id;
-    console.log(this.context.matchData._W.tournament_id, 'this------<');
     await handler
       .getRound(round_id)
       .then((value) => {
@@ -290,11 +288,11 @@ export default class TableScreen extends Component {
     const matchD = this.context.matchData._W;
     const matchList = this.context.tournamentData.matchItems;
     const tableList = this.state.tableList;
+    const statsList = this.state.tournamentStats;
     if (
-      tableList === 'empty' ||
       tableList === undefined ||
-      matchList === 'empty' ||
       matchList === undefined ||
+      statsList === undefined ||
       matchD === null
     ) {
       return (
@@ -303,7 +301,6 @@ export default class TableScreen extends Component {
         </View>
       );
     } else {
-      console.log(this.context.tournamentData);
       let rosterList = this.rosterPreparer(matchD);
       this.state.rosterList = rosterList;
       return (
