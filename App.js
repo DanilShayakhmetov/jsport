@@ -103,17 +103,6 @@ class App extends React.Component {
         console.log(error);
       });
     // console.log(handler.getTournamentStats(1016004));
-
-    await handler
-      .getTournamentStats(this.context.calendar.tournamentId)
-      .then((value) => {
-        this.setState({
-          tournamentStats: value,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   render() {

@@ -446,6 +446,7 @@ export default class TableScreen extends Component {
                 ))}
               </ScrollView>
             </View>
+
             <View
               style={{
                 display: this.state.focusedTab === 1 ? null : 'none',
@@ -590,6 +591,7 @@ export default class TableScreen extends Component {
                 ))}
               </ScrollView>
             </View>
+
             <View
               style={{
                 display: this.state.focusedTab === 2 ? null : 'none',
@@ -597,47 +599,122 @@ export default class TableScreen extends Component {
               }}>
               <View
                 style={{
-                  marginBottom: 20,
+                  width: '100%',
+                  marginBottom: 5,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
                 }}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, 0)}>
-                  <Text>{'rosterList.team1.team_id'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={this.rosterHandler.bind(this, 1)}>
-                  <Text>{'rosterList.team2.team_id'}</Text>
-                </TouchableOpacity>
+                <Text
+                  style={{
+                    width: '40%',
+                  }}>
+                  Игрок
+                </Text>
+                <Text
+                  style={{
+                    width: '35%',
+                  }}>
+                  Команда
+                </Text>
+                <Text
+                  style={{
+                    width: '5%',
+                  }}>
+                  И
+                </Text>
+                <Text
+                  style={{
+                    width: '5%',
+                  }}>
+                  Г
+                </Text>
+                <Text
+                  style={{
+                    width: '10%',
+                  }}>
+                  ЖК
+                </Text>
+                <Text
+                  style={{
+                    width: '5%',
+                  }}>
+                  КК
+                </Text>
               </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === 0 ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                <ScrollView>
-                  {rosterList.team1.map((item) => (
-                    <Text>
-                      {item.position}.{item.name}.{'     rost          '}
-                    </Text>
-                  ))}
-                </ScrollView>
-              </View>
-              <View
-                style={{
-                  display: this.state.focusedRoster === 1 ? null : 'none',
-                  overflow: 'hidden',
-                }}>
-                <ScrollView>
-                  {rosterList.team2.map((item) => (
-                    <Text>
-                      {item.position}.{item.name}.{'     rost          '}
-                    </Text>
-                  ))}
-                </ScrollView>
-              </View>
+              <ScrollView>
+                {statsList.map((row) => (
+                  <View
+                    style={{
+                      width: '100%',
+                      marginBottom: 5,
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                    }}>
+                    <View
+                      style={{
+                        width: '40%',
+                      }}>
+                      <Image
+                        style={styles.logoMini}
+                        source={{
+                          uri: handler.getPlayerImageURI(
+                            row.player.player_id,
+                            row.player.photo,
+                          ),
+                        }}
+                      />
+                      <Text>
+                        {row.player.first_name}
+                        {row.player.last_name}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: '35%',
+                      }}>
+                      <Image
+                        style={styles.logoMini}
+                        source={{
+                          uri: handler.getTeamImageURI(
+                            row.team.team_id,
+                            row.team.logo,
+                          ),
+                        }}
+                      />
+                      <Text>{row.team.full_name}</Text>
+                    </View>
+                    <View
+                      style={{
+                        width: '5%',
+                      }}>
+                      <Text>{row.games}</Text>
+                    </View>
+                    <View
+                      style={{
+                        width: '5%',
+                      }}>
+                      <Text>{row.goals}</Text>
+                    </View>
+                    <View
+                      style={{
+                        width: '10%',
+                      }}>
+                      <Text>{row.yellow_cards}</Text>
+                    </View>
+                    <View
+                      style={{
+                        width: '5%',
+                      }}>
+                      <Text>{row.red_cards}</Text>
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
-
             <View
               style={{
                 display: this.state.focusedTab === 3 ? null : 'none',
@@ -775,6 +852,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     marginRight: 10,
+  },
+  logoMini: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    margin: 2,
   },
   teamLogo: {
     width: 25,
