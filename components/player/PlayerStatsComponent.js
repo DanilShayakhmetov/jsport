@@ -67,22 +67,56 @@ export default class PlayerStatsScreen extends Component {
         <View style={styles.container}>
           <View style={styles.playerProfile_container}>
             <View style={styles.playerProfile_item}>
-              <Image />
+              <Image style={styles.playerProfile_photo} />
               <View style={styles.playerProfile_personal}>
-                <Text style={styles.playerProfile_name}> </Text>
-                <Text style={styles.playerProfile_bithdate}> </Text>
+                <Text style={styles.playerProfile_name}>
+                  Петров Сергей Александрович
+                </Text>
+                <Text style={styles.playerProfile_birthdate}>
+                  Дата рождения: 21.12.1234
+                </Text>
               </View>
             </View>
-            <Text style={styles.playerProfile_team}>asd </Text>
           </View>
+          <Text style={styles.playerProfile_team}>Клуб: Спартак</Text>
           <View style={styles.playerStats_container}>
-            <Text style={styles.playerStats_item}>игр </Text>
-            <Text style={styles.playerStats_item}>игр </Text>
-            <Text style={styles.playerStats_item}>игр </Text>
-            <Text style={styles.playerStats_item}>игр </Text>
-            <Text style={styles.playerStats_item}>игр </Text>
+            <View style={styles.playerStats_item}>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_title_items}>игр</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_title_items}>голы</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_title_items}>передачи</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_title_items}>ЖК</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_title_items}>КК</Text>
+              </View>
+            </View>
+            <View style={styles.playerStats_item}>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_value_items}>1</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_value_items}>12</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_value_items}>5</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_value_items}>1</Text>
+              </View>
+              <View style={styles.playerStats_item_Container}>
+                <Text style={styles.playerStats_value_items}>1</Text>
+              </View>
+            </View>
           </View>
           <View style={styles.playerSeason_container}>
+            <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
             <Picker
               selectedValue={this.state.seasonId}
               style={{height: 50, width: 150}}
@@ -93,14 +127,13 @@ export default class PlayerStatsScreen extends Component {
                 <Picker.Item label={season.title} value={season.season_id} />
               ))}
             </Picker>
-            <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
           </View>
           <View style={styles.playerTeam_container}>
-            <View style={styles.playerTeam_scoreTop}>СТАТИСТИКА</View>
-            <View style={styles.playerTeam_scoreTitle}>СТАТИСТИКА</View>
-            <View style={styles.playerTeam_scoreBottom}>СТАТИСТИКА</View>
-            <View style={styles.playerSeason_text}>СТАТИСТИКА</View>
-            <View style={styles.playerSeason_text}>СТАТИСТИКА</View>
+            <View style={styles.playerTeam_row_score} />
+            <View style={styles.playerTeam_row_scoreTitle} />
+            <View style={styles.playerTeam_row_team} />
+            <View style={styles.playerTeam_row_tournament} />
+            <View style={styles.playerTeam_row_match} />
           </View>
         </View>
       );
@@ -113,17 +146,150 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-start',
+    fontFamily: 'OpenSans',
   },
-  containerTop: {
-    flex: 1,
-    backgroundColor: '#fff',
+
+  playerProfile_container: {
+    backgroundColor: 'black',
+    height: '20%',
+    justifyContent: 'center',
+  },
+
+  playerProfile_item: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: '5%',
+  },
+
+  playerProfile_photo: {
+    width: 100,
+    height: 100,
+    borderWidth: 2,
+    borderRadius: 50,
+    backgroundColor: 'red',
+  },
+
+  playerProfile_personal: {
+    width: '60%',
+    margin: 5,
+    marginLeft: '5%',
+  },
+
+  playerProfile_name: {
+    fontSize: 25,
+    color: 'white',
+    fontFamily: 'OpenSans',
+  },
+
+  playerProfile_birthdate: {
+    fontSize: 15,
+    color: 'gray',
+    fontFamily: 'OpenSans',
+    marginTop: '5%',
+  },
+
+  playerProfile_team: {
+    fontSize: 15,
+    color: 'gray',
+    fontFamily: 'OpenSans',
+    paddingLeft: '5%',
+    backgroundColor: 'black',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
+    height: '5%',
   },
+
+  playerStats_container: {
+    height: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  playerStats_item: {
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  playerStats_value: {
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  playerStats_item_Container: {
+    alignItems: 'center',
+    width: '20%',
+  },
+  playerStats_title_items: {
+    alignItems: 'center',
+    fontSize: 15,
+    color: 'blue',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
+  },
+
+  playerStats_value_items: {
+    alignItems: 'center',
+    fontSize: 15,
+    color: 'black',
+    fontFamily: 'OpenSans',
+  },
+
+  playerSeason_container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'yellow',
+    height: '20%',
+  },
+
+  playerSeason_text: {
+    fontSize: 10,
+    color: 'black',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
+    width: '20%',
+  },
+
+  playerTeam_container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'yellow',
+    height: '20%',
+  },
+
+  playerTeam_row_score: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'yellow',
+    height: '10%',
+  },
+
+  playerTeam_row_scoreTitle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'black',
+    height: '10%',
+  },
+
+  playerTeam_row_team: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'gray',
+    height: '20%',
+  },
+
+  playerTeam_row_tournament: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'white',
+    height: '10%',
+  },
+
+  playerTeam_row_match: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'black',
+    height: '10%',
+  },
+
   touchItem: {
     borderBottomColor: 'blue',
     borderBottomWidth: 2,
