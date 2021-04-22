@@ -53,14 +53,9 @@ export default class PlayerStatsScreen extends Component {
   }
 
   render() {
-    let tournamentsList = this.state.tournamentsList;
     let seasonsList = this.state.seasonsList;
     let playerStats = this.state.playerStats;
-    if (
-      tournamentsList === undefined ||
-      seasonsList === undefined ||
-      playerStats === undefined
-    ) {
+    if (seasonsList === undefined || playerStats === undefined) {
       return (
         <View>
           <Text>Wait</Text>
@@ -70,16 +65,43 @@ export default class PlayerStatsScreen extends Component {
       console.log(playerStats);
       return (
         <View style={styles.container}>
-          <Picker
-            selectedValue={this.state.seasonId}
-            style={{height: 50, width: 150}}
-            onValueChange={(itemValue) => {
-              this.setState({seasonId: itemValue});
-            }}>
-            {seasonsList.seasons.map((season) => (
-              <Picker.Item label={season.title} value={season.season_id} />
-            ))}
-          </Picker>
+          <View style={styles.playerProfile_container}>
+            <View style={styles.playerProfile_item}>
+              <Image />
+              <View style={styles.playerProfile_personal}>
+                <Text style={styles.playerProfile_name}> </Text>
+                <Text style={styles.playerProfile_bithdate}> </Text>
+              </View>
+            </View>
+            <Text style={styles.playerProfile_team}>asd </Text>
+          </View>
+          <View style={styles.playerStats_container}>
+            <Text style={styles.playerStats_item}>игр </Text>
+            <Text style={styles.playerStats_item}>игр </Text>
+            <Text style={styles.playerStats_item}>игр </Text>
+            <Text style={styles.playerStats_item}>игр </Text>
+            <Text style={styles.playerStats_item}>игр </Text>
+          </View>
+          <View style={styles.playerSeason_container}>
+            <Picker
+              selectedValue={this.state.seasonId}
+              style={{height: 50, width: 150}}
+              onValueChange={(itemValue) => {
+                this.setState({seasonId: itemValue});
+              }}>
+              {seasonsList.seasons.map((season) => (
+                <Picker.Item label={season.title} value={season.season_id} />
+              ))}
+            </Picker>
+            <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
+          </View>
+          <View style={styles.playerTeam_container}>
+            <View style={styles.playerTeam_scoreTop}>СТАТИСТИКА</View>
+            <View style={styles.playerTeam_scoreTitle}>СТАТИСТИКА</View>
+            <View style={styles.playerTeam_scoreBottom}>СТАТИСТИКА</View>
+            <View style={styles.playerSeason_text}>СТАТИСТИКА</View>
+            <View style={styles.playerSeason_text}>СТАТИСТИКА</View>
+          </View>
         </View>
       );
     }
