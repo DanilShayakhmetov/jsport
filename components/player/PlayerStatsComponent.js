@@ -116,10 +116,12 @@ export default class PlayerStatsScreen extends Component {
             </View>
           </View>
           <View style={styles.playerSeason_container}>
-            <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
+            <View style={styles.playerSeason_textContainer}>
+              <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
+            </View>
             <Picker
               selectedValue={this.state.seasonId}
-              style={{height: 50, width: 150}}
+              style={styles.playerSeason_picker}
               onValueChange={(itemValue) => {
                 this.setState({seasonId: itemValue});
               }}>
@@ -129,9 +131,50 @@ export default class PlayerStatsScreen extends Component {
             </Picker>
           </View>
           <View style={styles.playerTeam_container}>
-            <View style={styles.playerTeam_row_score} />
-            <View style={styles.playerTeam_row_scoreTitle} />
-            <View style={styles.playerTeam_row_team} />
+            <View style={styles.playerTeam_row_score}>
+              <View style={styles.playerTeam_row_container}>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>1</Text>
+                </View>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>3</Text>
+                </View>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>5</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.playerTeam_row_scoreTitle}>
+              <View style={styles.playerTeam_row_container}>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>ИГР</Text>
+                </View>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>ГОЛ.</Text>
+                </View>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>ПАС.</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.playerTeam_row_team}>
+              <View style={styles.playerTeam_row_teamContainer}>
+                <View>
+                  <Text>1</Text>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_container}>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>1</Text>
+                </View>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>3</Text>
+                </View>
+                <View style={styles.playerTeam_row_item}>
+                  <Text style={styles.playerTeam_row_itemText}>5</Text>
+                </View>
+              </View>
+            </View>
             <View style={styles.playerTeam_row_tournament} />
             <View style={styles.playerTeam_row_match} />
           </View>
@@ -236,8 +279,9 @@ const styles = StyleSheet.create({
   playerSeason_container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'yellow',
-    height: '20%',
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    height: '5%',
   },
 
   playerSeason_text: {
@@ -245,21 +289,54 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'OpenSans',
     fontWeight: 'bold',
-    width: '20%',
+  },
+  playerSeason_textContainer: {
+    width: '40%',
+    height: '100%',
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  playerSeason_picker: {
+    width: '60%',
+    height: '100%',
   },
 
   playerTeam_container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'yellow',
-    height: '20%',
+    height: '50%',
   },
 
   playerTeam_row_score: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'yellow',
+    alignItems: 'flex-end',
+    backgroundColor: 'green',
     height: '10%',
+    width: '100%',
+  },
+
+  playerTeam_row_container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+    width: '100%',
+    height: '100%',
+  },
+  playerTeam_row_item: {
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '15%',
+    height: '100%',
+  },
+  playerTeam_row_itemText: {
+    fontSize: 15,
+    color: 'black',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
   },
 
   playerTeam_row_scoreTitle: {
@@ -267,6 +344,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     backgroundColor: 'black',
     height: '10%',
+    width: '100%',
   },
 
   playerTeam_row_team: {
@@ -274,6 +352,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     backgroundColor: 'gray',
     height: '20%',
+    width: '100%',
+  },
+
+  playerTeam_row_teamContainer: {
+    backgroundColor: 'gray',
+    height: '20%',
+    width: '60%',
   },
 
   playerTeam_row_tournament: {
@@ -281,6 +366,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     backgroundColor: 'white',
     height: '10%',
+    width: '100%',
   },
 
   playerTeam_row_match: {
