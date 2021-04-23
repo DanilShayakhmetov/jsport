@@ -194,6 +194,13 @@ export default class PlayerStatsScreen extends Component {
                 </View>
               </View>
             </View>
+            <View style={styles.playerTeam_row_tournament}>
+              <View style={styles.playerTeam_row_tournamentContainer}>
+                <Text style={styles.playerTeam_row_tournamentName}>
+                  Название турнира
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       );
@@ -331,7 +338,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-end',
     backgroundColor: 'green',
-    height: '10%',
+    height: '20%',
     width: '100%',
   },
 
