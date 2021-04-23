@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   playerTeam_row_score: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
     backgroundColor: 'green',
     height: '10%',
     width: '100%',
@@ -322,14 +322,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-end',
-    width: '100%',
+    width: '40%',
     height: '100%',
   },
   playerTeam_row_item: {
     backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '15%',
+    width: '30%',
     height: '100%',
   },
   playerTeam_row_itemText: {
@@ -345,6 +345,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     height: '10%',
     width: '100%',
+    justifyContent: 'flex-end',
+
   },
 
   playerTeam_row_team: {
