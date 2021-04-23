@@ -181,7 +181,19 @@ export default class PlayerStatsScreen extends Component {
                 </Text>
               </View>
             </View>
-            <View style={styles.playerTeam_row_match} />
+            <View style={styles.playerTeam_row_match}>
+              <View style={styles.playerTeam_row_match_DataContainer}>
+                <Text />
+              </View>
+              <View style={styles.playerTeam_row_match_ScoreContainer}>
+                <View style={styles.playerTeam_row_match_ScoreItem}>
+                  <Text>1</Text>
+                </View>
+                <View style={styles.playerTeam_row_match_ScoreItem}>
+                  <Text>2</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       );
@@ -421,8 +433,32 @@ const styles = StyleSheet.create({
   playerTeam_row_match: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'black',
-    height: '10%',
+    backgroundColor: 'aqua',
+    height: '20%',
+    width: '100%',
+  },
+
+  playerTeam_row_match_DataContainer: {
+    backgroundColor: '#FF1493',
+    width: '60%',
+    height: '100%',
+  },
+
+  playerTeam_row_match_ScoreContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'pink',
+    justifyContent: 'flex-end',
+    width: '40%',
+    height: '100%',
+  },
+
+  playerTeam_row_match_ScoreItem: {
+    backgroundColor: 'purple',
+    width: '30%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   touchItem: {
