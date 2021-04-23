@@ -91,10 +91,10 @@ export default class PlayerStatsScreen extends Component {
                 <Text style={styles.playerStats_title_items}>передачи</Text>
               </View>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>ЖК</Text>
+                <Text style={styles.playerStats_title_items}>жк</Text>
               </View>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>КК</Text>
+                <Text style={styles.playerStats_title_items}>кк</Text>
               </View>
             </View>
             <View style={styles.playerStats_item}>
@@ -159,9 +159,8 @@ export default class PlayerStatsScreen extends Component {
             </View>
             <View style={styles.playerTeam_row_team}>
               <View style={styles.playerTeam_row_teamContainer}>
-                <View>
-                  <Text>1</Text>
-                </View>
+                <Image style={styles.playerTeam_row_teamLogo} />
+                <Text style={styles.playerTeam_row_teamName}>"СПАРТАК"</Text>
               </View>
               <View style={styles.playerTeam_row_container}>
                 <View style={styles.playerTeam_row_item}>
@@ -175,7 +174,13 @@ export default class PlayerStatsScreen extends Component {
                 </View>
               </View>
             </View>
-            <View style={styles.playerTeam_row_tournament} />
+            <View style={styles.playerTeam_row_tournament}>
+              <View style={styles.playerTeam_row_tournamentContainer}>
+                <Text style={styles.playerTeam_row_tournamentName}>
+                  Название турнира
+                </Text>
+              </View>
+            </View>
             <View style={styles.playerTeam_row_match} />
           </View>
         </View>
@@ -285,17 +290,17 @@ const styles = StyleSheet.create({
   },
 
   playerSeason_text: {
-    fontSize: 10,
+    fontSize: 15,
     color: 'black',
     fontFamily: 'OpenSans',
-    fontWeight: 'bold',
+    marginLeft: '5%',
   },
   playerSeason_textContainer: {
     width: '40%',
     height: '100%',
     backgroundColor: 'gray',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   playerSeason_picker: {
     width: '60%',
@@ -346,7 +351,6 @@ const styles = StyleSheet.create({
     height: '10%',
     width: '100%',
     justifyContent: 'flex-end',
-
   },
 
   playerTeam_row_team: {
@@ -355,20 +359,63 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     height: '20%',
     width: '100%',
+    alignItems: 'center',
   },
 
   playerTeam_row_teamContainer: {
-    backgroundColor: 'gray',
-    height: '20%',
+    backgroundColor: 'blue',
     width: '60%',
+    height: '90%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+
+  playerTeam_row_teamItem: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '50%',
+  },
+
+  playerTeam_row_teamLogo: {
+    width: 30,
+    height: 30,
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: 'white',
+    margin: '5%',
+  },
+
+  playerTeam_row_teamName: {
+    fontSize: 15,
+    color: 'black',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
   },
 
   playerTeam_row_tournament: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'white',
-    height: '10%',
+    height: '15%',
     width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  playerTeam_row_tournamentContainer: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+  },
+
+  playerTeam_row_tournamentName: {
+    fontSize: 20,
+    color: 'black',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
+    marginLeft: '5%',
   },
 
   playerTeam_row_match: {
