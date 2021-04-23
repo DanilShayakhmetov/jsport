@@ -182,14 +182,27 @@ export default class PlayerStatsScreen extends Component {
               </View>
             </View>
             <View style={styles.playerTeam_row_match}>
-              <View style={styles.playerTeam_row_match_DataContainer}>
-                <Text />
+              <View style={styles.playerTeam_row_match_dataContainer}>
+                <View style={styles.playerTeam_row_match_dataItem}>
+                  <View style={styles.playerTeam_row_match_team1}>
+                    <Text>"СПАРТАК"</Text>
+                  </View>
+                  <View style={styles.playerTeam_row_match_score}>
+                    <Text>0:0</Text>
+                  </View>
+                  <View style={styles.playerTeam_row_match_team2}>
+                    <Text>"ЛОКОМОТИВ"</Text>
+                  </View>
+                </View>
+                <View style={styles.playerTeam_row_match_date}>
+                  <Text>11,нояб 2021 / 17:00</Text>
+                </View>
               </View>
-              <View style={styles.playerTeam_row_match_ScoreContainer}>
-                <View style={styles.playerTeam_row_match_ScoreItem}>
+              <View style={styles.playerTeam_row_match_scoreContainer}>
+                <View style={styles.playerTeam_row_match_scoreItem}>
                   <Text>1</Text>
                 </View>
-                <View style={styles.playerTeam_row_match_ScoreItem}>
+                <View style={styles.playerTeam_row_match_scoreItem}>
                   <Text>2</Text>
                 </View>
               </View>
@@ -445,23 +458,63 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  playerTeam_row_match_DataContainer: {
+  playerTeam_row_match_dataContainer: {
     backgroundColor: '#FF1493',
     width: '60%',
     height: '100%',
   },
 
-  playerTeam_row_match_ScoreContainer: {
+  playerTeam_row_match_dataItem: {
+    backgroundColor: '#5F2093',
+    width: '100%',
+    height: '50%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'pink',
+  },
+
+  playerTeam_row_match_date: {
+    backgroundColor: '#5F9493',
+    width: '100%',
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  playerTeam_row_match_team1: {
+    backgroundColor: '#5F2493',
+    width: '45%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  playerTeam_row_match_score: {
+    backgroundColor: '#971223',
+    width: '10%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  playerTeam_row_match_team2: {
+    backgroundColor: '#FFF223',
+    width: '45%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  playerTeam_row_match_scoreContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'gray',
     justifyContent: 'flex-end',
     width: '40%',
     height: '100%',
   },
 
-  playerTeam_row_match_ScoreItem: {
-    backgroundColor: 'purple',
+  playerTeam_row_match_scoreItem: {
+    backgroundColor: 'pink',
     width: '30%',
     height: '100%',
     alignItems: 'center',
