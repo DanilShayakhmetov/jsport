@@ -17,6 +17,8 @@ import {JoinAppContext} from '../JoinAppContext';
 import {GET_SEASONS} from './queri/season/SeasonQuery';
 import {GET_PLAYER_STATS} from './queri/player/StatsQuery';
 import {GET_TOURNAMENT_STATS} from './queri/tournament/StatsQuery';
+import {GET_PLAYER_MATCH} from './queri/player/MatchQuery';
+import {GET_PLAYER_SEASON_STATS} from './queri/player/SeasonStatsQuery';
 
 const client = makeApolloClient();
 const today = new Date();
@@ -243,7 +245,25 @@ class Handler extends React.Component {
       });
   }
 
-  static getPlayerStats(player_id, season_id) {
+  static getPlayerStats(player_id) {
+    let playerId = parseInt(player_id);
+    return client
+      .query({
+        variables: {
+          playerId: playerId,
+        },
+        query: GET_PLAYER_STATS,
+      })
+      .then(function (value) {
+        console.log(value.data.stats.data);
+        return value.data.stats.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getPlayerSeasonStats(player_id, season_id) {
     let playerId = parseInt(player_id);
     let seasonId = parseInt(season_id);
     return client
@@ -252,11 +272,31 @@ class Handler extends React.Component {
           playerId: playerId,
           seasonId: seasonId,
         },
-        query: GET_PLAYER_STATS,
+        query: GET_PLAYER_SEASON_STATS,
       })
       .then(function (value) {
         console.log(value.data.stats.data);
         return value.data.stats.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getPlayerMatch(team_id, from, to) {
+    let teamId = parseInt(team_id);
+    return client
+      .query({
+        variables: {
+          teamId: teamId,
+          from: from,
+          to: to,
+        },
+        query: GET_PLAYER_MATCH,
+      })
+      .then(function (value) {
+        console.log(value.data.calendar, '----------this----------');
+        return value.data.calendar.data;
       })
       .catch((error) => {
         console.log(error);

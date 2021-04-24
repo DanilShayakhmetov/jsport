@@ -23,6 +23,10 @@ export default class PlayerStatsScreen extends Component {
       seasonsList: undefined,
       seasonId: undefined,
       playerStats: undefined,
+      playerSeasonStats: undefined,
+      playerMatch: undefined,
+      from: undefined,
+      to: undefined,
     };
   }
 
@@ -31,9 +35,13 @@ export default class PlayerStatsScreen extends Component {
       .getSeasons()
       .then((value) => {
         let seasonId = value.seasons[value.seasons.length - 1].season_id;
+        let from = value.seasons[value.seasons.length - 1].start_dt;
+        let to = value.seasons[value.seasons.length - 1].end_dt;
         this.setState({
           seasonsList: value,
           seasonId: seasonId,
+          from: from,
+          to: to,
         });
       })
       .catch((error) => {
@@ -41,10 +49,33 @@ export default class PlayerStatsScreen extends Component {
       });
 
     await handler
-      .getPlayerStats(this.context.playerId, this.state.seasonId)
+      .getPlayerStats(this.context.playerId)
       .then((value) => {
         this.setState({
           playerStats: value,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    await handler
+      .getPlayerSeasonStats(this.context.playerId, this.state.seasonId)
+      .then((value) => {
+        this.setState({
+          playerSeasonStats: value,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(this.state.from, this.state.to);
+    await handler
+      .getPlayerMatch(this.context.teamId, this.state.from, this.state.to)
+      .then((value) => {
+        this.setState({
+          playerMatch: value,
         });
       })
       .catch((error) => {
@@ -55,30 +86,50 @@ export default class PlayerStatsScreen extends Component {
   render() {
     let seasonsList = this.state.seasonsList;
     let playerStats = this.state.playerStats;
-    if (seasonsList === undefined || playerStats === undefined) {
+    let playerSeasonStats = this.state.playerSeasonStats;
+    let playerMatch = this.state.playerMatch;
+    if (
+      seasonsList === undefined ||
+      playerStats === undefined ||
+      playerSeasonStats === undefined ||
+      playerMatch === undefined
+    ) {
       return (
         <View>
           <Text>Wait</Text>
         </View>
       );
     } else {
-      console.log(playerStats);
+      console.log(playerMatch[0].team1);
+      let player = playerStats[0];
+      let playerSeason = playerSeasonStats[0];
       return (
         <View style={styles.container}>
           <View style={styles.playerProfile_container}>
             <View style={styles.playerProfile_item}>
-              <Image style={styles.playerProfile_photo} />
+              <Image
+                style={styles.playerProfile_photo}
+                source={{
+                  uri: handler.getPlayerImageURI(
+                    player.player.player_id,
+                    player.player.photo,
+                  ),
+                }}
+              />
               <View style={styles.playerProfile_personal}>
                 <Text style={styles.playerProfile_name}>
-                  Петров Сергей Александрович
+                  {player.player.last_name} {player.player.first_name}{' '}
+                  {player.player.middle_name}
                 </Text>
                 <Text style={styles.playerProfile_birthdate}>
-                  Дата рождения: 21.12.1234
+                  Дата рождения: {player.player.birthday}
                 </Text>
               </View>
             </View>
           </View>
-          <Text style={styles.playerProfile_team}>Клуб: Спартак</Text>
+          <Text style={styles.playerProfile_team}>
+            Клуб: {player.team.full_name}
+          </Text>
           <View style={styles.playerStats_container}>
             <View style={styles.playerStats_item}>
               <View style={styles.playerStats_item_Container}>
@@ -99,19 +150,29 @@ export default class PlayerStatsScreen extends Component {
             </View>
             <View style={styles.playerStats_item}>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>1</Text>
+                <Text style={styles.playerStats_value_items}>
+                  {player.games}
+                </Text>
               </View>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>12</Text>
+                <Text style={styles.playerStats_value_items}>
+                  {player.goals}
+                </Text>
               </View>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>5</Text>
+                <Text style={styles.playerStats_value_items}>
+                  {player.assists}
+                </Text>
               </View>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>1</Text>
+                <Text style={styles.playerStats_value_items}>
+                  {player.yellow_cards}
+                </Text>
               </View>
               <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>1</Text>
+                <Text style={styles.playerStats_value_items}>
+                  {player.red_cards}
+                </Text>
               </View>
             </View>
           </View>
@@ -134,13 +195,19 @@ export default class PlayerStatsScreen extends Component {
             <View style={styles.playerTeam_row_score}>
               <View style={styles.playerTeam_row_container}>
                 <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>1</Text>
+                  <Text style={styles.playerTeam_row_itemText}>
+                    {playerSeason.games}
+                  </Text>
                 </View>
                 <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>3</Text>
+                  <Text style={styles.playerTeam_row_itemText}>
+                    {playerSeason.goals}
+                  </Text>
                 </View>
                 <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>5</Text>
+                  <Text style={styles.playerTeam_row_itemText}>
+                    {playerSeason.assists}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -159,18 +226,34 @@ export default class PlayerStatsScreen extends Component {
             </View>
             <View style={styles.playerTeam_row_team}>
               <View style={styles.playerTeam_row_teamContainer}>
-                <Image style={styles.playerTeam_row_teamLogo} />
-                <Text style={styles.playerTeam_row_teamName}>"СПАРТАК"</Text>
+                <Image
+                  style={styles.playerTeam_row_teamLogo}
+                  source={{
+                    uri: handler.getTeamImageURI(
+                      player.team.team_id,
+                      player.team.logo,
+                    ),
+                  }}
+                />
+                <Text style={styles.playerTeam_row_teamName}>
+                  {player.team.full_name}
+                </Text>
               </View>
               <View style={styles.playerTeam_row_container}>
                 <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>1</Text>
+                  <Text style={styles.playerTeam_row_itemText}>
+                    {playerSeason.games}
+                  </Text>
                 </View>
                 <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>3</Text>
+                  <Text style={styles.playerTeam_row_itemText}>
+                    {playerSeason.goals}
+                  </Text>
                 </View>
                 <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>5</Text>
+                  <Text style={styles.playerTeam_row_itemText}>
+                    {playerSeason.assists}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -181,32 +264,38 @@ export default class PlayerStatsScreen extends Component {
                 </Text>
               </View>
             </View>
-            <View style={styles.playerTeam_row_match}>
-              <View style={styles.playerTeam_row_match_dataContainer}>
-                <View style={styles.playerTeam_row_match_dataItem}>
-                  <View style={styles.playerTeam_row_match_team1}>
-                    <Text>"СПАРТАК"</Text>
+              {playerMatch.map((match) => (
+                <View style={styles.playerTeam_row_match}>
+                  <View style={styles.playerTeam_row_match_dataContainer}>
+                    <View style={styles.playerTeam_row_match_dataItem}>
+                      <View style={styles.playerTeam_row_match_team1}>
+                        <Text>{match.team1.full_name}</Text>
+                      </View>
+                      <View style={styles.playerTeam_row_match_score}>
+                        <Text>
+                          {match.ga}
+                          {' : '}
+                          {match.gf}
+                        </Text>
+                      </View>
+                      <View style={styles.playerTeam_row_match_team2}>
+                        <Text>{match.team2.full_name}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.playerTeam_row_match_date}>
+                      <Text>{handler.getFormedDate(match.start_dt)}</Text>
+                    </View>
                   </View>
-                  <View style={styles.playerTeam_row_match_score}>
-                    <Text>0:0</Text>
+                  <View style={styles.playerTeam_row_match_scoreContainer}>
+                    <View style={styles.playerTeam_row_match_scoreItem}>
+                      <Text>1</Text>
+                    </View>
+                    <View style={styles.playerTeam_row_match_scoreItem}>
+                      <Text>2</Text>
+                    </View>
                   </View>
-                  <View style={styles.playerTeam_row_match_team2}>
-                    <Text>"ЛОКОМОТИВ"</Text>
-                  </View>
                 </View>
-                <View style={styles.playerTeam_row_match_date}>
-                  <Text>11,нояб 2021 / 17:00</Text>
-                </View>
-              </View>
-              <View style={styles.playerTeam_row_match_scoreContainer}>
-                <View style={styles.playerTeam_row_match_scoreItem}>
-                  <Text>1</Text>
-                </View>
-                <View style={styles.playerTeam_row_match_scoreItem}>
-                  <Text>2</Text>
-                </View>
-              </View>
-            </View>
+              ))}
             <View style={styles.playerTeam_row_tournament}>
               <View style={styles.playerTeam_row_tournamentContainer}>
                 <Text style={styles.playerTeam_row_tournamentName}>
@@ -256,7 +345,7 @@ const styles = StyleSheet.create({
   },
 
   playerProfile_name: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'white',
     fontFamily: 'OpenSans',
   },
@@ -527,7 +616,7 @@ const styles = StyleSheet.create({
   },
   scrollItem: {
     flex: 1,
-    height: 10,
+    height: '100%',
   },
   mainDataContainer: {
     flex: 1,
