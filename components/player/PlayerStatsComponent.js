@@ -100,7 +100,7 @@ export default class PlayerStatsScreen extends Component {
         </View>
       );
     } else {
-      console.log(playerMatch[0].team1);
+      console.log(playerMatch.length);
       let player = playerStats[0];
       let playerSeason = playerSeasonStats[0];
       return (
@@ -264,44 +264,41 @@ export default class PlayerStatsScreen extends Component {
                 </Text>
               </View>
             </View>
-              {playerMatch.map((match) => (
-                <View style={styles.playerTeam_row_match}>
-                  <View style={styles.playerTeam_row_match_dataContainer}>
-                    <View style={styles.playerTeam_row_match_dataItem}>
-                      <View style={styles.playerTeam_row_match_team1}>
-                        <Text>{match.team1.full_name}</Text>
+            <View style={{height: '35%'}}>
+              <ScrollView style={{flex: 1}}>
+                {playerMatch.map((match) => (
+                  <View style={styles.playerTeam_row_match}>
+                    <View style={styles.playerTeam_row_match_dataContainer}>
+                      <View style={styles.playerTeam_row_match_dataItem}>
+                        <View style={styles.playerTeam_row_match_team1}>
+                          <Text>{match.team1.full_name}</Text>
+                        </View>
+                        <View style={styles.playerTeam_row_match_score}>
+                          <Text>
+                            {match.ga}
+                            {' : '}
+                            {match.gf}
+                          </Text>
+                        </View>
+                        <View style={styles.playerTeam_row_match_team2}>
+                          <Text>{match.team2.full_name}</Text>
+                        </View>
                       </View>
-                      <View style={styles.playerTeam_row_match_score}>
-                        <Text>
-                          {match.ga}
-                          {' : '}
-                          {match.gf}
-                        </Text>
-                      </View>
-                      <View style={styles.playerTeam_row_match_team2}>
-                        <Text>{match.team2.full_name}</Text>
+                      <View style={styles.playerTeam_row_match_date}>
+                        <Text>{handler.getFormedDate(match.start_dt)}</Text>
                       </View>
                     </View>
-                    <View style={styles.playerTeam_row_match_date}>
-                      <Text>{handler.getFormedDate(match.start_dt)}</Text>
+                    <View style={styles.playerTeam_row_match_scoreContainer}>
+                      <View style={styles.playerTeam_row_match_scoreItem}>
+                        <Text>1</Text>
+                      </View>
+                      <View style={styles.playerTeam_row_match_scoreItem}>
+                        <Text>2</Text>
+                      </View>
                     </View>
                   </View>
-                  <View style={styles.playerTeam_row_match_scoreContainer}>
-                    <View style={styles.playerTeam_row_match_scoreItem}>
-                      <Text>1</Text>
-                    </View>
-                    <View style={styles.playerTeam_row_match_scoreItem}>
-                      <Text>2</Text>
-                    </View>
-                  </View>
-                </View>
-              ))}
-            <View style={styles.playerTeam_row_tournament}>
-              <View style={styles.playerTeam_row_tournamentContainer}>
-                <Text style={styles.playerTeam_row_tournamentName}>
-                  Название турнира
-                </Text>
-              </View>
+                ))}
+              </ScrollView>
             </View>
           </View>
         </View>
@@ -540,10 +537,10 @@ const styles = StyleSheet.create({
   },
 
   playerTeam_row_match: {
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'aqua',
-    height: '20%',
+    height: 100,
     width: '100%',
   },
 

@@ -295,7 +295,7 @@ class Handler extends React.Component {
         query: GET_PLAYER_MATCH,
       })
       .then(function (value) {
-        console.log(value.data.calendar, '----------this----------');
+        console.log(value.data.calendar.data, '----------this----------');
         return value.data.calendar.data;
       })
       .catch((error) => {
