@@ -268,6 +268,7 @@ export default class MatchScreen extends Component {
                 {'События'}
               </Text>
             </TouchableOpacity>
+            <View style={{width: '5%'}} />
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={this.tabsHandler.bind(this, 1)}>
@@ -281,6 +282,7 @@ export default class MatchScreen extends Component {
                 {'Статистика'}
               </Text>
             </TouchableOpacity>
+            <View style={{width: '5%'}} />
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={this.tabsHandler.bind(this, 2)}>
@@ -361,102 +363,148 @@ export default class MatchScreen extends Component {
                 display: this.state.focusedTab === 1 ? null : 'none',
                 overflow: 'hidden',
               }}>
-              <View
-                style={{
-                  width: '100%',
-                  marginBottom: 5,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}>
-                <Text
-                  style={{
-                    width: '40%',
-                  }}>
-                  Команда
-                </Text>
-                <Text
-                  style={{
-                    width: '10%',
-                  }}>
-                  И
-                </Text>
-                <Text
-                  style={{
-                    width: '10%',
-                  }}>
-                  В
-                </Text>
-                <Text
-                  style={{
-                    width: '10%',
-                  }}>
-                  Н
-                </Text>
-                <Text
-                  style={{
-                    width: '10%',
-                  }}>
-                  П
-                </Text>
-                <View
-                  style={{
-                    width: '20%',
-                    alignItems: 'flex-end',
-                    alignSelf: 'flex-end',
-                  }}>
-                  <Text>О</Text>
+              <View style={styles.tableList_headerContainer}>
+                <View style={styles.tableList_headerItemFirst}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontFamily: 'OpenSans',
+                    }}>
+                    Команда
+                  </Text>
+                </View>
+                <View style={styles.tableList_headerItem}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontFamily: 'OpenSans',
+                    }}>
+                    И
+                  </Text>
+                </View>
+                <View style={styles.tableList_headerItem}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontFamily: 'OpenSans',
+                    }}>
+                    В
+                  </Text>
+                </View>
+                <View style={styles.tableList_headerItem}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontFamily: 'OpenSans',
+                    }}>
+                    Н
+                  </Text>
+                </View>
+                <View style={styles.tableList_headerItem}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'black',
+                      fontFamily: 'OpenSans',
+                    }}>
+                    П
+                  </Text>
+                </View>
+                <View style={styles.tableList_headerItemLast}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: 'black',
+                      fontFamily: 'OpenSans',
+                    }}>
+                    О
+                  </Text>
                 </View>
               </View>
               <ScrollView>
-                {tableList.tableRows.map((row) => (
+                {tableList.tableRows.map((row, number) => (
                   <View
-                    style={{
-                      width: '100%',
-                      marginBottom: 5,
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      alignItems: 'flex-start',
-                      justifyContent: 'flex-start',
-                    }}>
-                    <Text
-                      style={{
-                        width: '40%',
-                      }}>
-                      {row.team.full_name}
-                    </Text>
-                    <Text
-                      style={{
-                        width: '10%',
-                      }}>
-                      {row.games}
-                    </Text>
-                    <Text
-                      style={{
-                        width: '10%',
-                      }}>
-                      {row.wins}
-                    </Text>
-                    <Text
-                      style={{
-                        width: '10%',
-                      }}>
-                      {row.draws}
-                    </Text>
-                    <Text
-                      style={{
-                        width: '10%',
-                      }}>
-                      {row.losses}
-                    </Text>
-                    <View
-                      style={{
-                        width: '20%',
-                        alignItems: 'flex-end',
-                        alignSelf: 'flex-end',
-                      }}>
-                      <Text>{row.points}</Text>
+                    style={[
+                      styles.tableList_headerContainer,
+                      number % 2 === 0
+                        ? styles.tableList_rowContainerEven
+                        : styles.tableList_rowContainer,
+                    ]}>
+                    <View style={styles.tableList_rowItemFirst}>
+                      <View style={styles.tableList_rowItemPersonal}>
+                        <Image
+                          style={styles.logoMini}
+                          source={{
+                            uri: handler.getTeamImageURI(
+                              row.team.team_id,
+                              row.team.logo,
+                            ),
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: 'black',
+                            fontFamily: 'OpenSans',
+                            marginLeft: '5%',
+                          }}>
+                          {row.team.full_name}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableList_rowItem}>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {row.games}
+                      </Text>
+                    </View>
+                    <View style={styles.tableList_rowItem}>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {row.wins}
+                      </Text>
+                    </View>
+                    <View style={styles.tableList_rowItem}>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {row.draws}
+                      </Text>
+                    </View>
+                    <View style={styles.tableList_rowItem}>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {row.losses}
+                      </Text>
+                    </View>
+                    <View style={styles.tableList_rowItemLast}>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'black',
+                          fontFamily: 'OpenSans',
+                        }}>
+                        {row.points}
+                      </Text>
                     </View>
                   </View>
                 ))}
@@ -700,8 +748,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingTop: 10,
     paddingBottom: 10,
-    marginLeft: 25,
-    marginRight: 25,
     height: 40,
   },
   tabsItem_default: {
@@ -714,6 +760,93 @@ const styles = StyleSheet.create({
     color: '#3498db',
     borderBottomColor: '#3498db',
   },
+
+  tableList_headerContainer: {
+    width: '100%',
+    height: '10%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+
+  tableList_rowContainer: {
+    width: '100%',
+    height: '10%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'lightgray',
+    borderRadius: 5,
+  },
+
+  tableList_rowContainerEven: {
+    width: '100%',
+    height: '10%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    borderRadius: 5,
+  },
+
+  tableList_headerItemFirst: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: '40%',
+    height: '100%',
+    paddingLeft: '2%',
+  },
+
+  tableList_headerItem: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: '10%',
+    height: '100%',
+  },
+
+  tableList_headerItemLast: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    width: '20%',
+    height: '100%',
+    paddingRight: '2%',
+  },
+
+  tableList_rowItemFirst: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '40%',
+    height: '50%',
+    paddingLeft: '2%',
+  },
+  tableList_rowItemPersonal: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    height: '90%',
+  },
+  tableList_rowItem: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: '10%',
+    height: '100%',
+  },
+  tableList_rowItemLast: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    width: '20%',
+    height: '100%',
+    paddingRight: '2%',
+  },
+
   eventList_container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -767,7 +900,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    margin: 2,
   },
   borderItems: {
     flexDirection: 'row',
