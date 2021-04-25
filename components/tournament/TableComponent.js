@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {
-  Button,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Button,
+    Image, numberOfLines,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -335,7 +335,12 @@ export default class TableScreen extends Component {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={this.tabsHandler.bind(this, 0)}>
-                  <Text style={{fontFamily: 'OpenSans', fontSize: 18, fontWeight: 'bold',}}>
+                  <Text
+                    style={{
+                      fontFamily: 'OpenSans',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}>
                     {matchD.tournament.short_name}
                   </Text>
                 </TouchableOpacity>
@@ -476,6 +481,8 @@ export default class TableScreen extends Component {
                   flexWrap: 'wrap',
                   alignItems: 'flex-start',
                   justifyContent: 'flex-start',
+                  paddingLeft: '2%',
+                  paddingRight: '2%',
                 }}>
                 <View
                   style={{
@@ -541,19 +548,17 @@ export default class TableScreen extends Component {
                 </View>
               </View>
               <ScrollView style={{flex: 1}}>
-                {tableList.tableRows.map((item) => (
+                {tableList.tableRows.map((item, number) => (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={this.showApplication.bind(this, item.team)}>
                     <View
-                      style={{
-                        width: '100%',
-                        marginBottom: 5,
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        alignItems: 'flex-start',
-                        justifyContent: 'flex-start',
-                      }}>
+                      style={[
+                        styles.tableList_rowContainer,
+                        number % 2 === 0
+                          ? styles.tableList_rowContainerEven
+                          : styles.tableList_rowContainer,
+                      ]}>
                       <View
                         style={{
                           width: '45%',
@@ -561,15 +566,6 @@ export default class TableScreen extends Component {
                           flexWrap: 'wrap',
                           alignItems: 'center',
                         }}>
-                        <Text
-                          style={{
-                            fontFamily: 'OpenSans',
-                            fontSize: 14,
-                            width: '60%',
-                            margin: 10,
-                          }}>
-                          {item.team.full_name}
-                        </Text>
                         <Image
                           style={styles.teamLogo}
                           source={{
@@ -579,6 +575,16 @@ export default class TableScreen extends Component {
                             ),
                           }}
                         />
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            fontFamily: 'OpenSans',
+                            fontSize: 14,
+                            width: '60%',
+                            margin: 10,
+                          }}>
+                          {item.team.full_name}
+                        </Text>
                       </View>
                       <View
                         style={{
@@ -629,7 +635,7 @@ export default class TableScreen extends Component {
                               fontFamily: 'OpenSans',
                               fontSize: 14,
                             }}>
-                            {item.ga}.{' — '}.{item.gf}
+                            {item.points}
                           </Text>
                         </View>
                       </View>
@@ -939,6 +945,31 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignSelf: 'flex-start',
   },
+  tableList_rowContainer: {
+    width: '100%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'lightgray',
+    borderRadius: 5,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+  },
+
+  tableList_rowContainerEven: {
+    width: '100%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+  },
   logo: {
     width: 100,
     height: 60,
@@ -956,6 +987,6 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 100,
-    margin: 5,
+    // margin: 5,
   },
 });
