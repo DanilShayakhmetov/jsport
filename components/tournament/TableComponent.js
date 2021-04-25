@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {
-    Button,
-    Image, numberOfLines,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Button,
+  Image,
+  numberOfLines,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -481,8 +482,6 @@ export default class TableScreen extends Component {
                   flexWrap: 'wrap',
                   alignItems: 'flex-start',
                   justifyContent: 'flex-start',
-                  paddingLeft: '2%',
-                  paddingRight: '2%',
                 }}>
                 <View
                   style={{
@@ -662,55 +661,69 @@ export default class TableScreen extends Component {
                 }}>
                 <Text
                   style={{
-                    width: '40%',
+                    fontFamily: 'OpenSans',
+                    fontSize: 16,
+                    width: '35%',
                   }}>
                   Игрок
                 </Text>
                 <Text
                   style={{
+                    fontFamily: 'OpenSans',
+                    fontSize: 16,
                     width: '35%',
                   }}>
                   Команда
                 </Text>
                 <Text
                   style={{
+                    fontFamily: 'OpenSans',
+                    fontSize: 16,
                     width: '5%',
                   }}>
                   И
                 </Text>
                 <Text
                   style={{
+                    fontFamily: 'OpenSans',
+                    fontSize: 16,
                     width: '5%',
                   }}>
                   Г
                 </Text>
                 <Text
                   style={{
+                    fontFamily: 'OpenSans',
+                    fontSize: 16,
                     width: '10%',
                   }}>
                   ЖК
                 </Text>
                 <Text
                   style={{
-                    width: '5%',
+                    fontFamily: 'OpenSans',
+                    fontSize: 16,
+                    width: '10%',
                   }}>
                   КК
                 </Text>
               </View>
               <ScrollView style={{flex: 1}}>
-                {statsList.map((row) => (
+                {statsList.map((row, number) => (
                   <View
-                    style={{
-                      width: '100%',
-                      marginBottom: 5,
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      alignItems: 'flex-start',
-                      justifyContent: 'flex-start',
-                    }}>
+                    style={[
+                      styles.statsList_rowContainer,
+                      number % 2 === 0
+                        ? styles.statsList_rowContainerEven
+                        : styles.statsList_rowContainer,
+                    ]}>
                     <View
                       style={{
-                        width: '40%',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        width: '35%',
                       }}>
                       <Image
                         style={styles.logoMini}
@@ -721,14 +734,24 @@ export default class TableScreen extends Component {
                           ),
                         }}
                       />
-                      <Text>
-                        {row.player.first_name}
-                        {row.player.last_name}
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                          width: '60%',
+                          margin: 10,
+                        }}>
+                        {row.player.first_name} {row.player.last_name}
                       </Text>
                     </View>
                     <View
                       style={{
                         width: '35%',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
                       }}>
                       <Image
                         style={styles.logoMini}
@@ -739,31 +762,76 @@ export default class TableScreen extends Component {
                           ),
                         }}
                       />
-                      <Text>{row.team.full_name}</Text>
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                          width: '60%',
+                          margin: 10,
+                        }}>
+                        {row.team.full_name}
+                      </Text>
                     </View>
                     <View
                       style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         width: '5%',
+                        height: '100%',
                       }}>
-                      <Text>{row.games}</Text>
+                      <Text
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                        }}>
+                        {row.games}
+                      </Text>
                     </View>
                     <View
                       style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         width: '5%',
+                        height: '100%',
                       }}>
-                      <Text>{row.goals}</Text>
+                      <Text
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                        }}>
+                        {row.goals}
+                      </Text>
                     </View>
                     <View
                       style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         width: '10%',
+                        height: '100%',
                       }}>
-                      <Text>{row.yellow_cards}</Text>
+                      <Text
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                        }}>
+                        {row.yellow_cards}
+                      </Text>
                     </View>
                     <View
                       style={{
-                        width: '5%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '10%',
+                        height: '100%',
                       }}>
-                      <Text>{row.red_cards}</Text>
+                      <Text
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                        }}>
+                        {row.red_cards}
+                      </Text>
                     </View>
                   </View>
                 ))}
@@ -785,9 +853,11 @@ export default class TableScreen extends Component {
                         flexDirection: 'row',
                         flexWrap: 'wrap',
                         alignItems: 'center',
+                        width: '100%',
+                        margin: '2%',
                       }}>
                       <Image
-                        style={styles.teamLogo}
+                        style={styles.teamListLogo}
                         source={{
                           uri: handler.getTeamImageURI(
                             item.team.team_id,
@@ -795,7 +865,16 @@ export default class TableScreen extends Component {
                           ),
                         }}
                       />
-                      <Text>{item.team.full_name}</Text>
+                      <Text
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 18,
+                          color: 'black',
+                          fontWeight: 'bold',
+                          width: '80%',
+                        }}>
+                        {item.team.full_name}
+                      </Text>
                     </View>
                     <View
                       style={{
@@ -970,6 +1049,34 @@ const styles = StyleSheet.create({
     paddingLeft: '2%',
     paddingRight: '2%',
   },
+
+  statsList_rowContainer: {
+    width: '100%',
+    height: '2%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    backgroundColor: 'lightgray',
+    borderRadius: 5,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+  },
+
+  statsList_rowContainerEven: {
+    width: '100%',
+    height: '2%',
+    marginBottom: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+  },
   logo: {
     width: 100,
     height: 60,
@@ -987,6 +1094,12 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 100,
-    // margin: 5,
+    marginRight: 5,
+  },
+  teamListLogo: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    marginRight: 5,
   },
 });
