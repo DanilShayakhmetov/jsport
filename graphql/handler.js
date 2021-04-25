@@ -19,6 +19,7 @@ import {GET_PLAYER_STATS} from './queri/player/StatsQuery';
 import {GET_TOURNAMENT_STATS} from './queri/tournament/StatsQuery';
 import {GET_PLAYER_MATCH} from './queri/player/MatchQuery';
 import {GET_PLAYER_SEASON_STATS} from './queri/player/SeasonStatsQuery';
+import {GET_TOURNAMENT_ITEM} from "./queri/tournament/TournamentItemQuery";
 
 const client = makeApolloClient();
 const today = new Date();
@@ -195,6 +196,23 @@ class Handler extends React.Component {
       });
   }
 
+  static getTournamentItem(tournamentId) {
+    return client
+      .query({
+        variables: {
+          tournamentId: tournamentId,
+        },
+        query: GET_TOURNAMENT_ITEM,
+      })
+      .then(function (value) {
+        console.log(value);
+        return value;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   static getTeamMatch(team_id) {
     let teamId = parseInt(team_id);
     return client
@@ -295,7 +313,6 @@ class Handler extends React.Component {
         query: GET_PLAYER_MATCH,
       })
       .then(function (value) {
-        console.log(value.data.calendar.data, '----------this----------');
         return value.data.calendar.data;
       })
       .catch((error) => {
@@ -378,6 +395,21 @@ class Handler extends React.Component {
         'https://st.joinsport.io/player/' +
         teamId +
         '/photo/' +
+        image.split('.')[0] +
+        '_thumb.' +
+        image.split('.')[1]
+      );
+    }
+  }
+
+  static getTournamentImageURI(tournamentId, image) {
+    if (tournamentId === null || image === null) {
+      return 'https://nflperm.ru/assets/c59c7ff4/football_photo_thumb.png';
+    } else {
+      return (
+        'https://st.joinsport.io/tournament/' +
+        tournamentId +
+        '/cover/' +
         image.split('.')[0] +
         '_thumb.' +
         image.split('.')[1]

@@ -11,8 +11,10 @@ import {
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import cover from '../../assets/images/football_cover_cover.jpg';
 
 const handler = Handler;
+const COVER = Image.resolveAssetSource(cover).uri;
 var PLAYERS = <Text>{''}</Text>;
 
 export default class TableScreen extends Component {
@@ -67,7 +69,17 @@ export default class TableScreen extends Component {
         console.log(error);
       });
 
-    console.log(this.state.tournamentStats);
+    await handler
+      .getTournamentItem(tournament_id)
+      .then((value) => {
+        this.setState({
+          tournamentItem: value,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(this.state.tournamentItem);
   }
 
   //Отвечает за ненужнй раздел, просто заглушка
@@ -315,11 +327,9 @@ export default class TableScreen extends Component {
               }}>
               <Image
                 style={styles.logo}
-                source={
-                  {
-                    // uri: handler.getImageURI(item.team1.team_id, item.team1.logo),
-                  }
-                }
+                source={{
+                  uri: COVER,
+                }}
               />
               <View>
                 <TouchableOpacity
