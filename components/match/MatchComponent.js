@@ -11,10 +11,16 @@ import {
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import soccerBall from '../../assets/images/soccer-ball.png';
+import soccerBall from '../../assets/images/soccer_ball.png';
+import redCard from '../../assets/images/red_card.png';
+import yellowCard from '../../assets/images/yellow_card.png';
 
 const handler = Handler;
-const EVENT_IMAGE = Image.resolveAssetSource(soccerBall).uri;
+const EVENTS = {
+  YellowCard: Image.resolveAssetSource(yellowCard).uri,
+  RedCard: Image.resolveAssetSource(redCard).uri,
+  Goal: Image.resolveAssetSource(soccerBall).uri,
+};
 
 export default class MatchScreen extends Component {
   constructor(props) {
@@ -95,8 +101,13 @@ export default class MatchScreen extends Component {
           } else {
             eventItem.team = 2;
           }
-          eventItem.logo = 'ГОЛ';
-          eventItem.time = item.minute;
+          console.log(item.minute, 'qweqweqw');
+          eventItem.logo = EVENTS[item.__typename];
+          if (item.minute === null) {
+            eventItem.time = '  ';
+          } else {
+            eventItem.time = item.minute + "'";
+          }
           eventItem.name = playersList[item.player_id];
           eventsList.push(eventItem);
         });
@@ -309,17 +320,16 @@ export default class MatchScreen extends Component {
                     <View style={styles.eventList_team1}>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: 16,
                           color: 'black',
                           fontFamily: 'OpenSans',
                           display: item.team === 2 ? null : 'none',
                         }}>
                         {item.time}
-                        {"'"}
                       </Text>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: 16,
                           color: 'black',
                           fontFamily: 'OpenSans',
                           display: item.team === 1 ? null : 'none',
@@ -330,13 +340,13 @@ export default class MatchScreen extends Component {
                     <Image
                       style={styles.eventList_image}
                       source={{
-                        uri: EVENT_IMAGE,
+                        uri: item.logo,
                       }}
                     />
                     <View style={styles.eventList_team2}>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: 16,
                           color: 'black',
                           fontFamily: 'OpenSans',
                           display: item.team === 2 ? null : 'none',
@@ -345,13 +355,12 @@ export default class MatchScreen extends Component {
                       </Text>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: 16,
                           color: 'black',
                           fontFamily: 'OpenSans',
                           display: item.team === 1 ? null : 'none',
                         }}>
                         {item.time}
-                        {"'"}
                       </Text>
                     </View>
                   </View>
@@ -853,7 +862,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     margin: 5,
-    width: 400,
+    width: '100%',
   },
 
   eventList_team1: {
@@ -870,8 +879,7 @@ const styles = StyleSheet.create({
   },
   eventList_image: {
     width: '10%',
-    height: 40,
-    borderRadius: 20,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
