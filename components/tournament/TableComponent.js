@@ -335,71 +335,72 @@ export default class TableScreen extends Component {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={this.tabsHandler.bind(this, 0)}>
-                  <Text style={{fontFamily: 'OpenSans', fontSize: 18}}>
+                  <Text style={{fontFamily: 'OpenSans', fontSize: 18, fontWeight: 'bold',}}>
                     {matchD.tournament.short_name}
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
-          <View style={{height: 30, marginBottom: 10}}>
-            <ScrollView horizontal={true} style={styles.scrollItem}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 0 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 0)}>
-                <Text>{'        Матчи         '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 1 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 1)}>
-                <Text>{'        Таблица          '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 2 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 2)}>
-                <Text>{'        Статистика          '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 3 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 3)}>
-                <Text>{'        Команды          '}</Text>
-              </TouchableOpacity>
-            </ScrollView>
+          <View style={styles.tabsContainer}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 0)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 0
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Матчи'}
+              </Text>
+            </TouchableOpacity>
+            <View style={{width: '5%'}} />
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 1)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 1
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Таблица'}
+              </Text>
+            </TouchableOpacity>
+            <View style={{width: '5%'}} />
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 2)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 2
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Статистика'}
+              </Text>
+            </TouchableOpacity>
+            <View style={{width: '5%'}} />
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 3)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 3
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Команды'}
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View
-            style={{
-              height: 30,
-              marginBottom: 30,
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontFamily: 'OpenSans',
-              fontSize: 16,
-              borderWidth: 2,
-              borderRadius: 10,
-              borderColor: 'lightgray',
-              padding: 5,
-            }}>
-            <Text>{tableList.name}</Text>
+          <View style={styles.tableList_name}>
+            <Text style={styles.tableList_nameText}>{tableList.name}</Text>
           </View>
           <View style={styles.mainDataContainer}>
             <View
@@ -407,7 +408,7 @@ export default class TableScreen extends Component {
                 display: this.state.focusedTab === 0 ? null : 'none',
                 overflow: 'hidden',
               }}>
-              <ScrollView>
+              <ScrollView style={{flex: 1}}>
                 {matchList.map((match) => (
                   <View
                     style={{
@@ -445,22 +446,27 @@ export default class TableScreen extends Component {
                     <View>
                       <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
                         {match.item.team1.full_name}
-                        {'   -   '}
+                        {'   —   '}
                         {match.item.team2.full_name}
                       </Text>
-                      <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
-                        {match.item.start_dt}
+                      <Text
+                        style={{
+                          fontFamily: 'OpenSans',
+                          fontSize: 16,
+                          color: '#95a5a6',
+                        }}>
+                        {handler.getFormedDate(match.item.start_dt)}
                       </Text>
                     </View>
                   </View>
                 ))}
               </ScrollView>
             </View>
-
             <View
               style={{
                 display: this.state.focusedTab === 1 ? null : 'none',
                 overflow: 'hidden',
+                height: '130%',
               }}>
               <View
                 style={{
@@ -475,7 +481,9 @@ export default class TableScreen extends Component {
                   style={{
                     width: '45%',
                   }}>
-                  <Text>Команда</Text>
+                  <Text style={{fontFamily: 'OpenSans', fontSize: 16}}>
+                    Команда
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -486,24 +494,32 @@ export default class TableScreen extends Component {
                   <Text
                     style={{
                       width: '15%',
+                      fontFamily: 'OpenSans',
+                      fontSize: 16,
                     }}>
                     И
                   </Text>
                   <Text
                     style={{
                       width: '15%',
+                      fontFamily: 'OpenSans',
+                      fontSize: 16,
                     }}>
                     В
                   </Text>
                   <Text
                     style={{
                       width: '15%',
+                      fontFamily: 'OpenSans',
+                      fontSize: 16,
                     }}>
                     Н
                   </Text>
                   <Text
                     style={{
                       width: '15%',
+                      fontFamily: 'OpenSans',
+                      fontSize: 16,
                     }}>
                     П
                   </Text>
@@ -513,11 +529,18 @@ export default class TableScreen extends Component {
                       alignItems: 'flex-end',
                       alignSelf: 'flex-end',
                     }}>
-                    <Text>О</Text>
+                    <Text
+                      style={{
+                        width: '15%',
+                        fontFamily: 'OpenSans',
+                        fontSize: 16,
+                      }}>
+                      О
+                    </Text>
                   </View>
                 </View>
               </View>
-              <ScrollView>
+              <ScrollView style={{flex: 1}}>
                 {tableList.tableRows.map((item) => (
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -540,6 +563,8 @@ export default class TableScreen extends Component {
                         }}>
                         <Text
                           style={{
+                            fontFamily: 'OpenSans',
+                            fontSize: 14,
                             width: '60%',
                             margin: 10,
                           }}>
@@ -563,24 +588,32 @@ export default class TableScreen extends Component {
                         }}>
                         <Text
                           style={{
+                            fontFamily: 'OpenSans',
+                            fontSize: 14,
                             width: '15%',
                           }}>
                           {item.games}
                         </Text>
                         <Text
                           style={{
+                            fontFamily: 'OpenSans',
+                            fontSize: 14,
                             width: '15%',
                           }}>
                           {item.wins}
                         </Text>
                         <Text
                           style={{
+                            fontFamily: 'OpenSans',
+                            fontSize: 14,
                             width: '15%',
                           }}>
                           {item.draws}
                         </Text>
                         <Text
                           style={{
+                            fontFamily: 'OpenSans',
+                            fontSize: 14,
                             width: '15%',
                           }}>
                           {item.losses}
@@ -591,8 +624,12 @@ export default class TableScreen extends Component {
                             alignItems: 'flex-end',
                             alignSelf: 'flex-end',
                           }}>
-                          <Text>
-                            {item.ga}.{' - '}.{item.gf}
+                          <Text
+                            style={{
+                              fontFamily: 'OpenSans',
+                              fontSize: 14,
+                            }}>
+                            {item.ga}.{' — '}.{item.gf}
                           </Text>
                         </View>
                       </View>
@@ -606,6 +643,7 @@ export default class TableScreen extends Component {
               style={{
                 display: this.state.focusedTab === 2 ? null : 'none',
                 overflow: 'hidden',
+                height: '130%',
               }}>
               <View
                 style={{
@@ -653,7 +691,7 @@ export default class TableScreen extends Component {
                   КК
                 </Text>
               </View>
-              <ScrollView>
+              <ScrollView style={{flex: 1}}>
                 {statsList.map((row) => (
                   <View
                     style={{
@@ -729,8 +767,9 @@ export default class TableScreen extends Component {
               style={{
                 display: this.state.focusedTab === 3 ? null : 'none',
                 overflow: 'hidden',
+                height: '130%',
               }}>
-              <ScrollView>
+              <ScrollView style={{flex: 1}}>
                 {tableList.tableRows.map((item) => (
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -826,6 +865,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'flex-start',
     justifyContent: 'center',
+    height: '100%',
   },
   containerTop: {
     flex: 1,
@@ -834,9 +874,51 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 10,
   },
-  touchItem: {
-    borderBottomColor: 'blue',
-    borderBottomWidth: 2,
+  tabsContainer: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 40,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tabsItem: {
+    overflow: 'hidden',
+    fontFamily: 'OpenSans',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    paddingTop: 10,
+    paddingBottom: 10,
+    height: 40,
+  },
+  tabsItem_default: {
+    borderBottomWidth: 0,
+    color: 'lightgray',
+    borderBottomColor: 'lightgray',
+  },
+  tabsItem_chosen: {
+    borderBottomWidth: 3,
+    color: '#3498db',
+    borderBottomColor: '#3498db',
+  },
+
+  tableList_name: {
+    height: 30,
+    marginBottom: '5%',
+    marginTop: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: 'OpenSans',
+    fontSize: 16,
+    borderRadius: 10,
+    backgroundColor: 'lightgray',
+    padding: '1%',
+  },
+  tableList_nameText: {
+    fontFamily: 'OpenSans',
+    fontSize: 16,
   },
   scrollItem: {
     flex: 1,
@@ -846,6 +928,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 100,
     padding: 10,
+    height: '100%',
   },
   titleText: {
     marginTop: 10,

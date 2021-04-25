@@ -19,7 +19,7 @@ import {GET_PLAYER_STATS} from './queri/player/StatsQuery';
 import {GET_TOURNAMENT_STATS} from './queri/tournament/StatsQuery';
 import {GET_PLAYER_MATCH} from './queri/player/MatchQuery';
 import {GET_PLAYER_SEASON_STATS} from './queri/player/SeasonStatsQuery';
-import {GET_TOURNAMENT_ITEM} from "./queri/tournament/TournamentItemQuery";
+import {GET_TOURNAMENT_ITEM} from './queri/tournament/TournamentItemQuery';
 
 const client = makeApolloClient();
 const today = new Date();
