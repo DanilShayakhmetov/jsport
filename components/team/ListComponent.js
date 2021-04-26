@@ -72,9 +72,10 @@ export default class TeamListScreen extends Component {
     } else {
       return (
         <View style={styles.container}>
+          <Text style={{marginLeft: 20}}>Выбор сезона</Text>
           <Picker
             selectedValue={this.state.seasonId}
-            style={{height: 50, width: 150}}
+            style={{height: 50, width: 200, margin: 10}}
             onValueChange={(itemValue) => {
               this.setState({seasonId: parseInt(itemValue)});
               handler
@@ -113,7 +114,15 @@ export default class TeamListScreen extends Component {
                     uri: handler.getTeamImageURI(team.team_id, team.logo),
                   }}
                 />
-                <Text style={{marginLeft: 10}}>{team.full_name}</Text>
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    fontSize: 22,
+                    color: '#606070',
+                    fontFamily: 'OpenSans',
+                  }}>
+                  {team.full_name}
+                </Text>
               </View>
             ))}
           </ScrollView>
@@ -214,9 +223,9 @@ const styles = StyleSheet.create({
     borderColor: 'white',
   },
   logo: {
-    width: 25,
-    height: 25,
-    borderRadius: 100,
+    width: 75,
+    height: 75,
+    borderRadius: 75,
     margin: 5,
   },
 });
