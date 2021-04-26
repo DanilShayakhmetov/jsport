@@ -193,7 +193,9 @@ export default class MatchCenterScreen extends Component {
                         }>
                         <View style={styles.matchItem_topBlock}>
                           <View style={styles.matchItem_team1}>
-                            <Text style={styles.text}>
+                            <Text
+                                numberOfLines={1}
+                                style={styles.text}>
                               {value.item.team1.full_name}
                             </Text>
                             <Image
@@ -218,12 +220,13 @@ export default class MatchCenterScreen extends Component {
                             </Text>
                             <Text
                               style={{
-                                fontSize: 16,
+                                fontSize: 18,
                                 color: '#606070',
                                 padding: 5,
                                 fontFamily: 'OpenSans',
                                 display: value.item.ga !== null ? null : 'none',
                                 margin: 10,
+                                fontWeight: 'bold',
                               }}>
                               {value.item.ga}
                               {' : '}
@@ -240,7 +243,9 @@ export default class MatchCenterScreen extends Component {
                                 ),
                               }}
                             />
-                            <Text style={styles.text}>
+                            <Text
+                                numberOfLines={1}
+                                style={styles.text}>
                               {value.item.team2.full_name}
                             </Text>
                           </View>
@@ -431,11 +436,12 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#606070',
     padding: 10,
     fontFamily: 'OpenSans',
     width: '70%',
+    fontWeight: 'bold',
   },
   logo: {
     width: 25,

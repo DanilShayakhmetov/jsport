@@ -316,6 +316,7 @@ export default class PlayerStatsScreen extends Component {
               alignSelf: 'center',
               borderTopWidth: 0.5,
               backgroundColor: 'lightgray',
+              marginBottom: -10,
             }}>
             <View
               style={{

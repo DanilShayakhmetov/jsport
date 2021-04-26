@@ -268,11 +268,12 @@ export default class TeamScreen extends Component {
           </ScrollView>
           <View
             style={{
-              width: '100%',
+              width: '120%',
               height: 40,
               alignSelf: 'center',
               borderTopWidth: 0.5,
               backgroundColor: 'lightgray',
+              marginBottom: -10,
             }}>
             <View
               style={{
