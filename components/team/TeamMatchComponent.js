@@ -220,7 +220,8 @@ export default class TeamScreen extends Component {
                         style={{
                           flexDirection: 'row',
                           flexWrap: 'wrap',
-                          marginRight: 20,
+                          alignItems: 'center',
+                          justifyContent: 'flex-start',
                         }}>
                         <Image
                           style={styles.playerLogo}
@@ -231,25 +232,32 @@ export default class TeamScreen extends Component {
                             ),
                           }}
                         />
-                      </View>
-                      <View>
-                        <Text
-                          style={{
-                            fontSize: 18,
-                            color: '#606070',
-                            fontFamily: 'OpenSans',
-                          }}>
-                          {player.last_name}
-                          {player.first_name}
-                          {player.middle_name}
-                        </Text>
+                        <View style={{width: '70%'}}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              color: '#606070',
+                              fontFamily: 'OpenSans',
+                              fontWeight: 'bold',
+                            }}>
+                            {player.last_name} {player.first_name}{' '}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              color: '#606070',
+                              fontFamily: 'OpenSans',
+                            }}>
+                            {player.middle_name}
+                          </Text>
+                        </View>
                         <Text
                           style={{
                             fontSize: 16,
                             color: 'gray',
                             fontFamily: 'OpenSans',
                           }}>
-                          {player.start_dt}
+                          {player.birthday}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -394,5 +402,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
+    marginRight: '5%',
   },
 });
