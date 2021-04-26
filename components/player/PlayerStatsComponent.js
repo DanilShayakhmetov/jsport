@@ -271,17 +271,25 @@ export default class PlayerStatsScreen extends Component {
                     <View style={styles.playerTeam_row_match_dataContainer}>
                       <View style={styles.playerTeam_row_match_dataItem}>
                         <View style={styles.playerTeam_row_match_team1}>
-                          <Text>{match.team1.full_name}</Text>
+                          <Text
+                            numberOfLines={1}
+                            style={styles.playerTeam_row_text}>
+                            {match.team1.full_name}
+                          </Text>
                         </View>
                         <View style={styles.playerTeam_row_match_score}>
-                          <Text>
+                          <Text style={styles.playerTeam_row_text}>
                             {match.ga}
                             {' : '}
                             {match.gf}
                           </Text>
                         </View>
                         <View style={styles.playerTeam_row_match_team2}>
-                          <Text>{match.team2.full_name}</Text>
+                          <Text
+                            numberOfLines={1}
+                            style={styles.playerTeam_row_text}>
+                            {match.team2.full_name}
+                          </Text>
                         </View>
                       </View>
                       <View style={styles.playerTeam_row_match_date}>
@@ -290,10 +298,10 @@ export default class PlayerStatsScreen extends Component {
                     </View>
                     <View style={styles.playerTeam_row_match_scoreContainer}>
                       <View style={styles.playerTeam_row_match_scoreItem}>
-                        <Text>1</Text>
+                        <Text style={styles.playerTeam_row_text}>0</Text>
                       </View>
                       <View style={styles.playerTeam_row_match_scoreItem}>
-                        <Text>2</Text>
+                        <Text style={styles.playerTeam_row_text}>0</Text>
                       </View>
                     </View>
                   </View>
@@ -428,7 +436,7 @@ const styles = StyleSheet.create({
   playerTeam_container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     height: '50%',
   },
 
@@ -470,7 +478,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   playerTeam_row_itemText: {
-    fontSize: 15,
+    fontSize: 20,
     color: 'black',
     fontFamily: 'OpenSans',
     fontWeight: 'bold',
@@ -519,7 +527,7 @@ const styles = StyleSheet.create({
   },
 
   playerTeam_row_teamName: {
-    fontSize: 15,
+    fontSize: 20,
     color: 'black',
     fontFamily: 'OpenSans',
     fontWeight: 'bold',
@@ -539,7 +547,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#B9D5D7',
   },
 
   playerTeam_row_tournamentName: {
@@ -559,13 +567,13 @@ const styles = StyleSheet.create({
   },
 
   playerTeam_row_match_dataContainer: {
-    backgroundColor: '#FF1493',
+    // backgroundColor: '#FF1493',
     width: '60%',
     height: '100%',
   },
 
   playerTeam_row_match_dataItem: {
-    backgroundColor: '#5F2093',
+    // backgroundColor: '#5F2093',
     width: '100%',
     height: '50%',
     flexDirection: 'row',
@@ -573,7 +581,7 @@ const styles = StyleSheet.create({
   },
 
   playerTeam_row_match_date: {
-    backgroundColor: '#5F9493',
+    // backgroundColor: '#5F9493',
     width: '100%',
     height: '50%',
     justifyContent: 'center',
@@ -581,24 +589,24 @@ const styles = StyleSheet.create({
   },
 
   playerTeam_row_match_team1: {
-    backgroundColor: '#5F2493',
-    width: '45%',
+    // backgroundColor: '#5F2493',
+    width: '42%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   playerTeam_row_match_score: {
-    backgroundColor: '#971223',
-    width: '10%',
+    // backgroundColor: '#971223',
+    width: '16%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   playerTeam_row_match_team2: {
-    backgroundColor: '#FFF223',
-    width: '45%',
+    // backgroundColor: '#FFF223',
+    width: '42%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -607,22 +615,29 @@ const styles = StyleSheet.create({
   playerTeam_row_match_scoreContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'gray',
+    // backgroundColor: 'gray',
     justifyContent: 'flex-end',
     width: '40%',
     height: '100%',
   },
 
   playerTeam_row_match_scoreItem: {
-    backgroundColor: 'pink',
+    // backgroundColor: 'pink',
     width: '30%',
     height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    padding: '10%',
+  },
+  playerTeam_row_text: {
+    fontSize: 15,
+    color: 'black',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
   },
 
   touchItem: {
-    borderBottomColor: 'blue',
+    // borderBottomColor: 'blue',
     borderBottomWidth: 2,
   },
   scrollItem: {
