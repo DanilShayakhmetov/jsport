@@ -20,6 +20,8 @@ import {GET_TOURNAMENT_STATS} from './queri/tournament/StatsQuery';
 import {GET_PLAYER_MATCH} from './queri/player/MatchQuery';
 import {GET_PLAYER_SEASON_STATS} from './queri/player/SeasonStatsQuery';
 import {GET_TOURNAMENT_ITEM} from './queri/tournament/TournamentItemQuery';
+import player from '../assets/images/player_default.png';
+import team from '../assets/images/team_default.png';
 
 const client = makeApolloClient();
 const today = new Date();
@@ -37,6 +39,8 @@ const listOfMonth = {
   11: 'ноября',
   12: 'декабря',
 };
+const PLAYER_DEFAULT = Image.resolveAssetSource(player).uri;
+const TEAM_DEFAULT = Image.resolveAssetSource(team).uri;
 
 class Handler extends React.Component {
   constructor(props) {
@@ -374,7 +378,7 @@ class Handler extends React.Component {
 
   static getTeamImageURI(teamId, image) {
     if (teamId === null || image === null) {
-      return 'https://nflperm.ru/assets/936085a3/football_logo_173x173.png';
+      return TEAM_DEFAULT;
     } else {
       return (
         'https://st.joinsport.io/team/' +
@@ -389,7 +393,7 @@ class Handler extends React.Component {
 
   static getPlayerImageURI(teamId, image) {
     if (teamId === null || image === null) {
-      return 'https://nflperm.ru/assets/c59c7ff4/football_photo_thumb.png';
+      return PLAYER_DEFAULT;
     } else {
       return (
         'https://st.joinsport.io/player/' +

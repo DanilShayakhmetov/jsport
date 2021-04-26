@@ -189,7 +189,12 @@ export default class TableScreen extends Component {
               activeOpacity={0.8}
               onPress={this.showApplication.bind(this, team, 1)}
               style={{margin: 5}}>
-              <Text style={{borderWidth: 1, borderRadius: 5}}>
+              <Text
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  backgroundColor: 'lightgray',
+                }}>
                 {'        Заявленные          '}
               </Text>
             </TouchableOpacity>
@@ -207,6 +212,7 @@ export default class TableScreen extends Component {
                 activeOpacity={0.8}
                 onPress={this.teamRedirect.bind(this, team)}
                 style={{
+                  width: '100%',
                   flexDirection: 'row',
                   flexWrap: 'wrap',
                   justifyContent: 'center',
@@ -223,9 +229,17 @@ export default class TableScreen extends Component {
                     ),
                   }}
                 />
-                <Text style={{width: '25%'}}>{player.player.last_name}</Text>
-                <Text style={{width: '25%'}}>{player.player.first_name}</Text>
-                <Text style={{width: '25%'}}>{player.player.middle_name}</Text>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    fontFamily: 'OpenSans',
+                    fontSize: 14,
+                    width: '75%',
+                    margin: 10,
+                  }}>
+                  {player.player.last_name} {player.player.first_name}{' '}
+                  {player.player.middle_name}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -242,7 +256,12 @@ export default class TableScreen extends Component {
               activeOpacity={0.8}
               onPress={this.showApplication.bind(this, team, 1)}
               style={{margin: 5}}>
-              <Text style={{borderWidth: 1, borderRadius: 5}}>
+              <Text
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  backgroundColor: '#fff',
+                }}>
                 {'        Заявленные          '}
               </Text>
             </TouchableOpacity>
@@ -250,7 +269,12 @@ export default class TableScreen extends Component {
               activeOpacity={0.8}
               onPress={this.showApplication.bind(this, team, 0)}
               style={{margin: 5}}>
-              <Text style={{borderWidth: 1, borderRadius: 5}}>
+              <Text
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  backgroundColor: 'lightgray',
+                }}>
                 {'        Отзаявленные          '}
               </Text>
             </TouchableOpacity>
@@ -260,6 +284,7 @@ export default class TableScreen extends Component {
                 activeOpacity={0.8}
                 onPress={this.teamRedirect.bind(this, team)}
                 style={{
+                  width: '100%',
                   flexDirection: 'row',
                   flexWrap: 'wrap',
                   justifyContent: 'center',
@@ -276,9 +301,17 @@ export default class TableScreen extends Component {
                     ),
                   }}
                 />
-                <Text style={{width: '25%'}}>{player.player.last_name}</Text>
-                <Text style={{width: '25%'}}>{player.player.first_name}</Text>
-                <Text style={{width: '25%'}}>{player.player.middle_name}</Text>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    fontFamily: 'OpenSans',
+                    fontSize: 14,
+                    width: '75%',
+                    margin: 10,
+                  }}>
+                  {player.player.last_name} {player.player.first_name}{' '}
+                  {player.player.middle_name}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
