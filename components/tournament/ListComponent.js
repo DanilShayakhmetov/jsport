@@ -12,8 +12,10 @@ import {
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import cover from '../../assets/images/football_cover_cover.jpg';
 
 const handler = Handler;
+const COVER = Image.resolveAssetSource(cover).uri;
 const regex = /(<([^>]+)>)/gi;
 
 export default class TournamentListScreen extends Component {
@@ -71,9 +73,10 @@ export default class TournamentListScreen extends Component {
       console.log(tournamentsList.tournaments.data);
       return (
         <View style={styles.container}>
+          <Text style={{marginLeft: 20}}>Выбор сезона</Text>
           <Picker
             selectedValue={this.state.seasonId}
-            style={{height: 50, width: 150}}
+            style={{height: 50, width: 200, marginLeft: 10}}
             onValueChange={(itemValue) => {
               this.setState({seasonId: itemValue});
               handler
@@ -117,18 +120,43 @@ export default class TournamentListScreen extends Component {
                   <Image
                     style={styles.logo}
                     source={{
-                      uri: 'https://reactnative.dev/img/tiny_logo.png',
+                      uri: COVER,
                     }}
                   />
                   <View>
-                    <Text style={{padding: 15}}>
-                      {tournament.start_dt}.{'   -   '}.{tournament.end_dt}
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        fontSize: 16,
+                        color: '#606070',
+                        fontFamily: 'OpenSans',
+                        padding: '1%',
+                      }}>
+                      {tournament.start_dt}
+                      {'   -   '}
+                      {tournament.end_dt}
                     </Text>
-                    <Text style={{padding: 15}}>Колл-во команд</Text>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        fontSize: 16,
+                        color: '#606070',
+                        fontFamily: 'OpenSans',
+                        padding: '1%',
+                      }}>
+                      Колл-во команд
+                    </Text>
                   </View>
                 </View>
                 <View>
-                  <Text>
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      fontSize: 16,
+                      color: '#606070',
+                      fontFamily: 'OpenSans',
+                      padding: '1%',
+                    }}>
                     {/*{tournament.cover}.{'   -   '}.{tournament.short_name}*/}
                     {tournament.description.replace(regex, '')}
                   </Text>
@@ -225,17 +253,17 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   image: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     overflow: 'hidden',
     borderWidth: 3,
     borderColor: 'white',
   },
   logo: {
-    width: 200,
-    height: 120,
-    borderRadius: 20,
+    width: 120,
+    height: 70,
+    borderRadius: 10,
     margin: 5,
   },
 });
