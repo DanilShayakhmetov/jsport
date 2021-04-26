@@ -213,13 +213,13 @@ export default class PlayerStatsScreen extends Component {
             </View>
             <View style={styles.playerTeam_row_scoreTitle}>
               <View style={styles.playerTeam_row_container}>
-                <View style={styles.playerTeam_row_item}>
+                <View style={styles.playerTeam_row_itemTitle}>
                   <Text style={styles.playerTeam_row_itemText}>ИГР</Text>
                 </View>
-                <View style={styles.playerTeam_row_item}>
+                <View style={styles.playerTeam_row_itemTitle}>
                   <Text style={styles.playerTeam_row_itemText}>ГОЛ.</Text>
                 </View>
-                <View style={styles.playerTeam_row_item}>
+                <View style={styles.playerTeam_row_itemTitle}>
                   <Text style={styles.playerTeam_row_itemText}>ПАС.</Text>
                 </View>
               </View>
@@ -240,17 +240,17 @@ export default class PlayerStatsScreen extends Component {
                 </Text>
               </View>
               <View style={styles.playerTeam_row_container}>
-                <View style={styles.playerTeam_row_item}>
+                <View style={styles.playerTeam_row_itemTeam}>
                   <Text style={styles.playerTeam_row_itemText}>
                     {playerSeason.games}
                   </Text>
                 </View>
-                <View style={styles.playerTeam_row_item}>
+                <View style={styles.playerTeam_row_itemTeam}>
                   <Text style={styles.playerTeam_row_itemText}>
                     {playerSeason.goals}
                   </Text>
                 </View>
-                <View style={styles.playerTeam_row_item}>
+                <View style={styles.playerTeam_row_itemTeam}>
                   <Text style={styles.playerTeam_row_itemText}>
                     {playerSeason.assists}
                   </Text>
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   },
 
   playerProfile_container: {
-    backgroundColor: 'black',
+    backgroundColor: 'lightgray',
     height: '20%',
     justifyContent: 'center',
   },
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
 
   playerProfile_name: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     fontFamily: 'OpenSans',
   },
 
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontFamily: 'OpenSans',
     paddingLeft: '5%',
-    backgroundColor: 'black',
+    backgroundColor: 'lightgray',
     alignItems: 'center',
     height: '5%',
   },
@@ -386,16 +386,16 @@ const styles = StyleSheet.create({
   },
   playerStats_title_items: {
     alignItems: 'center',
-    fontSize: 15,
-    color: 'blue',
+    fontSize: 17,
+    color: 'black',
     fontFamily: 'OpenSans',
-    fontWeight: 'bold',
   },
 
   playerStats_value_items: {
     alignItems: 'center',
-    fontSize: 15,
-    color: 'black',
+    fontSize: 17,
+    color: 'blue',
+    fontWeight: 'bold',
     fontFamily: 'OpenSans',
   },
 
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#2980b9',
     height: '5%',
   },
 
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
   playerSeason_textContainer: {
     width: '40%',
     height: '100%',
-    backgroundColor: 'gray',
+    backgroundColor: 'lightgray',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-end',
-    backgroundColor: 'green',
+    backgroundColor: '#3498db',
     height: '20%',
     width: '100%',
   },
@@ -449,7 +449,21 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   playerTeam_row_item: {
-    backgroundColor: 'pink',
+    backgroundColor: '#3498db',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '30%',
+    height: '100%',
+  },
+  playerTeam_row_itemTitle: {
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '30%',
+    height: '100%',
+  },
+  playerTeam_row_itemTeam: {
+    backgroundColor: '#85B1FF',
     alignItems: 'center',
     justifyContent: 'center',
     width: '30%',
@@ -465,7 +479,7 @@ const styles = StyleSheet.create({
   playerTeam_row_scoreTitle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'black',
+    backgroundColor: 'lightgray',
     height: '10%',
     width: '100%',
     justifyContent: 'flex-end',
@@ -474,14 +488,14 @@ const styles = StyleSheet.create({
   playerTeam_row_team: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'gray',
+    backgroundColor: '#85B1FF',
     height: '20%',
     width: '100%',
     alignItems: 'center',
   },
 
   playerTeam_row_teamContainer: {
-    backgroundColor: 'blue',
+    backgroundColor: '#85B1FF',
     width: '60%',
     height: '90%',
     flexDirection: 'row',
