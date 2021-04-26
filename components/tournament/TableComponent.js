@@ -926,24 +926,29 @@ export default class TableScreen extends Component {
           </View>
           <View
             style={{
-              width: 432,
+              width: '110%',
               height: 40,
+              margin: -5,
               alignSelf: 'center',
-              backgroundColor: 'lightGray',
-              borderTopWidth: 1,
+              borderTopWidth: 0.5,
+              backgroundColor: 'lightgray',
             }}>
             <View
               style={{
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 marginTop: 10,
+                justifyContent: 'center',
+                width: '100%',
               }}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => this.props.navigation.navigate('MatchCenter')}
                 style={{
-                  width: 144,
-                  color: 'gray',
+                  width: '33%',
+                  color: 'lightgray',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
                 <Icon name="football-outline" size={30} color="#517fa4" />
               </TouchableOpacity>
@@ -951,10 +956,12 @@ export default class TableScreen extends Component {
                 activeOpacity={0.8}
                 onPress={() => this.props.navigation.navigate('TournamentList')}
                 style={{
-                  width: 144,
-                  color: 'gray',
-                  borderLeftWidth: 2,
-                  borderRightWidth: 2,
+                  width: '33%',
+                  color: 'lightgray',
+                  borderLeftWidth: 0.5,
+                  borderRightWidth: 0.5,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
                 <Icon name="trophy-outline" size={30} color="#517fa4" />
               </TouchableOpacity>
@@ -962,8 +969,10 @@ export default class TableScreen extends Component {
                 activeOpacity={0.8}
                 onPress={() => this.props.navigation.navigate('TeamList')}
                 style={{
-                  width: 144,
-                  color: 'gray',
+                  width: '33%',
+                  color: 'lightgray',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
                 <Icon name="shield-outline" size={30} color="#517fa4" />
               </TouchableOpacity>
