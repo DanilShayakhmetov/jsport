@@ -31,7 +31,7 @@ export default class TeamScreen extends Component {
     await handler
       .getTeamMatch(this.context.teamData.team_id)
       .then((value) => {
-        console.log(value);
+        console.log(value.calendar.data);
         this.setState({
           matchList: value.calendar.data,
         });
@@ -101,34 +101,40 @@ export default class TeamScreen extends Component {
                   fontFamily: 'OpenSans',
                   fontWeight: 'bold',
                 }}>
-                {team.short_name}
+                {team.full_name}
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{height: 30, marginBottom: 30}}>
-            <ScrollView horizontal={true} style={styles.scrollItem}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 0 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 0)}>
-                <Text>{'        Матчи         '}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  borderBottomWidth: this.state.focusedTab === 1 ? 2 : 0,
-                  borderBottomColor: 'blue',
-                  overflow: 'hidden',
-                }}
-                onPress={this.tabsHandler.bind(this, 1)}>
-                <Text>{'        Состав          '}</Text>
-              </TouchableOpacity>
-            </ScrollView>
+          <View style={styles.tabsContainer}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 0)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 0
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Матчи'}
+              </Text>
+            </TouchableOpacity>
+            <View style={{width: '15%'}} />
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={this.tabsHandler.bind(this, 1)}>
+              <Text
+                style={[
+                  styles.tabsItem,
+                  this.state.focusedTab === 1
+                    ? styles.tabsItem_chosen
+                    : styles.tabsItem_default,
+                ]}>
+                {'Состав'}
+              </Text>
+            </TouchableOpacity>
           </View>
+
           <ScrollView>
             <View style={styles.mainDataContainer}>
               <View
@@ -176,9 +182,9 @@ export default class TeamScreen extends Component {
                           fontFamily: 'OpenSans',
                           fontWeight: 'bold',
                         }}>
-                        {match.team1.short_name}
+                        {match.team1.full_name}
                         {'   -   '}
-                        {match.team2.short_name}
+                        {match.team2.full_name}
                       </Text>
                       <Text
                         style={{
@@ -186,7 +192,7 @@ export default class TeamScreen extends Component {
                           color: 'gray',
                           fontFamily: 'OpenSans',
                         }}>
-                        {match.start_dt}
+                        {handler.getFormedDate(match.start_dt)}
                       </Text>
                     </View>
                   </View>
@@ -319,6 +325,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 10,
   },
+  tabsContainer: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 40,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: '5%',
+  },
+  tabsItem: {
+    overflow: 'hidden',
+    fontFamily: 'OpenSans',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    paddingTop: 10,
+    paddingBottom: 10,
+    height: 40,
+  },
+  tabsItem_default: {
+    borderBottomWidth: 0,
+    color: 'lightgray',
+    borderBottomColor: 'lightgray',
+  },
+  tabsItem_chosen: {
+    borderBottomWidth: 3,
+    color: '#3498db',
+    borderBottomColor: '#3498db',
+  },
+
   touchItem: {
     borderBottomColor: 'blue',
     borderBottomWidth: 2,

@@ -258,7 +258,7 @@ export default class MatchCenterScreen extends Component {
                                   : null,
                               margin: 5,
                             }}>
-                            {value.item.start_dt}
+                            {handler.getFormedDate(value.item.start_dt)}
                             {' | '}
                             {item.Stadium === null ? '-' : item.Stadium.name}
                           </Text>
