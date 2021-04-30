@@ -26,9 +26,7 @@ export default class MatchCenterScreen extends Component {
     }
     this.changeInterval = this.changeInterval.bind(this);
     this.state = {
-      filteredCalendar: 'empty',
       focusedTab: 0,
-      imageList: undefined,
     };
   }
 
@@ -58,45 +56,45 @@ export default class MatchCenterScreen extends Component {
   };
 
   changeInterval = (days = 0, month = 0, tab = 0) => {
-    let to = handler.getDate(days, month);
+    let INTERVALS = [
+      {from: [-1, 0], to: [-1, 0]},
+      {from: [0, 0], to: [0, 0]},
+      {from: [1, 0], to: [1, 0]},
+      {from: [0, 0], to: [7, 0]},
+      {from: [0, 0], to: [0, 1]},
+    ];
+    let to = handler.getDate(INTERVALS[tab].to[0], INTERVALS[tab].to[1]);
+    let from = handler.getDate(INTERVALS[tab].from[0], INTERVALS[tab].from[1]);
+    console.log(to, from);
     let calendar = [...this.context.calendar];
     calendar.forEach(function (value) {
       value.matchItems.forEach(function (match) {
         match.visibility = match.item.start_dt.split(' ')[0] <= to;
       });
     });
+    console.log('here');
     this.setState({
       filteredCalendar: calendar,
       focusedTab: tab,
     });
   };
 
-  getCalendar = () => {
-    let calendar = '';
-    if (this.state.filteredCalendar !== 'empty') {
-      calendar = handler.dataFilter(this.state.filteredCalendar);
-    } else {
-      calendar = this.context.calendar;
-    }
-
-    return calendar;
-  };
-
   render() {
-    if (handler.isUndefined(this.context.calendar)) {
+    if (this.context.filteredCalendar === 'empty') {
       return (
         <View>
           <Text>Wait</Text>
         </View>
       );
     } else {
+      console.log(this.context.filteredCalendar);
       return (
         <View style={styles.container}>
           <View style={styles.tabs_container}>
             <ScrollView horizontal={true}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.changeInterval.bind(this, -1, 0, -1)}>
+                onPress={this.changeInterval.bind(this, 2, 0, -1)}>
                 <Text
                   style={[
                     styles.tabsItem,
@@ -162,7 +160,7 @@ export default class MatchCenterScreen extends Component {
             </ScrollView>
           </View>
           <ScrollView>
-            {this.getCalendar().map((item, number) => (
+            {this.context.filteredCalendar.map((item, number) => (
               <View>
                 {/*Header of the Expandable List Item*/}
                 <TouchableOpacity
@@ -193,9 +191,7 @@ export default class MatchCenterScreen extends Component {
                         }>
                         <View style={styles.matchItem_topBlock}>
                           <View style={styles.matchItem_team1}>
-                            <Text
-                                numberOfLines={1}
-                                style={styles.text}>
+                            <Text numberOfLines={1} style={styles.text}>
                               {value.item.team1.full_name}
                             </Text>
                             <Image
@@ -243,9 +239,7 @@ export default class MatchCenterScreen extends Component {
                                 ),
                               }}
                             />
-                            <Text
-                                numberOfLines={1}
-                                style={styles.text}>
+                            <Text numberOfLines={1} style={styles.text}>
                               {value.item.team2.full_name}
                             </Text>
                           </View>

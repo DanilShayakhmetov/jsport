@@ -11,11 +11,12 @@ import TableScreen from './components/tournament/TableComponent';
 import TeamScreen from './components/team/TeamMatchComponent';
 import TeamListScreen from './components/team/ListComponent';
 import TournamentListScreen from './components/tournament/ListComponent';
-import PlayerStatsComponent from "./components/player/PlayerStatsComponent";
-import PlayerStatsScreen from "./components/player/PlayerStatsComponent";
+import PlayerStatsComponent from './components/player/PlayerStatsComponent';
+import PlayerStatsScreen from './components/player/PlayerStatsComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
+const INTERVALS = {0: [-1, 0], 1: []};
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class App extends React.Component {
     this.state = {
       calendar: 'empty',
       teamCalendar: 'empty',
+      filteredCalendar: 'empty',
       matchData: 'empty',
       tournamentData: 'empty',
       teamData: 'empty',
@@ -87,8 +89,23 @@ class App extends React.Component {
     return tournamentList;
   };
 
+  changeInterval = (calendar, days = 0, month = 0, tab = 0) => {
+    let to = handler.getDate(days, month);
+    calendar.forEach(function (value) {
+      value.matchItems.forEach(function (match) {
+        console.log(match.item.start_dt.split(' ')[0]);
+        match.visibility = match.item.start_dt.split(' ')[0] <= to;
+      });
+    });
+    this.setState({
+      filteredCalendar: calendar,
+      focusedTab: tab,
+    });
+    return this.state.filteredCalendar;
+  };
+
   async componentDidMount() {
-    let from = handler.getDate(-5, 0);
+    let from = handler.getDate(-1, 0);
     let to = handler.getDate(0, 1);
     console.log(from, to);
     await handler
@@ -96,11 +113,13 @@ class App extends React.Component {
       // .getMatchCalendar('2020-03-01', '2020-12-25')
       .then((value) => {
         let calendar = handler.dataFilter(value);
+        // let calendarIntervals =
         calendar = this.getSortedData(calendar);
         calendar = handler.dataFilter(calendar);
         this.setState({
           calendar: calendar,
         });
+        this.changeInterval(calendar, -1, 0, 0);
       })
       .catch((error) => {
         console.log(error);
@@ -113,6 +132,7 @@ class App extends React.Component {
       <JoinAppContext.Provider
         value={{
           calendar: this.state.calendar,
+          filteredCalendar: this.state.filteredCalendar,
           layoutHeight: this.state.layoutHeight,
           matchId: this.state.matchId,
           matchData: this.state.matchData,

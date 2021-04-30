@@ -353,10 +353,29 @@ class Handler extends React.Component {
   static getDate(day = 0, month = 0) {
     let dd = today.getDate() + day;
     let mm = today.getMonth() + 1 + month;
+    if ((mm % 2 !== 1 && mm < '08') || (mm % 2 !== 0 && mm > '07')) {
+      if (dd > 31) {
+        mm += 1;
+        dd -= 7;
+      }
+    } else {
+      if (dd > 30) {
+        mm += 1;
+        dd -= 7;
+      }
+      if (dd > 28) {
+        mm += 1;
+        dd -= 7;
+      }
+    }
     let yyyy = today.getFullYear();
     if (mm.toString().length === 1) {
       mm = '0' + mm;
     }
+    if (mm > 12) {
+      yyyy += 1;
+    }
+    // console.log(yyyy + '-' + mm + '-' + dd);
     return yyyy + '-' + mm + '-' + dd;
   }
 
