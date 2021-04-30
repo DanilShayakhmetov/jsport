@@ -26,6 +26,10 @@ export const GET_TOURNAMENT_APPLICATION = gql`
         player_id
         player {
           player_id
+          first_name
+          last_name
+          middle_name
+          photo
         }
         status
         application_dt

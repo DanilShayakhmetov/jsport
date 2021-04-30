@@ -1,16 +1,16 @@
 import gql from 'graphql-tag';
 
-export const GET_MATCH_CENTER = gql`
-  query MatchCenterQuery($from: Date!, $to: Date!) {
-    calendar(filters: {start_date_range: {from: $from, to: $to}}) {
+export const GET_PLAYER_MATCH = gql`
+  query PlayerMatchQuery($teamId: Int!, $from: Date!, $to: Date!) {
+    calendar(
+      filters: {team_id: $teamId, start_date_range: {from: $from, to: $to}}
+    ) {
       paginatorInfo {
         count
       }
       data {
-        tournament_id
         series_id
         number
-        match_id
         team1 {
           team_id
           short_name
@@ -27,15 +27,9 @@ export const GET_MATCH_CENTER = gql`
         ga
         gfp
         gap
+        overtime
+        technical
         start_dt
-        tournament {
-          full_name
-          short_name
-        }
-        stadium {
-          name
-          address
-        }
       }
     }
   }

@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import {Image} from 'react-native';
 import makeApolloClient from './apollo';
 import {GET_MATCH_CENTER} from './queri/match/MatchCenterQuery';
 import {GET_MATCH} from './queri/match/MatchQuery';
@@ -14,23 +15,37 @@ import {GET_TEAM_ROSTER} from './queri/team/TeamRosterQuery';
 import {GET_TEAM_LIST} from './queri/team/ListQuery';
 import {JoinAppContext} from '../JoinAppContext';
 import {GET_SEASONS} from './queri/season/SeasonQuery';
+import {GET_PLAYER_STATS} from './queri/player/StatsQuery';
+import {GET_TOURNAMENT_STATS} from './queri/tournament/StatsQuery';
+import {GET_PLAYER_MATCH} from './queri/player/MatchQuery';
+import {GET_PLAYER_SEASON_STATS} from './queri/player/SeasonStatsQuery';
+import {GET_TOURNAMENT_ITEM} from './queri/tournament/TournamentItemQuery';
+import player from '../assets/images/player_default.png';
+import team from '../assets/images/team_default.png';
 
 const client = makeApolloClient();
 const today = new Date();
+const listOfMonth = {
+  '01': 'января',
+  '02': 'февраля',
+  '03': 'марта',
+  '04': 'апреля',
+  '05': 'мая',
+  '06': 'июня',
+  '07': 'июля',
+  '08': 'августа',
+  '09': 'сентября',
+  10: 'октября',
+  11: 'ноября',
+  12: 'декабря',
+};
+const PLAYER_DEFAULT = Image.resolveAssetSource(player).uri;
+const TEAM_DEFAULT = Image.resolveAssetSource(team).uri;
 
 class Handler extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  getDate = (year, month, date) => {
-    const d = new Date(year, month, date);
-    const ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-    const mo = new Intl.DateTimeFormat('en', {month: 'short'}).format(d);
-    const da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
-    const resultDate = `${ye}-${mo}-${da}`;
-    // console.log(resultDate);
-  };
 
   //GET MATCH CALENDAR FOR MATCH CENTER
   static getMatchCalendar(from, to) {
@@ -40,14 +55,12 @@ class Handler extends React.Component {
         query: GET_MATCH_CENTER,
       })
       .then(function (value) {
-        let calendar = value.data.calendar.data;
-        console.log(calendar);
-        return calendar;
+        // console.log(calendar);
+        return value.data.calendar.data;
       })
       .catch((error) => {
         error;
       });
-    // console.log(this.state.responseAPI);
   }
 
   //GET MATCH PROFILE PAGE
@@ -74,14 +87,11 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
-        return calendar;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(this.state.responseAPI);
   }
 
   //GET ROUND DATA UNIVERSAL 1003807 1003808  1003809
@@ -92,15 +102,11 @@ class Handler extends React.Component {
         query: GET_ROUND,
       })
       .then(function (value) {
-        let round;
-        round = value.data.round;
-        // console.log(round);
-        return round;
+        return value.data.round;
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(this.state.responseAPI);
   }
 
   //GET TOURNAMENT SCHEDULE START PAGE
@@ -116,13 +122,11 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_SCHEDULE,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(this.state.responseAPI);
   }
 
   static getTournamentTable(tournamentId, roundId, from, to) {
@@ -155,8 +159,7 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_LIST,
       })
       .then(function (value) {
-        let tournaments = value.data;
-        return tournaments;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -173,9 +176,41 @@ class Handler extends React.Component {
         query: GET_TOURNAMENT_APPLICATION,
       })
       .then(function (value) {
-        let application = value.data;
-        // console.log(application);
-        return application;
+        return value.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getTournamentStats(tournament_id) {
+    let tournamentId = parseInt(tournament_id);
+    return client
+      .query({
+        variables: {
+          tournamentId: tournamentId,
+        },
+        query: GET_TOURNAMENT_STATS,
+      })
+      .then(function (value) {
+        return value.data.stats.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getTournamentItem(tournamentId) {
+    return client
+      .query({
+        variables: {
+          tournamentId: tournamentId,
+        },
+        query: GET_TOURNAMENT_ITEM,
+      })
+      .then(function (value) {
+        console.log(value);
+        return value;
       })
       .catch((error) => {
         console.log(error);
@@ -192,9 +227,7 @@ class Handler extends React.Component {
         query: GET_TEAM_MATCH,
       })
       .then(function (value) {
-        let calendar = value.data;
-        return calendar;
-        // console.log(calendar);
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -210,8 +243,7 @@ class Handler extends React.Component {
         query: GET_TEAM_ROSTER,
       })
       .then(function (value) {
-        let calendar = value.data;
-        return calendar;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -228,25 +260,64 @@ class Handler extends React.Component {
         query: GET_TEAM_LIST,
       })
       .then(function (value) {
-        let teams = value.data;
-        return teams;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  static getPlayerStats(teamsCount) {
+  static getPlayerStats(player_id) {
+    let playerId = parseInt(player_id);
     return client
       .query({
         variables: {
-          teamsCount: teamsCount,
+          playerId: playerId,
         },
-        query: GET_TEAM_LIST,
+        query: GET_PLAYER_STATS,
       })
       .then(function (value) {
-        let calendar = value.data;
-        console.log(calendar);
+        console.log(value.data.stats.data);
+        return value.data.stats.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getPlayerSeasonStats(player_id, season_id) {
+    let playerId = parseInt(player_id);
+    let seasonId = parseInt(season_id);
+    return client
+      .query({
+        variables: {
+          playerId: playerId,
+          seasonId: seasonId,
+        },
+        query: GET_PLAYER_SEASON_STATS,
+      })
+      .then(function (value) {
+        console.log(value.data.stats.data);
+        return value.data.stats.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  static getPlayerMatch(team_id, from, to) {
+    let teamId = parseInt(team_id);
+    return client
+      .query({
+        variables: {
+          teamId: teamId,
+          from: from,
+          to: to,
+        },
+        query: GET_PLAYER_MATCH,
+      })
+      .then(function (value) {
+        return value.data.calendar.data;
       })
       .catch((error) => {
         console.log(error);
@@ -259,8 +330,7 @@ class Handler extends React.Component {
         query: GET_SEASONS,
       })
       .then(function (value) {
-        let seasons = value.data;
-        return seasons;
+        return value.data;
       })
       .catch((error) => {
         console.log(error);
@@ -283,15 +353,91 @@ class Handler extends React.Component {
   static getDate(day = 0, month = 0) {
     let dd = today.getDate() + day;
     let mm = today.getMonth() + 1 + month;
+    if ((mm % 2 !== 1 && mm < '08') || (mm % 2 !== 0 && mm > '07')) {
+      if (dd > 31) {
+        mm += 1;
+        dd = '07';
+      }
+    } else {
+      if (dd > 30) {
+        mm += 1;
+        dd = '07';
+      }
+      if (dd > 28) {
+        mm += 1;
+        dd = '07';
+      }
+    }
     let yyyy = today.getFullYear();
     if (mm.toString().length === 1) {
       mm = '0' + mm;
     }
+    if (mm > 12) {
+      yyyy += 1;
+    }
+    // console.log(yyyy + '-' + mm + '-' + dd);
     return yyyy + '-' + mm + '-' + dd;
   }
 
   static isUndefined(inputData) {
     return inputData === 'empty' || inputData === undefined;
+  }
+
+  static getFormedDate(dateString) {
+    let date = dateString.split(' ')[0].split('-');
+    let time = dateString.split(' ')[1].split(':');
+    date[1] = listOfMonth[date[1]];
+    return date[2] + ' ' + date[1] + ' , ' + time[0] + ':' + time[1];
+  }
+
+  static getFormedDateShort(dateString) {
+    let date = dateString.split(' ')[0].split('-');
+    return date[2] + '.' + date[1];
+  }
+
+  static getTeamImageURI(teamId, image) {
+    if (teamId === null || image === null) {
+      return TEAM_DEFAULT;
+    } else {
+      return (
+        'https://st.joinsport.io/team/' +
+        teamId +
+        '/logo/' +
+        image.split('.')[0] +
+        '_100x100.' +
+        image.split('.')[1]
+      );
+    }
+  }
+
+  static getPlayerImageURI(teamId, image) {
+    if (teamId === null || image === null) {
+      return PLAYER_DEFAULT;
+    } else {
+      return (
+        'https://st.joinsport.io/player/' +
+        teamId +
+        '/photo/' +
+        image.split('.')[0] +
+        '_thumb.' +
+        image.split('.')[1]
+      );
+    }
+  }
+
+  static getTournamentImageURI(tournamentId, image) {
+    if (tournamentId === null || image === null) {
+      return 'https://nflperm.ru/assets/c59c7ff4/football_photo_thumb.png';
+    } else {
+      return (
+        'https://st.joinsport.io/tournament/' +
+        tournamentId +
+        '/cover/' +
+        image.split('.')[0] +
+        '_thumb.' +
+        image.split('.')[1]
+      );
+    }
   }
 }
 
