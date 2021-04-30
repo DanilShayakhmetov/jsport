@@ -8,6 +8,7 @@ import {
   View,
   Picker,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -95,8 +96,9 @@ export default class PlayerStatsScreen extends Component {
       playerMatch === undefined
     ) {
       return (
-        <View>
-          <Text>Wait</Text>
+        <View style={[styles.loadingContainer, styles.horizontal]}>
+          <ActivityIndicator />
+          <ActivityIndicator size="large" color="#00ff00" />
         </View>
       );
     } else {
@@ -185,6 +187,19 @@ export default class PlayerStatsScreen extends Component {
               style={styles.playerSeason_picker}
               onValueChange={(itemValue) => {
                 this.setState({seasonId: itemValue});
+                handler
+                  .getPlayerSeasonStats(
+                    this.context.playerId,
+                    this.state.seasonId,
+                  )
+                  .then((value) => {
+                    this.setState({
+                      playerSeasonStats: value,
+                    });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
               }}>
               {seasonsList.seasons.map((season) => (
                 <Picker.Item label={season.title} value={season.season_id} />
@@ -314,13 +329,14 @@ export default class PlayerStatsScreen extends Component {
               width: '100%',
               height: 40,
               alignSelf: 'center',
-              marginBottom: -10,
+              // alignItems: 'flex-end',
             }}>
             <View
               style={{
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 marginTop: 10,
+                marginBottom: -20,
                 justifyContent: 'center',
                 width: '100%',
               }}>
@@ -369,7 +385,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontFamily: 'OpenSans',
   },
-
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
   playerProfile_container: {
     backgroundColor: 'lightgray',
     height: '20%',

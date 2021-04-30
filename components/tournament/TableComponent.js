@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  ActivityIndicator,
   Button,
   Image,
   numberOfLines,
@@ -339,8 +340,9 @@ export default class TableScreen extends Component {
       matchD === null
     ) {
       return (
-        <View>
-          <Text>Wait</Text>
+        <View style={[styles.loadingContainer, styles.horizontal]}>
+          <ActivityIndicator />
+          <ActivityIndicator size="large" color="#00ff00" />
         </View>
       );
     } else {
@@ -982,9 +984,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 10,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 100,
   },
   containerTop: {
     flex: 1,

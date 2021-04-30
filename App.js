@@ -11,12 +11,10 @@ import TableScreen from './components/tournament/TableComponent';
 import TeamScreen from './components/team/TeamMatchComponent';
 import TeamListScreen from './components/team/ListComponent';
 import TournamentListScreen from './components/tournament/ListComponent';
-import PlayerStatsComponent from './components/player/PlayerStatsComponent';
 import PlayerStatsScreen from './components/player/PlayerStatsComponent';
 
 const Stack = createStackNavigator();
 const handler = Handler;
-const INTERVALS = {0: [-1, 0], 1: []};
 
 class App extends React.Component {
   constructor(props) {
@@ -113,7 +111,6 @@ class App extends React.Component {
       // .getMatchCalendar('2020-03-01', '2020-12-25')
       .then((value) => {
         let calendar = handler.dataFilter(value);
-        // let calendarIntervals =
         calendar = this.getSortedData(calendar);
         calendar = handler.dataFilter(calendar);
         this.setState({
@@ -124,7 +121,6 @@ class App extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    // console.log(handler.getTournamentStats(1016004));
   }
 
   render() {
@@ -152,13 +148,21 @@ class App extends React.Component {
             <Stack.Screen name="Match" component={MatchScreen} />
             <Stack.Screen name="TournamentTable" component={TableScreen} />
             <Stack.Screen name="Team" component={TeamScreen} />
-            <Stack.Screen name="TeamList" component={TeamListScreen} />
+            <Stack.Screen
+              name="TeamList"
+              component={TeamListScreen}
+              options={{title: 'Список команд'}}
+            />
             <Stack.Screen
               name="TournamentList"
               component={TournamentListScreen}
               options={{title: 'Список турниров'}}
             />
-            <Stack.Screen name="PlayerStats" component={PlayerStatsScreen} />
+            <Stack.Screen
+              name="PlayerStats"
+              component={PlayerStatsScreen}
+              options={{title: 'Статистика игрока'}}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </JoinAppContext.Provider>

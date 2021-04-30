@@ -10,6 +10,7 @@ import {
   UIManager,
   View,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -86,8 +87,9 @@ export default class MatchCenterScreen extends Component {
   render() {
     if (this.context.filteredCalendar === 'empty') {
       return (
-        <View>
-          <Text>Wait</Text>
+        <View style={[styles.loadingContainer, styles.horizontal]}>
+          <ActivityIndicator />
+          <ActivityIndicator size="large" color="#00ff00" />
         </View>
       );
     } else {
@@ -338,6 +340,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'OpenSans',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
   tabs_container: {
     height: 50,

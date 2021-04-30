@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  ActivityIndicator,
   Button,
   Image,
   ScrollView,
@@ -101,7 +102,6 @@ export default class MatchScreen extends Component {
           } else {
             eventItem.team = 2;
           }
-          console.log(item.minute, 'qweqweqw');
           eventItem.logo = EVENTS[item.__typename];
           if (item.minute === null) {
             eventItem.time = '  ';
@@ -205,8 +205,9 @@ export default class MatchScreen extends Component {
       tableList === undefined
     ) {
       return (
-        <View>
-          <Text>Wait</Text>
+        <View style={[styles.loadingContainer, styles.horizontal]}>
+          <ActivityIndicator />
+          <ActivityIndicator size="large" color="#00ff00" />
         </View>
       );
     } else {
@@ -677,6 +678,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
   matchData: {
     flex: 1,

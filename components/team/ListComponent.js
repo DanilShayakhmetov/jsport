@@ -8,6 +8,7 @@ import {
   View,
   Picker,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {JoinAppContext} from '../../JoinAppContext';
 import Handler from '../../graphql/handler';
@@ -65,8 +66,9 @@ export default class TeamListScreen extends Component {
       seasonsList === undefined
     ) {
       return (
-        <View>
-          <Text>Wait</Text>
+        <View style={[styles.loadingContainer, styles.horizontal]}>
+          <ActivityIndicator />
+          <ActivityIndicator size="large" color="#00ff00" />
         </View>
       );
     } else {
@@ -187,6 +189,16 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
   containerTop: {
     flex: 1,
