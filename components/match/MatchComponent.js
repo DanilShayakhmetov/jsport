@@ -669,6 +669,7 @@ export default class MatchScreen extends Component {
     }
   }
 }
+
 MatchScreen.contextType = JoinAppContext;
 
 const styles = StyleSheet.create({
