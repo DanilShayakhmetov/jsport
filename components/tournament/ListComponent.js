@@ -146,7 +146,7 @@ export default class TournamentListScreen extends Component {
                         fontFamily: 'OpenSans',
                         padding: '1%',
                       }}>
-                      Колл-во команд
+                      Колл-во команд: -
                     </Text>
                   </View>
                 </View>
@@ -170,6 +170,7 @@ export default class TournamentListScreen extends Component {
             style={{
               width: '100%',
               height: 40,
+              marginBottom: 10,
               alignSelf: 'center',
             }}>
             <View
