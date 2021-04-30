@@ -682,11 +682,13 @@ const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: 'white',
+    width: '100%',
   },
   horizontal: {
+    justifyContent: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
+    padding: -50,
   },
   matchData: {
     flex: 1,

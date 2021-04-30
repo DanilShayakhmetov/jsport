@@ -345,11 +345,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'white',
+    width: '100%',
   },
   horizontal: {
+    justifyContent: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
+    padding: -50,
   },
   tabs_container: {
     height: 50,
