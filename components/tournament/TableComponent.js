@@ -191,7 +191,6 @@ export default class TableScreen extends Component {
               style={{margin: 5}}>
               <Text
                 style={{
-                  borderWidth: 1,
                   borderRadius: 5,
                   backgroundColor: 'lightgray',
                 }}>
@@ -202,7 +201,7 @@ export default class TableScreen extends Component {
               activeOpacity={0.8}
               onPress={this.showApplication.bind(this, team, 0)}
               style={{margin: 5}}>
-              <Text style={{borderWidth: 1, borderRadius: 5}}>
+              <Text style={{borderRadius: 5}}>
                 {'        Отзаявленные          '}
               </Text>
             </TouchableOpacity>
@@ -258,7 +257,6 @@ export default class TableScreen extends Component {
               style={{margin: 5}}>
               <Text
                 style={{
-                  borderWidth: 1,
                   borderRadius: 5,
                   backgroundColor: '#fff',
                 }}>
@@ -271,7 +269,6 @@ export default class TableScreen extends Component {
               style={{margin: 5}}>
               <Text
                 style={{
-                  borderWidth: 1,
                   borderRadius: 5,
                   backgroundColor: 'lightgray',
                 }}>
@@ -930,8 +927,7 @@ export default class TableScreen extends Component {
               height: 40,
               margin: -5,
               alignSelf: 'center',
-              borderTopWidth: 0.5,
-              backgroundColor: 'lightgray',
+              backgroundColor: 'white',
             }}>
             <View
               style={{
@@ -957,9 +953,6 @@ export default class TableScreen extends Component {
                 onPress={() => this.props.navigation.navigate('TournamentList')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
-                  borderLeftWidth: 0.5,
-                  borderRightWidth: 0.5,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -970,7 +963,6 @@ export default class TableScreen extends Component {
                 onPress={() => this.props.navigation.navigate('TeamList')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>

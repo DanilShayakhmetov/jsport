@@ -131,8 +131,7 @@ export default class TeamListScreen extends Component {
               width: '100%',
               height: 40,
               alignSelf: 'center',
-              borderTopWidth: 0.5,
-              backgroundColor: 'lightgray',
+              marginBottom: 10,
             }}>
             <View
               style={{
@@ -147,7 +146,6 @@ export default class TeamListScreen extends Component {
                 onPress={() => this.props.navigation.navigate('MatchCenter')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -158,9 +156,6 @@ export default class TeamListScreen extends Component {
                 onPress={() => this.props.navigation.navigate('TournamentList')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
-                  borderLeftWidth: 0.5,
-                  borderRightWidth: 0.5,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -171,7 +166,6 @@ export default class TeamListScreen extends Component {
                 onPress={() => this.props.navigation.navigate('TeamList')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>

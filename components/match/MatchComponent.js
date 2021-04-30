@@ -620,7 +620,8 @@ export default class MatchScreen extends Component {
               width: '100%',
               height: 40,
               alignSelf: 'center',
-              borderTopWidth: 0.5,
+              backgroundColor: 'white',
+              // borderTopWidth: 0.5,
             }}>
             <View
               style={{
@@ -635,7 +636,6 @@ export default class MatchScreen extends Component {
                 onPress={() => this.props.navigation.navigate('MatchCenter')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -646,9 +646,6 @@ export default class MatchScreen extends Component {
                 onPress={() => this.props.navigation.navigate('TournamentList')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
-                  borderLeftWidth: 0.5,
-                  borderRightWidth: 0.5,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
@@ -659,7 +656,6 @@ export default class MatchScreen extends Component {
                 onPress={() => this.props.navigation.navigate('TeamList')}
                 style={{
                   width: '33%',
-                  color: 'lightgray',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
