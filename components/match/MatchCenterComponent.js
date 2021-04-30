@@ -69,10 +69,14 @@ export default class MatchCenterScreen extends Component {
     let calendar = [...this.context.calendar];
     calendar.forEach(function (value) {
       value.matchItems.forEach(function (match) {
-        match.visibility = match.item.start_dt.split(' ')[0] <= to;
+        if (match.item.start_dt.split(' ')[0] >= from) {
+          match.visibility = match.item.start_dt.split(' ')[0] <= to;
+        } else {
+          match.visibility = false;
+        }
       });
     });
-    console.log('here');
+
     this.setState({
       filteredCalendar: calendar,
       focusedTab: tab,
@@ -87,18 +91,18 @@ export default class MatchCenterScreen extends Component {
         </View>
       );
     } else {
-      console.log(this.context.filteredCalendar);
+      console.log(this.state.filteredCalendar);
       return (
         <View style={styles.container}>
           <View style={styles.tabs_container}>
             <ScrollView horizontal={true}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.changeInterval.bind(this, 2, 0, -1)}>
+                onPress={this.changeInterval.bind(this, 2, 0, 0)}>
                 <Text
                   style={[
                     styles.tabsItem,
-                    this.state.focusedTab === -1
+                    this.state.focusedTab === 0
                       ? styles.tabsItem_chosen
                       : styles.tabsItem_default,
                   ]}>
@@ -107,11 +111,11 @@ export default class MatchCenterScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.changeInterval.bind(this, 0, 0, 0)}>
+                onPress={this.changeInterval.bind(this, 0, 0, 1)}>
                 <Text
                   style={[
                     styles.tabsItem,
-                    this.state.focusedTab === 0
+                    this.state.focusedTab === 1
                       ? styles.tabsItem_chosen
                       : styles.tabsItem_default,
                   ]}>
@@ -120,11 +124,11 @@ export default class MatchCenterScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.changeInterval.bind(this, 1, 0, 1)}>
+                onPress={this.changeInterval.bind(this, 1, 0, 2)}>
                 <Text
                   style={[
                     styles.tabsItem,
-                    this.state.focusedTab === 1
+                    this.state.focusedTab === 2
                       ? styles.tabsItem_chosen
                       : styles.tabsItem_default,
                   ]}>
@@ -133,11 +137,11 @@ export default class MatchCenterScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.changeInterval.bind(this, 7, 0, 2)}>
+                onPress={this.changeInterval.bind(this, 7, 0, 3)}>
                 <Text
                   style={[
                     styles.tabsItem,
-                    this.state.focusedTab === 2
+                    this.state.focusedTab === 3
                       ? styles.tabsItem_chosen
                       : styles.tabsItem_default,
                   ]}>
@@ -146,11 +150,11 @@ export default class MatchCenterScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={this.changeInterval.bind(this, 0, 1, 3)}>
+                onPress={this.changeInterval.bind(this, 0, 1, 4)}>
                 <Text
                   style={[
                     styles.tabsItem,
-                    this.state.focusedTab === 3
+                    this.state.focusedTab === 4
                       ? styles.tabsItem_chosen
                       : styles.tabsItem_default,
                   ]}>

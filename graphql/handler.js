@@ -356,16 +356,16 @@ class Handler extends React.Component {
     if ((mm % 2 !== 1 && mm < '08') || (mm % 2 !== 0 && mm > '07')) {
       if (dd > 31) {
         mm += 1;
-        dd -= 7;
+        dd = '07';
       }
     } else {
       if (dd > 30) {
         mm += 1;
-        dd -= 7;
+        dd = '07';
       }
       if (dd > 28) {
         mm += 1;
-        dd -= 7;
+        dd = '07';
       }
     }
     let yyyy = today.getFullYear();
