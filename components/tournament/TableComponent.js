@@ -116,9 +116,9 @@ export default class TableScreen extends Component {
           playerItem.position = player.position_id;
           if (playersSubstitiutions !== undefined) {
             playersSubstitiutions.forEach(function (substitution) {
-              if (substitution.player_out_id === player.player_id) {
+              if (substitution.player_out === player.player_id) {
                 playerItem.sub = {
-                  player_in_id: substitution.player_in_id,
+                  player_in_id: substitution.player_in,
                   minute: substitution.minute,
                 };
               }

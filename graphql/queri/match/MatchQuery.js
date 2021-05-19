@@ -52,9 +52,9 @@ export const GET_MATCH = gql`
       }
       substitutions {
         team_id
-        player_in_id
+        player_in
         player_in_number
-        player_out_id
+        player_out
         player_out_number
         minute
         second

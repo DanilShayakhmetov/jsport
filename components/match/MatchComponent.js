@@ -126,7 +126,7 @@ export default class MatchScreen extends Component {
       team1: [],
       team2: [],
     };
-
+    console.log(teams);
     teams.forEach(function (team) {
       if (team.players !== undefined) {
         team.players.forEach(function (player) {
@@ -142,11 +142,16 @@ export default class MatchScreen extends Component {
           playerItem.position = player.position_id;
           if (playersSubstitiutions !== undefined) {
             playersSubstitiutions.forEach(function (substitution) {
-              if (substitution.player_out_id === player.player_id) {
-                playerItem.sub = {
-                  player_in_id: substitution.player_in_id,
-                  minute: substitution.minute,
-                };
+              if (
+                substitution !== undefined &&
+                substitution.player_in !== undefined
+              ) {
+                if (substitution.player_out === player.player_id) {
+                  playerItem.sub = {
+                    player_in_id: substitution.player_in,
+                    minute: substitution.minute,
+                  };
+                }
               }
             });
           }
