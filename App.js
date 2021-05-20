@@ -107,8 +107,8 @@ class App extends React.Component {
     let to = handler.getDate(0, 1);
     console.log(from, to);
     await handler
-      .getMatchCalendar(from, to)
-      // .getMatchCalendar('2020-03-01', '2020-12-25')
+      // .getMatchCalendar(from, to)
+      .getMatchCalendar('2020-03-01', '2020-12-25')
       .then((value) => {
         let calendar = handler.dataFilter(value);
         calendar = this.getSortedData(calendar);

@@ -56,6 +56,11 @@ export default class TeamListScreen extends Component {
       });
   }
 
+  teamRedirect = (team) => {
+    this.context.teamData = team;
+    return this.props.navigation.navigate('Team');
+  };
+
   render() {
     let teamList = this.state.teamsList;
     let seasonsList = this.state.seasonsList;

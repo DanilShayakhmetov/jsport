@@ -222,7 +222,7 @@ export default class MatchCenterScreen extends Component {
                             </Text>
                             <Text
                               style={{
-                                fontSize: 18,
+                                fontSize: 16,
                                 color: '#606070',
                                 padding: 5,
                                 fontFamily: 'OpenSans',

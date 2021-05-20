@@ -156,6 +156,7 @@ export default class TeamScreen extends Component {
                         flexDirection: 'row',
                         flexWrap: 'wrap',
                         marginRight: 20,
+                        width: '15%',
                       }}>
                       <Image
                         style={styles.teamLogo}
@@ -176,8 +177,15 @@ export default class TeamScreen extends Component {
                         }}
                       />
                     </View>
-                    <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        marginRight: 20,
+                        width: '80%',
+                      }}>
                       <Text
+                        numberOfLines={1}
                         style={{
                           fontSize: 18,
                           color: '#606070',

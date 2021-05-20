@@ -105,275 +105,552 @@ export default class PlayerStatsScreen extends Component {
       console.log(playerMatch.length);
       let player = playerStats[0];
       let playerSeason = playerSeasonStats[0];
-      return (
-        <View style={styles.container}>
-          <View style={styles.playerProfile_container}>
-            <View style={styles.playerProfile_item}>
-              <Image
-                style={styles.playerProfile_photo}
-                source={{
-                  uri: handler.getPlayerImageURI(
-                    player.player.player_id,
-                    player.player.photo,
-                  ),
-                }}
-              />
-              <View style={styles.playerProfile_personal}>
-                <Text style={styles.playerProfile_name}>
-                  {player.player.last_name} {player.player.first_name}{' '}
-                  {player.player.middle_name}
-                </Text>
-                <Text style={styles.playerProfile_birthdate}>
-                  Дата рождения: {player.player.birthday}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <Text style={styles.playerProfile_team}>
-            Клуб: {player.team.full_name}
-          </Text>
-          <View style={styles.playerStats_container}>
-            <View style={styles.playerStats_item}>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>игр</Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>голы</Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>передачи</Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>жк</Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_title_items}>кк</Text>
-              </View>
-            </View>
-            <View style={styles.playerStats_item}>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>
-                  {player.games}
-                </Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>
-                  {player.goals}
-                </Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>
-                  {player.assists}
-                </Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>
-                  {player.yellow_cards}
-                </Text>
-              </View>
-              <View style={styles.playerStats_item_Container}>
-                <Text style={styles.playerStats_value_items}>
-                  {player.red_cards}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.playerSeason_container}>
-            <View style={styles.playerSeason_textContainer}>
-              <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
-            </View>
-            <Picker
-              selectedValue={this.state.seasonId}
-              style={styles.playerSeason_picker}
-              onValueChange={(itemValue) => {
-                this.setState({seasonId: itemValue});
-                handler
-                  .getPlayerSeasonStats(
-                    this.context.playerId,
-                    this.state.seasonId,
-                  )
-                  .then((value) => {
-                    this.setState({
-                      playerSeasonStats: value,
-                    });
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }}>
-              {seasonsList.seasons.map((season) => (
-                <Picker.Item label={season.title} value={season.season_id} />
-              ))}
-            </Picker>
-          </View>
-          <View style={styles.playerTeam_container}>
-            <View style={styles.playerTeam_row_score}>
-              <View style={styles.playerTeam_row_container}>
-                <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>
-                    {playerSeason.games}
-                  </Text>
-                </View>
-                <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>
-                    {playerSeason.goals}
-                  </Text>
-                </View>
-                <View style={styles.playerTeam_row_item}>
-                  <Text style={styles.playerTeam_row_itemText}>
-                    {playerSeason.assists}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.playerTeam_row_scoreTitle}>
-              <View style={styles.playerTeam_row_container}>
-                <View style={styles.playerTeam_row_itemTitle}>
-                  <Text style={styles.playerTeam_row_itemText}>ИГР</Text>
-                </View>
-                <View style={styles.playerTeam_row_itemTitle}>
-                  <Text style={styles.playerTeam_row_itemText}>ГОЛ.</Text>
-                </View>
-                <View style={styles.playerTeam_row_itemTitle}>
-                  <Text style={styles.playerTeam_row_itemText}>ПАС.</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.playerTeam_row_team}>
-              <View style={styles.playerTeam_row_teamContainer}>
+      if (playerSeason === undefined) {
+        return (
+          <View style={styles.container}>
+            <View style={styles.playerProfile_container}>
+              <View style={styles.playerProfile_item}>
                 <Image
-                  style={styles.playerTeam_row_teamLogo}
+                  style={styles.playerProfile_photo}
                   source={{
-                    uri: handler.getTeamImageURI(
-                      player.team.team_id,
-                      player.team.logo,
+                    uri: handler.getPlayerImageURI(
+                      player.player.player_id,
+                      player.player.photo,
                     ),
                   }}
                 />
-                <Text style={styles.playerTeam_row_teamName}>
-                  {player.team.full_name}
-                </Text>
-              </View>
-              <View style={styles.playerTeam_row_container}>
-                <View style={styles.playerTeam_row_itemTeam}>
-                  <Text style={styles.playerTeam_row_itemText}>
-                    {playerSeason.games}
+                <View style={styles.playerProfile_personal}>
+                  <Text style={styles.playerProfile_name}>
+                    {player.player.last_name} {player.player.first_name}{' '}
+                    {player.player.middle_name}
                   </Text>
-                </View>
-                <View style={styles.playerTeam_row_itemTeam}>
-                  <Text style={styles.playerTeam_row_itemText}>
-                    {playerSeason.goals}
-                  </Text>
-                </View>
-                <View style={styles.playerTeam_row_itemTeam}>
-                  <Text style={styles.playerTeam_row_itemText}>
-                    {playerSeason.assists}
+                  <Text style={styles.playerProfile_birthdate}>
+                    Дата рождения: {player.player.birthday}
                   </Text>
                 </View>
               </View>
             </View>
-            <View style={styles.playerTeam_row_tournament}>
-              <View style={styles.playerTeam_row_tournamentContainer}>
-                <Text style={styles.playerTeam_row_tournamentName}>
-                  Название турнира
-                </Text>
+            <Text style={styles.playerProfile_team}>
+              Клуб: {player.team.full_name}
+            </Text>
+            <View style={styles.playerStats_container}>
+              <View style={styles.playerStats_item}>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>игр</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>голы</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>передачи</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>жк</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>кк</Text>
+                </View>
+              </View>
+              <View style={styles.playerStats_item}>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.games}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.goals}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.assists}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.yellow_cards}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.red_cards}
+                  </Text>
+                </View>
               </View>
             </View>
-            <View style={{height: '35%'}}>
-              <ScrollView style={{flex: 1}}>
-                {playerMatch.map((match) => (
-                  <View style={styles.playerTeam_row_match}>
-                    <View style={styles.playerTeam_row_match_dataContainer}>
-                      <View style={styles.playerTeam_row_match_dataItem}>
-                        <View style={styles.playerTeam_row_match_team1}>
-                          <Text
-                            numberOfLines={1}
-                            style={styles.playerTeam_row_text}>
-                            {match.team1.full_name}
-                          </Text>
-                        </View>
-                        <View style={styles.playerTeam_row_match_score}>
-                          <Text style={styles.playerTeam_row_text}>
-                            {match.ga}
-                            {' : '}
-                            {match.gf}
-                          </Text>
-                        </View>
-                        <View style={styles.playerTeam_row_match_team2}>
-                          <Text
-                            numberOfLines={1}
-                            style={styles.playerTeam_row_text}>
-                            {match.team2.full_name}
-                          </Text>
-                        </View>
-                      </View>
-                      <View style={styles.playerTeam_row_match_date}>
-                        <Text>{handler.getFormedDate(match.start_dt)}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.playerTeam_row_match_scoreContainer}>
-                      <View style={styles.playerTeam_row_match_scoreItem}>
-                        <Text style={styles.playerTeam_row_text}>0</Text>
-                      </View>
-                      <View style={styles.playerTeam_row_match_scoreItem}>
-                        <Text style={styles.playerTeam_row_text}>0</Text>
-                      </View>
-                    </View>
-                  </View>
+            <View style={styles.playerSeason_container}>
+              <View style={styles.playerSeason_textContainer}>
+                <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
+              </View>
+              <Picker
+                selectedValue={this.state.seasonId}
+                style={styles.playerSeason_picker}
+                onValueChange={(itemValue) => {
+                  this.setState({seasonId: itemValue});
+                  handler
+                    .getPlayerSeasonStats(
+                      this.context.playerId,
+                      this.state.seasonId,
+                    )
+                    .then((value) => {
+                      this.setState({
+                        playerSeasonStats: value,
+                      });
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }}>
+                {seasonsList.seasons.map((season) => (
+                  <Picker.Item label={season.title} value={season.season_id} />
                 ))}
-              </ScrollView>
+              </Picker>
             </View>
-          </View>
-          <View
-            style={{
-              width: '100%',
-              height: 40,
-              alignSelf: 'center',
-              // alignItems: 'flex-end',
-            }}>
+            <View style={styles.playerTeam_container}>
+              <View style={styles.playerTeam_row_score}>
+                <View style={styles.playerTeam_row_container}>
+                  <View style={styles.playerTeam_row_item}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {'-'}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_item}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {'-'}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_item}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {'-'}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_scoreTitle}>
+                <View style={styles.playerTeam_row_container}>
+                  <View style={styles.playerTeam_row_itemTitle}>
+                    <Text style={styles.playerTeam_row_itemText}>ИГР</Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTitle}>
+                    <Text style={styles.playerTeam_row_itemText}>ГОЛ.</Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTitle}>
+                    <Text style={styles.playerTeam_row_itemText}>ПАС.</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_team}>
+                <View style={styles.playerTeam_row_teamContainer}>
+                  <Image
+                    style={styles.playerTeam_row_teamLogo}
+                    source={{
+                      uri: handler.getTeamImageURI(
+                        player.team.team_id,
+                        player.team.logo,
+                      ),
+                    }}
+                  />
+                  <Text style={styles.playerTeam_row_teamName}>
+                    {player.team.full_name}
+                  </Text>
+                </View>
+                <View style={styles.playerTeam_row_container}>
+                  <View style={styles.playerTeam_row_itemTeam}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {'-'}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTeam}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {'-'}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTeam}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {'-'}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_tournament}>
+                <View style={styles.playerTeam_row_tournamentContainer}>
+                  <Text style={styles.playerTeam_row_tournamentName}>
+                    Название турнира
+                  </Text>
+                </View>
+              </View>
+              <View style={{height: '35%'}}>
+                <ScrollView style={{flex: 1}}>
+                  {playerMatch.map((match) => (
+                    <View style={styles.playerTeam_row_match}>
+                      <View style={styles.playerTeam_row_match_dataContainer}>
+                        <View style={styles.playerTeam_row_match_dataItem}>
+                          <View style={styles.playerTeam_row_match_team1}>
+                            <Text
+                              numberOfLines={1}
+                              style={styles.playerTeam_row_text}>
+                              {'-'}
+                            </Text>
+                          </View>
+                          <View style={styles.playerTeam_row_match_score}>
+                            <Text style={styles.playerTeam_row_text}>
+                              {'-'}
+                              {' : '}
+                              {'-'}
+                            </Text>
+                          </View>
+                          <View style={styles.playerTeam_row_match_team2}>
+                            <Text
+                              numberOfLines={1}
+                              style={styles.playerTeam_row_text}>
+                              {'-'}
+                            </Text>
+                          </View>
+                        </View>
+                        <View style={styles.playerTeam_row_match_date}>
+                          <Text>                      {'-'}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.playerTeam_row_match_scoreContainer}>
+                        <View style={styles.playerTeam_row_match_scoreItem}>
+                          <Text style={styles.playerTeam_row_text}>0</Text>
+                        </View>
+                        <View style={styles.playerTeam_row_match_scoreItem}>
+                          <Text style={styles.playerTeam_row_text}>0</Text>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
             <View
               style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginTop: 10,
-                marginBottom: -20,
-                justifyContent: 'center',
                 width: '100%',
+                height: 40,
+                alignSelf: 'center',
+                // alignItems: 'flex-end',
               }}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => this.props.navigation.navigate('MatchCenter')}
+              <View
                 style={{
-                  width: '33%',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  marginTop: 10,
+                  marginBottom: -20,
                   justifyContent: 'center',
-                  alignItems: 'center',
+                  width: '100%',
                 }}>
-                <Icon name="football-outline" size={30} color="#517fa4" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => this.props.navigation.navigate('TournamentList')}
-                style={{
-                  width: '33%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Icon name="trophy-outline" size={30} color="#517fa4" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => this.props.navigation.navigate('TeamList')}
-                style={{
-                  width: '33%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Icon name="shield-outline" size={30} color="#517fa4" />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => this.props.navigation.navigate('MatchCenter')}
+                  style={{
+                    width: '33%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="football-outline" size={30} color="#517fa4" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    this.props.navigation.navigate('TournamentList')
+                  }
+                  style={{
+                    width: '33%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="trophy-outline" size={30} color="#517fa4" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => this.props.navigation.navigate('TeamList')}
+                  style={{
+                    width: '33%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="shield-outline" size={30} color="#517fa4" />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      );
+        );
+      } else {
+        return (
+          <View style={styles.container}>
+            <View style={styles.playerProfile_container}>
+              <View style={styles.playerProfile_item}>
+                <Image
+                  style={styles.playerProfile_photo}
+                  source={{
+                    uri: handler.getPlayerImageURI(
+                      player.player.player_id,
+                      player.player.photo,
+                    ),
+                  }}
+                />
+                <View style={styles.playerProfile_personal}>
+                  <Text style={styles.playerProfile_name}>
+                    {player.player.last_name} {player.player.first_name}{' '}
+                    {player.player.middle_name}
+                  </Text>
+                  <Text style={styles.playerProfile_birthdate}>
+                    Дата рождения: {player.player.birthday}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <Text style={styles.playerProfile_team}>
+              Клуб: {player.team.full_name}
+            </Text>
+            <View style={styles.playerStats_container}>
+              <View style={styles.playerStats_item}>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>игр</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>голы</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>передачи</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>жк</Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_title_items}>кк</Text>
+                </View>
+              </View>
+              <View style={styles.playerStats_item}>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.games}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.goals}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.assists}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.yellow_cards}
+                  </Text>
+                </View>
+                <View style={styles.playerStats_item_Container}>
+                  <Text style={styles.playerStats_value_items}>
+                    {player.red_cards}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.playerSeason_container}>
+              <View style={styles.playerSeason_textContainer}>
+                <Text style={styles.playerSeason_text}>СТАТИСТИКА</Text>
+              </View>
+              <Picker
+                selectedValue={this.state.seasonId}
+                style={styles.playerSeason_picker}
+                onValueChange={(itemValue) => {
+                  this.setState({seasonId: itemValue});
+                  handler
+                    .getPlayerSeasonStats(
+                      this.context.playerId,
+                      this.state.seasonId,
+                    )
+                    .then((value) => {
+                      this.setState({
+                        playerSeasonStats: value,
+                      });
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }}>
+                {seasonsList.seasons.map((season) => (
+                  <Picker.Item label={season.title} value={season.season_id} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.playerTeam_container}>
+              <View style={styles.playerTeam_row_score}>
+                <View style={styles.playerTeam_row_container}>
+                  <View style={styles.playerTeam_row_item}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {playerSeason.games}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_item}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {playerSeason.goals}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_item}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {playerSeason.assists}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_scoreTitle}>
+                <View style={styles.playerTeam_row_container}>
+                  <View style={styles.playerTeam_row_itemTitle}>
+                    <Text style={styles.playerTeam_row_itemText}>ИГР</Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTitle}>
+                    <Text style={styles.playerTeam_row_itemText}>ГОЛ.</Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTitle}>
+                    <Text style={styles.playerTeam_row_itemText}>ПАС.</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_team}>
+                <View style={styles.playerTeam_row_teamContainer}>
+                  <Image
+                    style={styles.playerTeam_row_teamLogo}
+                    source={{
+                      uri: handler.getTeamImageURI(
+                        player.team.team_id,
+                        player.team.logo,
+                      ),
+                    }}
+                  />
+                  <Text style={styles.playerTeam_row_teamName}>
+                    {player.team.full_name}
+                  </Text>
+                </View>
+                <View style={styles.playerTeam_row_container}>
+                  <View style={styles.playerTeam_row_itemTeam}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {playerSeason.games}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTeam}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {playerSeason.goals}
+                    </Text>
+                  </View>
+                  <View style={styles.playerTeam_row_itemTeam}>
+                    <Text style={styles.playerTeam_row_itemText}>
+                      {playerSeason.assists}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.playerTeam_row_tournament}>
+                <View style={styles.playerTeam_row_tournamentContainer}>
+                  <Text style={styles.playerTeam_row_tournamentName}>
+                    Название турнира
+                  </Text>
+                </View>
+              </View>
+              <View style={{height: '35%'}}>
+                <ScrollView style={{flex: 1}}>
+                  {playerMatch.map((match) => (
+                    <View style={styles.playerTeam_row_match}>
+                      <View style={styles.playerTeam_row_match_dataContainer}>
+                        <View style={styles.playerTeam_row_match_dataItem}>
+                          <View style={styles.playerTeam_row_match_team1}>
+                            <Text
+                              numberOfLines={1}
+                              style={styles.playerTeam_row_text}>
+                              {match.team1.full_name}
+                            </Text>
+                          </View>
+                          <View style={styles.playerTeam_row_match_score}>
+                            <Text style={styles.playerTeam_row_text}>
+                              {match.ga}
+                              {' : '}
+                              {match.gf}
+                            </Text>
+                          </View>
+                          <View style={styles.playerTeam_row_match_team2}>
+                            <Text
+                              numberOfLines={1}
+                              style={styles.playerTeam_row_text}>
+                              {match.team2.full_name}
+                            </Text>
+                          </View>
+                        </View>
+                        <View style={styles.playerTeam_row_match_date}>
+                          <Text>{handler.getFormedDate(match.start_dt)}</Text>
+                        </View>
+                      </View>
+                      <View style={styles.playerTeam_row_match_scoreContainer}>
+                        <View style={styles.playerTeam_row_match_scoreItem}>
+                          <Text style={styles.playerTeam_row_text}>0</Text>
+                        </View>
+                        <View style={styles.playerTeam_row_match_scoreItem}>
+                          <Text style={styles.playerTeam_row_text}>0</Text>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                height: 40,
+                alignSelf: 'center',
+                // alignItems: 'flex-end',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  marginTop: 10,
+                  marginBottom: -20,
+                  justifyContent: 'center',
+                  width: '100%',
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => this.props.navigation.navigate('MatchCenter')}
+                  style={{
+                    width: '33%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="football-outline" size={30} color="#517fa4" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    this.props.navigation.navigate('TournamentList')
+                  }
+                  style={{
+                    width: '33%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="trophy-outline" size={30} color="#517fa4" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => this.props.navigation.navigate('TeamList')}
+                  style={{
+                    width: '33%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon name="shield-outline" size={30} color="#517fa4" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        );
+      }
     }
   }
 }

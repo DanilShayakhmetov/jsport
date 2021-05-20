@@ -55,6 +55,11 @@ export default class TournamentListScreen extends Component {
       });
   }
 
+  tournamentRedirect = () => {
+    handler.getMatchMain();
+    return this.props.navigation.navigate('TournamentTable');
+  };
+
   render() {
     let tournamentsList = this.state.tournamentsList;
     let seasonsList = this.state.seasonsList;
