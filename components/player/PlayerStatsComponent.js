@@ -603,6 +603,7 @@ export default class PlayerStatsScreen extends Component {
                 width: '100%',
                 height: 40,
                 alignSelf: 'center',
+                marginTop: 20,
                 // alignItems: 'flex-end',
               }}>
               <View

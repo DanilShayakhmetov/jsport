@@ -266,6 +266,7 @@ export default class TeamScreen extends Component {
                             fontSize: 16,
                             color: 'gray',
                             fontFamily: 'OpenSans',
+                            marginLeft: '23%',
                           }}>
                           {player.birthday}
                         </Text>
