@@ -165,7 +165,9 @@ export default class TournamentListScreen extends Component {
                       padding: '1%',
                     }}>
                     {/*{tournament.cover}.{'   -   '}.{tournament.short_name}*/}
-                    {tournament.description.replace(regex, '')}
+                    {tournament.description
+                      ? tournament.description.replace(regex, '')
+                      : ''}
                   </Text>
                 </View>
               </View>

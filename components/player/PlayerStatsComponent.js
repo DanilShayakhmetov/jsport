@@ -23,6 +23,7 @@ export default class PlayerStatsScreen extends Component {
     this.state = {
       seasonsList: undefined,
       seasonId: undefined,
+      seasonName: undefined,
       playerStats: undefined,
       playerSeasonStats: undefined,
       playerMatch: undefined,
@@ -211,19 +212,13 @@ export default class PlayerStatsScreen extends Component {
               <View style={styles.playerTeam_row_score}>
                 <View style={styles.playerTeam_row_container}>
                   <View style={styles.playerTeam_row_item}>
-                    <Text style={styles.playerTeam_row_itemText}>
-                      {'-'}
-                    </Text>
+                    <Text style={styles.playerTeam_row_itemText}>{'-'}</Text>
                   </View>
                   <View style={styles.playerTeam_row_item}>
-                    <Text style={styles.playerTeam_row_itemText}>
-                      {'-'}
-                    </Text>
+                    <Text style={styles.playerTeam_row_itemText}>{'-'}</Text>
                   </View>
                   <View style={styles.playerTeam_row_item}>
-                    <Text style={styles.playerTeam_row_itemText}>
-                      {'-'}
-                    </Text>
+                    <Text style={styles.playerTeam_row_itemText}>{'-'}</Text>
                   </View>
                 </View>
               </View>
@@ -257,27 +252,19 @@ export default class PlayerStatsScreen extends Component {
                 </View>
                 <View style={styles.playerTeam_row_container}>
                   <View style={styles.playerTeam_row_itemTeam}>
-                    <Text style={styles.playerTeam_row_itemText}>
-                      {'-'}
-                    </Text>
+                    <Text style={styles.playerTeam_row_itemText}>{'-'}</Text>
                   </View>
                   <View style={styles.playerTeam_row_itemTeam}>
-                    <Text style={styles.playerTeam_row_itemText}>
-                      {'-'}
-                    </Text>
+                    <Text style={styles.playerTeam_row_itemText}>{'-'}</Text>
                   </View>
                   <View style={styles.playerTeam_row_itemTeam}>
-                    <Text style={styles.playerTeam_row_itemText}>
-                      {'-'}
-                    </Text>
+                    <Text style={styles.playerTeam_row_itemText}>{'-'}</Text>
                   </View>
                 </View>
               </View>
               <View style={styles.playerTeam_row_tournament}>
                 <View style={styles.playerTeam_row_tournamentContainer}>
-                  <Text style={styles.playerTeam_row_tournamentName}>
-                    Название турнира
-                  </Text>
+                  <Text style={styles.playerTeam_row_tournamentName}>КЛФ</Text>
                 </View>
               </View>
               <View style={{height: '35%'}}>
@@ -309,8 +296,7 @@ export default class PlayerStatsScreen extends Component {
                           </View>
                         </View>
                         <View style={styles.playerTeam_row_match_date}>
-                          <Text>                      {'-'}
-                          </Text>
+                          <Text> {'-'}</Text>
                         </View>
                       </View>
                       <View style={styles.playerTeam_row_match_scoreContainer}>
@@ -549,7 +535,7 @@ export default class PlayerStatsScreen extends Component {
               <View style={styles.playerTeam_row_tournament}>
                 <View style={styles.playerTeam_row_tournamentContainer}>
                   <Text style={styles.playerTeam_row_tournamentName}>
-                    Название турнира
+                    КЛФ
                   </Text>
                 </View>
               </View>
@@ -601,7 +587,7 @@ export default class PlayerStatsScreen extends Component {
             <View
               style={{
                 width: '100%',
-                height: 40,
+                height: 30,
                 alignSelf: 'center',
                 marginTop: 20,
                 // alignItems: 'flex-end',

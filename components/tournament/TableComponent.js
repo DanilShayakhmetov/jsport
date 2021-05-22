@@ -445,6 +445,7 @@ export default class TableScreen extends Component {
               style={{
                 display: this.state.focusedTab === 0 ? null : 'none',
                 overflow: 'hidden',
+                height: '130%',
               }}>
               <ScrollView style={{flex: 1}}>
                 {matchList.map((match) => (
